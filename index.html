@@ -1,1 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>東北雪國歷險記 ❄️｜旅遊手動</title>
+  <style>
+    :root {
+      --primary: #0f172a;       /* 深海藍 */
+      --accent: #3b82f6;        /* 冰雪藍 */
+      --accent-hover: #0284c7;  /* 湛藍 */
+      --bg: #f1f5f9;            /* 雪地灰白 */
+      --card-bg: #ffffff;       /* 雪白 */
+      --text: #0f172a;          /* 墨黑 */
+      --text-muted: #475569;    /* 霧灰藍 */
+      --ice-blue: #f0f9ff;      /* 冰藍 background */
+      --ice-border: #e0f2fe;    /* 冰藍邊框 */
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
 
+    /* Hero Banner with Family Selfie Background */
+    .hero {
+      position: relative;
+      background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.7) 100%),
+                  url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80') center/cover;
+      color: white;
+      padding: 40px 20px 24px;
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.15);
+      background-size: cover;
+      background-position: center 30%;
+    }
+    .change-cover-btn {
+      position: absolute; top: 15px; right: 15px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 6px 12px; border-radius: 30px;
+      color: white; font-size: 0.7rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; gap: 4px;
+    }
+    .hero-title { font-size: 1.7rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+    .hero-dates { font-size: 0.85rem; font-weight: 700; opacity: 0.95; margin-bottom: 2px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    .hero-locations { font-size: 0.8rem; opacity: 0.85; margin-bottom: 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 14px;
+      border-radius: 16px;
+      text-align: center;
+    }
+    .stat-val { font-size: 1.6rem; font-weight: 800; line-height: 1.1; }
+    .stat-lbl { font-size: 0.72rem; opacity: 0.9; margin-top: 4px; font-weight: 600; }
+
+    /* Weather Quick Glance */
+    .weather-glance {
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .weather-item { display: flex; align-items: center; gap: 6px; color: white; font-size: 0.75rem; }
+    .weather-icon { font-size: 1.1rem; }
+
+    /* Top Tabs Slider */
+    .tab-nav-wrapper {
+      position: sticky; top: 0; z-index: 100;
+      background: #e2e8f0; padding: 10px 14px;
+      border-bottom: 1px solid #cbd5e1;
+      overflow-x: auto; white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      display: flex; gap: 6px;
+    }
+    .tab-nav-wrapper::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      display: inline-flex; flex-direction: row; align-items: center; justify-content: center; gap: 4px;
+      padding: 8px 14px; border-radius: 30px; border: none;
+      background: #f8fafc; color: #475569; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .tab-btn.active { background: var(--accent); color: #fff; box-shadow: 0 4px 10px rgba(59,130,246,0.35); }
+
+    /* Main Container */
+    .container { padding: 16px; max-width: 600px; margin: 0 auto; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Day Chips Selector */
+    .day-selector { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; }
+    .day-selector::-webkit-scrollbar { display: none; }
+    .day-chip {
+      flex: 0 0 auto; padding: 8px 14px; background: #fff; border: 1.5px solid #cbd5e1;
+      border-radius: 14px; text-align: center; cursor: pointer; font-size: 0.82rem; font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .day-chip.active { background: var(--ice-blue); border-color: var(--accent); color: var(--accent); font-weight: 800; box-shadow: 0 3px 8px rgba(59,130,246,0.15); }
+
+    /* Card System */
+    .card { background: var(--card-bg); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(15,23,42,0.04); border: 1.5px solid #f1f5f9; }
+    .card-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; color: var(--primary); }
+    .card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; }
+
+    /* Timeline Section */
+    .timeline { position: relative; padding-left: 28px; margin-top: 14px; }
+    .timeline::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: #cbd5e1; }
+    .t-item { position: relative; margin-bottom: 24px; }
+    .t-dot {
+      position: absolute; left: -28px; top: 0; width: 22px; height: 22px;
+      border-radius: 50%; background: #fff; border: 2px solid var(--accent); color: var(--accent);
+      font-size: 0.72rem; font-weight: 800; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 4px rgba(59,130,246,0.2);
+    }
+    .t-time { font-size: 0.8rem; font-weight: 800; color: var(--accent); }
+    .t-title { font-size: 0.98rem; font-weight: 800; margin: 2px 0 4px; color: var(--primary); }
+    .t-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 8px; }
+    .btn-map {
+      display: inline-block; padding: 5px 12px; background: var(--ice-blue); color: var(--accent);
+      font-size: 0.72rem; font-weight: 700; border-radius: 8px; text-decoration: none; border: 1px solid var(--ice-border);
+    }
+
+    /* Accordion */
+    .accordion-item { background: #fff; border-radius: 14px; border: 1.5px solid #e2e8f0; margin-bottom: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+    .acc-header {
+      padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
+      font-weight: 800; font-size: 0.9rem; cursor: pointer; color: var(--primary);
+    }
+    .acc-header .plus { font-size: 1.1rem; color: var(--accent); font-weight: 800; transition: transform 0.2s ease; }
+    .acc-body { display: none; padding: 12px 16px; border-top: 1px solid #f1f5f9; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; background: #f8fafc; }
+    .accordion-item.open .acc-body { display: block; }
+    .accordion-item.open .acc-header .plus { transform: rotate(45deg); }
+
+    /* Checklist */
+    .check-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px; cursor: pointer; }
+    .check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); }
+    .check-item span { font-size: 0.88rem; font-weight: 600; }
+
+    /* Billing Section styles */
+    .pay-switch { display: flex; gap: 8px; margin-bottom: 12px; }
+    .pay-opt {
+      flex: 1; padding: 10px; text-align: center; border-radius: 12px; border: 1.5px solid #cbd5e1;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; background: #fff;
+    }
+    .pay-opt.active { background: var(--ice-blue); border-color: var(--accent); color: var(--accent); }
+    
+    .amt-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .amt-box { display: flex; flex-direction: column; }
+    .amt-box label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+    .amt-box input { padding: 10px 12px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-size: 0.9rem; font-weight: 700; }
+    
+    .btn-add-bill {
+      width: 100%; padding: 12px; background: var(--accent); color: white; border: none;
+      border-radius: 12px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-bottom: 16px;
+      box-shadow: 0 4px 10px rgba(59,130,246,0.2);
+    }
+    
+    .bill-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #f1f5f9; font-size: 0.85rem; }
+    .bill-item .desc { font-weight: 700; }
+    .bill-item .amt { font-weight: 800; color: var(--primary); }
+    .bill-item .del { color: #ef4444; cursor: pointer; font-weight: bold; margin-left: 10px; }
+
+    .summary-card { background: var(--ice-blue); border: 1.5px solid var(--ice-border); border-radius: 14px; padding: 14px; margin-top: 14px; }
+    .summary-title { font-size: 0.85rem; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 6px; }
+    .summary-row.total { border-top: 1px dashed #bde0fe; padding-top: 6px; margin-top: 6px; font-weight: 800; font-size: 0.95rem; color: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden Photo Input -->
+  <input type="file" id="coverInput" accept="image/*" style="display: none;" onchange="updateCover(this)">
+
+  <!-- 頂部自拍封面 -->
+  <header class="hero" id="hero-banner">
+    <button class="change-cover-btn" onclick="document.getElementById('coverInput').click()">📷 更換封面</button>
+    <div class="hero-title">東北雪國歷險記 ❄️</div>
+    <div class="hero-dates">2027.01.27 ~ 02.03</div>
+    <div class="hero-locations">東京 · 仙台 · 藏王溫泉 8天7夜</div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val" id="countdown">--</div>
+        <div class="stat-lbl">距離出發天數</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">8</div>
+        <div class="stat-lbl">旅行天數</div>
+      </div>
+    </div>
+
+    <!-- 即時天氣小預報 -->
+    <div class="weather-glance">
+      <div class="weather-item">
+        <span class="weather-icon">🗼</span>
+        <span>東京 1°C~9°C (陰)</span>
+      </div>
+      <div class="weather-item">
+        <span class="weather-icon">🏯</span>
+        <span>仙台 -2°C~4°C (雪)</span>
+      </div>
+      <div class="weather-item">
+        <span class="weather-icon">☃️</span>
+        <span>藏王 -8°C~-3°C (暴雪)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 冰雪藍 導航列 -->
+  <nav class="tab-nav-wrapper">
+    <button class="tab-btn active" onclick="switchTab('itinerary', this)">📅 每日行程</button>
+    <button class="tab-btn" onclick="switchTab('billing', this)">💰 花費紀錄</button>
+    <button class="tab-btn" onclick="switchTab('hotel', this)">✈️ 航班住宿</button>
+    <button class="tab-btn" onclick="switchTab('transport', this)">🚅 交通攻略</button>
+    <button class="tab-btn" onclick="switchTab('food', this)">🍜 美食攻略</button>
+    <button class="tab-btn" onclick="switchTab('luggage', this)">🧳 行李清單</button>
+  </nav>
+
+  <main class="container">
+
+    <!-- 1. 每日行程 (Itinerary) -->
+    <section id="tab-itinerary" class="tab-content active">
+      <div class="day-selector">
+        <div class="day-chip active" onclick="filterDay(1, this)">Day 1<br><small>1/27</small></div>
+        <div class="day-chip" onclick="filterDay(2, this)">Day 2<br><small>1/28</small></div>
+        <div class="day-chip" onclick="filterDay(3, this)">Day 3<br><small>1/29</small></div>
+        <div class="day-chip" onclick="filterDay(4, this)">Day 4<br><small>1/30</small></div>
+        <div class="day-chip" onclick="filterDay(5, this)">Day 5<br><small>1/31</small></div>
+        <div class="day-chip" onclick="filterDay(6, this)">Day 6<br><small>2/1</small></div>
+        <div class="day-chip" onclick="filterDay(7, this)">Day 7<br><small>2/2</small></div>
+        <div class="day-chip" onclick="filterDay(8, this)">Day 8<br><small>2/3</small></div>
+      </div>
+
+      <div class="card" id="day-content">
+        <!-- 預設載入 Day 1 的內容 -->
+        <h3 class="card-title"> Day 1 ‧ 人形町入住與老街探索</h3>
+        <p class="card-subtitle">1/27 (三) 東京人形町</p>
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-dot">1</div>
+            <div class="t-time">13:30</div>
+            <div class="t-title">抵達成田國際機場</div>
+            <div class="t-desc">辦理入境，搭乘京成 Access 特急（直通淺草線）前往市區。</div>
+            <a href="https://maps.google.com" target="_blank" class="btn-map">開啟地圖</a>
+          </div>
+          <div class="t-item">
+            <div class="t-dot">2</div>
+            <div class="t-time">16:30</div>
+            <div class="t-title">抵達東橫 INN 日本橋人形町</div>
+            <div class="t-desc">辦理入住，放置行李，周邊老街散策與買人形燒。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 花費紀錄 (Billing) -->
+    <section id="tab-billing" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">💵 代墊記帳與分攤</h3>
+        <p class="card-subtitle">台幣預付與日幣花費分開，並統計代墊結算</p>
+        
+        <div class="pay-switch">
+          <div class="pay-opt active" id="pay-opt-li" onclick="setPayee('li')">李家代墊 (4人)</div>
+          <div class="pay-opt" id="pay-opt-lin" onclick="setPayee('lin')">林家代墊 (3人)</div>
+        </div>
+        
+        <input type="text" id="bill-name" placeholder="項目（例：機票、晚餐...）" style="width:100%; padding:10px; margin-bottom:12px; border-radius:10px; border:1.5px solid #cbd5e1;">
+        
+        <div class="amt-inputs">
+          <div class="amt-box">
+            <label>台幣金額 (NT$)</label>
+            <input type="number" id="bill-twd" value="0">
+          </div>
+          <div class="amt-box">
+            <label>日幣金額 (¥)</label>
+            <input type="number" id="bill-jpy" value="0">
+          </div>
+        </div>
+        
+        <button class="btn-add-bill" onclick="addBill()">➕ 新增紀錄</button>
+
+        <div id="bill-list">
+          <!-- 記帳明細列表 -->
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-title">📊 費用總結與代墊找補</div>
+          <div class="summary-row"><span>李家代墊總額:</span><span id="li-pay">NT$ 0 ｜ ¥0</span></div>
+          <div class="summary-row"><span>林家代墊總額:</span><span id="lin-pay">NT$ 0 ｜ ¥0</span></div>
+          <div class="summary-row total"><span>應找補結算 (人頭 4:3 拆帳):</span><span id="settlement">無欠款</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 航班住宿 (Hotel) -->
+    <section id="tab-hotel" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">🏨 東京 & 仙台 & 藏王 住宿</h3>
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-dot">1</div>
+            <div class="t-time">1/27 - 1/29</div>
+            <div class="t-title">東橫 INN 東京日本橋人形町</div>
+            <div class="t-desc">近地下鐵人形町站，安靜、機能佳。</div>
+          </div>
+          <div class="t-item">
+            <div class="t-dot">2</div>
+            <div class="t-time">1/29 - 1/31</div>
+            <div class="t-title">東橫 INN 仙台站西口中央</div>
+            <div class="t-desc">仙台站步行 5 分鐘，西口熱鬧商圈，交通與飲食都極度方便。</div>
+          </div>
+          <div class="t-item">
+            <div class="t-dot">3</div>
+            <div class="t-time">1/31 - 2/1</div>
+            <div class="t-title">藏王溫泉 深山莊高見屋</div>
+            <div class="t-desc">傳統日式木造古湯旅館，緊鄰上之台雪道。</div>
+          </div>
+          <div class="t-item">
+            <div class="t-dot">4</div>
+            <div class="t-time">2/1 - 2/2</div>
+            <div class="t-title">藏王國際大飯店</div>
+            <div class="t-desc">直通橫倉雪道與纜車站，吃早餐完即可搶先上山。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 交通攻略 (Transport) -->
+    <section id="tab-transport" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">🚄 長途移動與大眾運輸</h3>
+        <div class="accordion-item open">
+          <div class="acc-header" onclick="toggleAcc(this)">京成 Access 特急（成田 ➔ 人形町）<span class="plus">+</span></div>
+          <div class="acc-body">一般鐵路電車，直接刷交通 IC 卡（Suica 等）進站即可。</div>
+        </div>
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">新幹線（東京 ➔ 仙台）<span class="plus">+</span></div>
+          <div class="acc-body">搭乘東北新幹線（Hayabusa 號），為全車指定席，需提前劃位或持 Pass 取票。</div>
+        </div>
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">藏王回仙台冬季直達高速巴士<span class="plus">+</span></div>
+          <div class="acc-body">在藏王巴士總站搭乘「山交/宮城交通」直達高速巴士，約 85 分鐘回到仙台站東口，需提前預約。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 美食攻略 (Food) -->
+    <section id="tab-food" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">🍜 當地必吃美食攻略</h3>
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">仙台站牛舌名店推薦<span class="plus">+</span></div>
+          <div class="acc-body">
+            • 善治郎（推薦厚切牛舌定食）<br>
+            • 司（Tsukasa，炭香濃郁，在地高評價）<br>
+            • 利久（經典連鎖，分店多，品質穩定）
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAcc(this)">仙台其他名產<span class="plus">+</span></div>
+          <div class="acc-body">• 仙台牛燒肉（推薦仔虎）<br>• 毛豆泥奶昔（Zunda Shake）<br>• 蒲鉾（烤魚板）</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 行李清單 (Luggage) -->
+    <section id="tab-luggage" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">🧳 必備行李與證件</h3>
+        <div class="check-item" onclick="toggleCheck(this, 'c1')">
+          <input type="checkbox" id="c1"> <span>護照 ＆ 日幣現金 ＆ 信用卡</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 'c2')">
+          <input type="checkbox" id="c2"> <span>Visit Japan Web 填寫 ＆ 入境 QR Code</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 'c3')">
+          <input type="checkbox" id="c3"> <span>雪地裝備（防滑雪靴、防潑水手套、護目雪鏡、保暖毛帽）</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 1. 自動計算倒數天數
+    const tripStartDate = new Date("2027-01-27T00:00:00");
+    const today = new Date();
+    const diffTime = tripStartDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("countdown").innerText = diffDays > 0 ? diffDays : 0;
+
+    // 2. 切換主標籤頁
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    // 3. 摺疊面板
+    function toggleAcc(header) {
+      header.parentElement.classList.toggle('open');
+    }
+
+    // 4. 打勾清單暫存
+    function toggleCheck(container, id) {
+      const chk = document.getElementById(id);
+      if (event.target !== chk) chk.checked = !chk.checked;
+      localStorage.setItem("travel_check_" + id, chk.checked);
+    }
+
+    // 5. 圖片封面上傳更換與讀取
+    function updateCover(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('hero-banner').style.backgroundImage = `linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.7) 100%), url('${e.target.result}')`;
+          localStorage.setItem('custom_cover_image', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // 6. 記帳邏輯與結算功能
+    let activePayee = 'li';
+    let bills = JSON.parse(localStorage.getItem('trip_bills_data')) || [];
+
+    function setPayee(payee) {
+      activePayee = payee;
+      document.getElementById('pay-opt-li').classList.toggle('active', payee === 'li');
+      document.getElementById('pay-opt-lin').classList.toggle('active', payee === 'lin');
+    }
+
+    function addBill() {
+      const name = document.getElementById('bill-name').value.trim() || '未命名開銷';
+      const twd = parseFloat(document.getElementById('bill-twd').value) || 0;
+      const jpy = parseFloat(document.getElementById('bill-jpy').value) || 0;
+
+      if (twd === 0 && jpy === 0) return alert('請輸入台幣或日幣金額！');
+
+      const bill = { id: Date.now(), payee: activePayee, name, twd, jpy };
+      bills.push(bill);
+      localStorage.setItem('trip_bills_data', JSON.stringify(bills));
+      
+      document.getElementById('bill-name').value = '';
+      document.getElementById('bill-twd').value = '0';
+      document.getElementById('bill-jpy').value = '0';
+      
+      renderBills();
+    }
+
+    function deleteBill(id) {
+      bills = bills.filter(b => b.id !== id);
+      localStorage.setItem('trip_bills_data', JSON.stringify(bills));
+      renderBills();
+    }
+
+    function renderBills() {
+      const list = document.getElementById('bill-list');
+      list.innerHTML = '';
+      
+      let totalLiTwd = 0, totalLiJpy = 0;
+      let totalLinTwd = 0, totalLinJpy = 0;
+
+      bills.forEach(b => {
+        const isLi = b.payee === 'li';
+        if (isLi) {
+          totalLiTwd += b.twd;
+          totalLiJpy += b.jpy;
+        } else {
+          totalLinTwd += b.twd;
+          totalLinJpy += b.jpy;
+        }
+
+        list.innerHTML += `
+          <div class="bill-item">
+            <div>
+              <span class="desc">${b.name}</span>
+              <span style="font-size:0.75rem; color:#64748b; margin-left:4px;">(${isLi?'李':'林'}墊)</span>
+            </div>
+            <div style="display:flex; align-items:center;">
+              <span class="amt">${b.twd > 0 ? 'NT$ ' + b.twd : ''} ${b.jpy > 0 ? ' ¥' + b.jpy : ''}</span>
+              <span class="del" onclick="deleteBill(${b.id})">✕</span>
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('li-pay').innerText = `NT$ ${totalLiTwd.toLocaleString()} ｜ ¥ ${totalLiJpy.toLocaleString()}`;
+      document.getElementById('lin-pay').innerText = `NT$ ${totalLinTwd.toLocaleString()} ｜ ¥ ${totalLinJpy.toLocaleString()}`;
+
+      // 人頭 4:3 拆帳與平帳計算 (李家4人, 林家3人，共7人)
+      const grandTotalTwd = totalLiTwd + totalLinTwd;
+      const grandTotalJpy = totalLiJpy + totalLinJpy;
+
+      const liShareTwd = (grandTotalTwd / 7) * 4;
+      const liShareJpy = (grandTotalJpy / 7) * 4;
+
+      const linShareTwd = (grandTotalTwd / 7) * 3;
+      const linShareJpy = (grandTotalJpy / 7) * 3;
+
+      // 找補金額（代墊大於應分攤代表要收錢，代墊小於應分攤代表要付錢）
+      const liBalanceTwd = totalLiTwd - liShareTwd;
+      const liBalanceJpy = totalLiJpy - liShareJpy;
+
+      let settleText = '無欠款';
+      if (liBalanceTwd > 0.5 || liBalanceJpy > 0.5) {
+        // 李家代墊多，林家要補給李家
+        settleText = `👉 林家需補貼李家: NT$ ${Math.round(liBalanceTwd).toLocaleString()} ${liBalanceJpy > 0 ? '＆ ¥' + Math.round(liBalanceJpy).toLocaleString() : ''}`;
+      } else if (liBalanceTwd < -0.5 || liBalanceJpy < -0.5) {
+        // 林家代墊多，李家要補給林家
+        settleText = `👉 李家需補貼林家: NT$ ${Math.round(Math.abs(liBalanceTwd)).toLocaleString()} ${liBalanceJpy < 0 ? '＆ ¥' + Math.round(Math.abs(liBalanceJpy)).toLocaleString() : ''}`;
+      }
+      
+      document.getElementById('settlement').innerText = settleText;
+    }
+
+    // 7. 每日行程切換數據 (可自由擴充各天詳細行程資訊)
+    const daySchedules = {
+      1: {
+        title: "Day 1 ‧ 人形町入住與老街探索",
+        subtitle: "1/27 (三) 東京人形町",
+        timeline: [
+          { time: "13:30", title: "抵達成田國際機場", desc: "辦理入境，搭乘京成 Access 特急（直通淺草線）前往市區。", map: "https://maps.google.com" },
+          { time: "16:30", title: "抵達東橫 INN 日本橋人形町", desc: "辦理入住，放置行程行李，周邊老街與傳統人形燒散策。" }
+        ]
+      },
+      2: {
+        title: "Day 2 ‧ 東京市區/淺草散策",
+        subtitle: "1/28 (四) 淺草、上野",
+        timeline: [
+          { time: "09:00", title: "淺草寺參拜", desc: "參觀雷門、逛仲見世通，體驗江戶下町風情。" },
+          { time: "13:00", title: "上野恩賜公園與阿美橫丁", desc: "藥妝、伴手禮採買，品嚐在地平價美食。" }
+        ]
+      },
+      3: {
+        title: "Day 3 ‧ 移防仙台與市區吃牛舌",
+        subtitle: "1/29 (五) 東京 ➔ 仙台",
+        timeline: [
+          { time: "10:00", title: "搭乘東北新幹線", desc: "從東京站/上野站出發前往仙台，車程約 1.5 小時。" },
+          { time: "12:00", title: "抵達東橫 INN 仙台站西口中央", desc: "寄放行李後在仙台站大啖厚切牛舌（如善治郎、利久等）。" }
+        ]
+      },
+      4: {
+        title: "Day 4 ‧ 松島一日遊",
+        subtitle: "1/30 (六) 宮城松島",
+        timeline: [
+          { time: "09:00", title: "搭乘 JR 仙石線前往松島海岸", desc: "日本三景之一，搭乘觀光船巡航松島灣、參觀五大堂與瑞嚴寺。" },
+          { time: "14:00", title: "品嚐烤牡蠣與魚板", desc: "在松島海岸老街享受新鮮海味、體驗親自烤魚板樂趣。" }
+        ]
+      },
+      5: {
+        title: "Day 5 ‧ 包車去狐狸村並直上藏王",
+        subtitle: "1/31 (日) 仙台 ➔ 狐狸村 ➔ 藏王溫泉",
+        timeline: [
+          { time: "09:00", title: "包車出發 (行李上車)", desc: "大行李免寄送，9人座專車直達宮城藏王狐狸村。" },
+          { time: "10:00", title: "宮城藏王狐狸村", desc: "雪地觀看上百隻毛茸茸狐狸、體驗抱狐狸，地面濕滑務必穿防滑雪靴。" },
+          { time: "13:00", title: "山形市區午餐（山形牛）", desc: "中途安排在白石或山形市區品嚐在地熱騰騰的特色午餐。" },
+          { time: "15:30", title: "抵達藏王溫泉 高見屋 (百年古湯)", desc: "入住百年高見屋旅館。放好行李後，直奔溫泉老街，租借接下來兩天的滑雪具（租2天，試穿雪靴），歸還前可寄存。" }
+        ]
+      },
+      6: {
+        title: "Day 6 ‧ 藏王上之台滑雪全日課",
+        subtitle: "2/1 (一) 藏王溫泉 (換飯店)",
+        timeline: [
+          { time: "08:30", title: "大行李轉移 ➔ 藏王國際", desc: "高見屋退房，大行李委託飯店運送/代轉至今晚要住的藏王國際大飯店。" },
+          { time: "09:00", title: "上之台滑雪場 ‧ 滑雪課", desc: "不滑雪的夥伴可單獨或結伴搭乘【藏王纜車（橫倉）】直登地藏山頂觀賞雪怪樹冰，山頂有景觀餐廳與暖氣休息室。" },
+          { time: "12:00", title: "午餐與自由練習", desc: "在上之台雪道旁的景觀餐廳或老街會合午餐。下午滑雪組繼續練習，觀光組可在溫泉街散步。" },
+          { time: "15:30", title: "入住藏王國際大飯店", desc: "飯店與橫倉雪道、樹冰纜車站相連。在大浴場享受強酸性硫磺溫泉，消除疲勞。" }
+        ]
+      },
+      7: {
+        title: "Day 7 ‧ 搶搭首批纜車看樹冰 ➔ 回仙台",
+        subtitle: "2/2 (二) 藏王溫泉 ➔ 仙台",
+        timeline: [
+          { time: "08:15", title: "早鳥排隊 ‧ 藏王觀光纜車", desc: "趁滑雪團與外來旅客尚未抵達（08:30營運），從飯店步行 1 分鐘至山麓站搭乘纜車登頂，看晨光下最壯觀的雪怪樹冰。" },
+          { time: "11:00", title: "辦理退房與歸還雪具", desc: "回飯店收拾行李並退房，至老街歸還雪具、吃午餐。" },
+          { time: "15:00", title: "搭直達高速巴士回仙台", desc: "在藏王巴士總站搭乘預約好的冬季巴士，行李放底層，約 85 分鐘直達仙台站東口。" },
+          { time: "16:45", title: "入住東橫 INN 仙台站西口中央", desc: "辦理入住，晚上可在西口拱廊商店街、藥妝店瘋狂採購、吃宵夜。" }
+        ]
+      },
+      8: {
+        title: "Day 8 ‧ 三井 Outlet 採買 ➔ 返台",
+        subtitle: "2/3 (三) 仙台 ➔ 機場 ➔ 溫暖的家",
+        timeline: [
+          { time: "09:30", title: "東橫 INN 退房與行李寄存", desc: "吃完早餐退房，大行李寄放前台，輕裝出發。" },
+          { time: "10:00", title: "JR 仙石線 ➔ 三井 Outlet 仙台港", desc: "搭電車至中野榮站，步行 8 分鐘到 Outlet。購物、採買伴手禮、在美食街午餐。" },
+          { time: "14:30", title: "回飯店取行李 ➔ 仙台機場", desc: "回東橫 INN 拿行李，搭乘仙台機場聯絡線鐵路（約 25 分鐘）抵達機場，搭乘傍晚航班返台。" }
+        ]
+      }
+    };
+
+    function filterDay(dayNum, chip) {
+      document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      
+      const sched = daySchedules[dayNum];
+      if (!sched) return;
+
+      const container = document.getElementById('day-content');
+      let timelineHtml = '';
+
+      sched.timeline.forEach((t, i) => {
+        timelineHtml += `
+          <div class="t-item">
+            <div class="t-dot">${i+1}</div>
+            <div class="t-time">${t.time}</div>
+            <div class="t-title">${t.title}</div>
+            <div class="t-desc">${t.desc}</div>
+            ${t.map ? `<a href="${t.map}" target="_blank" class="btn-map">開啟地圖</a>` : ''}
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <h3 class="card-title">Day ${dayNum} ‧ ${sched.title}</h3>
+        <p class="card-subtitle">${sched.subtitle}</p>
+        <div class="timeline">
+          ${timelineHtml}
+        </div>
+      `;
+    }
+
+    // 載入時還原狀態與讀取 Custom 封面
+    window.addEventListener('DOMContentLoaded', () => {
+      // 讀取暫存 Cover 圖片
+      const savedCover = localStorage.getItem('custom_cover_image');
+      if (savedCover) {
+        document.getElementById('hero-banner').style.backgroundImage = `linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.7) 100%), url('${savedCover}')`;
+      }
+      
+      // 還原打勾清單
+      ['c1','c2','c3'].forEach(id => {
+        const val = localStorage.getItem("travel_check_" + id);
+        if (val !== null) {
+          document.getElementById(id).checked = (val === 'true');
+        }
+      });
+
+      // 載入記帳資料
+      renderBills();
+    });
+  </script>
+</body>
+</html>
+  
