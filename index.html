@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>李＆林家 · 日本東北雪國歷險記 ❄️</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#0f172a',
+            iceBlue: '#e0f2fe',
+            snowPink: '#fdf2f8',
+            warmBeige: '#faf8f5',
+          },
+          borderRadius: {
+            '2xl': '18px',
+            '3xl': '26px'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* 隱藏滾動條但保持滑動順暢 */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* iOS 磨砂玻璃質感 */
+    .glass-box {
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+    .glass-card-subtle {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    /* 按鈕觸控微動效 */
+    .touch-btn:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+<body class="bg-[#f8f6f2] text-slate-800 antialiased min-h-screen pb-28 select-none font-sans">
+
+  <!-- ==========================================
+       1. 頂部視覺看板 (Hero Banner)
+       ========================================== -->
+  <header class="relative bg-slate-950 text-white rounded-b-[32px] overflow-hidden shadow-xl">
+    <!-- 背景插畫：以您提供的自拍圖為優先，若同資料夾無此圖則平滑過渡至高品質備用雪景圖 -->
+    <div id="hero-bg" class="absolute inset-0 bg-cover bg-center transition-all duration-500 scale-100"
+         style="background-image: url('藏王溫泉雪怪狐群自拍_2.png'), url('藏王溫泉雪怪狐群自拍.png'), url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1200&q=85');">
+    </div>
+    
+    <!-- 頂部漸層遮罩，保證文字與玻璃卡片易讀性 -->
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/40 to-black/30"></div>
+
+    <div class="relative px-5 pt-48 sm:pt-60 pb-6 max-w-lg mx-auto flex flex-col justify-end">
+      
+      <!-- 頂部小標籤與更換封面按鈕 -->
+      <div class="flex items-center justify-between mb-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/30 border border-sky-300/40 text-[10px] font-black text-sky-200 tracking-wider uppercase">
+          <span>🚠</span> ZAO · SENDAI · TOKYO
+        </span>
+        <label class="text-[10px] bg-white/20 hover:bg-white/30 text-white/90 px-2.5 py-1 rounded-full cursor-pointer flex items-center gap-1 transition backdrop-blur-md">
+          <span>📷 更換封面</span>
+          <input type="file" id="cover-uploader" accept="image/*" class="hidden" onchange="handleCoverUpload(event)">
+        </label>
+      </div>
+
+      <h1 class="text-2xl font-black tracking-tight text-white drop-shadow-md mb-1">
+        李＆林家 · 東北雪國歷險記 ❄️🇯🇵
+      </h1>
+      <p class="text-xs text-sky-100 font-medium drop-shadow-sm mb-1">
+        2027.01.27 — 02.03 ｜ 東京 · 仙台 · 藏王溫泉
+      </p>
+      <p class="text-[11px] text-pink-200 font-medium mb-4 drop-shadow-sm flex items-center gap-1">
+        <span>❤️</span> 李家4人 ＋ 林家3人 · 八天七夜溫馨同遊
+      </p>
+
+      <!-- 統計毛玻璃資訊卡 (出發天數 / 旅行天數 / 成員人數) -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="glass-box rounded-2xl p-2.5 text-center">
+          <div id="stat-countdown" class="text-2xl font-black text-white leading-tight">--</div>
+          <div class="text-[10px] text-sky-100 font-bold mt-0.5">距離出發天數</div>
+        </div>
+        <div class="glass-box rounded-2xl p-2.5 text-center">
+          <div class="text-2xl font-black text-white leading-tight">8</div>
+          <div class="text-[10px] text-sky-100 font-bold mt-0.5">旅行天數</div>
+        </div>
+        <div class="glass-box rounded-2xl p-2.5 text-center">
+          <div class="text-2xl font-black text-white leading-tight">7</div>
+          <div class="text-[10px] text-sky-100 font-bold mt-0.5">成員 (4大3小)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       2. 橫向滑動分頁選單 (Sticky Top Tabs)
+       ========================================== -->
+  <nav class="sticky top-0 z-40 bg-[#f8f6f2]/95 backdrop-blur-md border-b border-slate-200/80 px-3 py-2.5">
+    <div class="flex gap-2 overflow-x-auto no-scrollbar max-w-lg mx-auto">
+      <button onclick="switchTab('itinerary')" id="tab-btn-itinerary" class="tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-900 text-white shadow-sm flex items-center gap-1.5">
+        <span>📅</span> 每日行程
+      </button>
+      <button onclick="switchTab('expense')" id="tab-btn-expense" class="tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 hover:bg-slate-200/60 flex items-center gap-1.5">
+        <span>💰</span> 花費紀錄
+      </button>
+      <button onclick="switchTab('hotel')" id="tab-btn-hotel" class="tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 hover:bg-slate-200/60 flex items-center gap-1.5">
+        <span>✈️</span> 航班住宿
+      </button>
+      <button onclick="switchTab('transport')" id="tab-btn-transport" class="tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 hover:bg-slate-200/60 flex items-center gap-1.5">
+        <span>🚆</span> 交通攻略
+      </button>
+      <button onclick="switchTab('food')" id="tab-btn-food" class="tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 hover:bg-slate-200/60 flex items-center gap-1.5">
+        <span>🍜</span> 美食攻略
+      </button>
+      <button onclick="switchTab('luggage')" id="tab-btn-luggage" class="tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 hover:bg-slate-200/60 flex items-center gap-1.5">
+        <span>🧳</span> 行李清單
+      </button>
+      <button onclick="switchTab('info')" id="tab-btn-info" class="tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 hover:bg-slate-200/60 flex items-center gap-1.5">
+        <span>💡</span> 旅遊須知
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       3. 核心主視圖容器
+       ========================================== -->
+  <main class="max-w-lg mx-auto px-4 mt-4">
+
+    <!-- -----------------------------------------
+         [VIEW 1] 每日行程 (Itinerary Day 1 - Day 8)
+         ----------------------------------------- -->
+    <section id="view-itinerary" class="tab-view space-y-4">
+      <div>
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">每日行程規劃</h2>
+        <p class="text-xs text-slate-500">點擊天數標籤可查看當日動線 · 支援一鍵 Google 導航</p>
+      </div>
+
+      <!-- 天數滑動選擇晶片 (Day 1 - Day 8) -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1" id="day-chips-container">
+        <!-- JS 動態生成 Day 按鈕 -->
+      </div>
+
+      <!-- 當日行程時間軸卡片 -->
+      <div id="itinerary-details-card" class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100">
+        <!-- JS 動態插入時間軸 -->
+      </div>
+    </section>
+
+    <!-- -----------------------------------------
+         [VIEW 2] 花費紀錄 (雙幣別 ＆ 兩家代墊結算)
+         ----------------------------------------- -->
+    <section id="view-expense" class="tab-view hidden space-y-4">
+      <div>
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">花費紀錄與記帳</h2>
+        <p class="text-xs text-slate-500">紀錄兩家代墊金額 · 自動統計各自總花費與結算差額</p>
+      </div>
+
+      <!-- 幣別分頁切換 -->
+      <div class="flex bg-slate-200/70 p-1 rounded-2xl">
+        <button onclick="switchExpenseCurrency('TWD')" id="btn-curr-twd" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-900 shadow-sm">
+          💳 台幣預付 (NT$)
+        </button>
+        <button onclick="switchExpenseCurrency('JPY')" id="btn-curr-jpy" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all text-slate-600">
+          💴 現場日幣 (JPY ¥)
+        </button>
+      </div>
+
+      <!-- 新增花費表單 -->
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-3.5">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <span class="text-xs font-black text-slate-800 flex items-center gap-1.5" id="form-currency-indicator">
+            💳 新增項目（台幣預付）
+          </span>
+          <span class="text-[10px] text-slate-400">已啟用本機即時儲存</span>
+        </div>
+
+        <!-- 項目名稱 -->
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 mb-1">項目名稱</label>
+          <input type="text" id="expense-name" placeholder="例如：1/31 包車、高見屋住宿、滑雪教練"
+                 class="w-full text-xs px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-800">
+        </div>
+
+        <!-- 代墊人切換 (李家代墊 / 林家代墊) -->
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 mb-1">由誰先全額代墊？</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="selectPayer('lee')" id="payer-btn-lee"
+                    class="py-2.5 px-3 rounded-xl text-xs font-bold border-2 border-indigo-600 bg-indigo-50 text-indigo-700 flex items-center justify-center gap-1.5 transition">
+              <span>👨‍👩‍👦‍👦</span> 李家代墊 (4人)
+            </button>
+            <button type="button" onclick="selectPayer('lin')" id="payer-btn-lin"
+                    class="py-2.5 px-3 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-600 flex items-center justify-center gap-1.5 transition">
+              <span>👨‍👩‍👧</span> 林家代墊 (3人)
+            </button>
+          </div>
+        </div>
+
+        <!-- 費用分攤輸入區 (含 4:3 依人數拆帳捷徑) -->
+        <div class="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100 space-y-2.5">
+          <div class="flex justify-between items-center">
+            <label class="text-[10px] font-bold text-slate-600">各自應負擔之金額</label>
+            <button type="button" onclick="quickSplitRatio()" class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 font-bold transition">
+              ⚡ 依人數 4:3 自動計算
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <span class="block text-[10px] font-bold text-indigo-700 mb-1">李家應負擔 (4人份)</span>
+              <input type="number" id="expense-amt-lee" placeholder="金額 0" oninput="updateFormTotalPreview()"
+                     class="w-full text-xs px-3 py-2.5 rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-600 font-bold text-slate-800">
+            </div>
+            <div>
+              <span class="block text-[10px] font-bold text-emerald-700 mb-1">林家應負擔 (3人份)</span>
+              <input type="number" id="expense-amt-lin" placeholder="金額 0" oninput="updateFormTotalPreview()"
+                     class="w-full text-xs px-3 py-2.5 rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 font-bold text-slate-800">
+            </div>
+          </div>
+          <div class="text-[10px] text-right text-slate-400 font-medium" id="form-total-preview">
+            此筆代墊總額：0
+          </div>
+        </div>
+
+        <!-- 備註與送出 -->
+        <div class="flex gap-2">
+          <input type="text" id="expense-note" placeholder="付款方式 / 備註 (如：刷海外卡、現場付現)"
+                 class="flex-1 text-xs px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-800">
+          <button onclick="addExpenseItem()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-2.5 rounded-xl touch-btn shadow-md whitespace-nowrap">
+            ＋ 新增
+          </button>
+        </div>
+      </div>
+
+      <!-- 統計面板 1：李家總費用 vs 林家總費用 -->
+      <div class="space-y-1.5">
+        <div class="text-[11px] font-black text-slate-600 px-1">📊 兩家總花費統計（應負擔額）</div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div class="bg-white rounded-2xl p-4 border border-indigo-100 shadow-sm relative overflow-hidden">
+            <div class="text-[11px] font-bold text-indigo-700 mb-1 flex items-center gap-1">
+              <span>👨‍👩‍👦‍👦</span> 李家總費用 (4人)
+            </div>
+            <div class="text-lg font-black text-slate-900" id="total-val-lee">NT$ 0</div>
+            <div class="text-[10px] text-slate-400 mt-1" id="paid-out-lee">李家已代墊: NT$ 0</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm relative overflow-hidden">
+            <div class="text-[11px] font-bold text-emerald-700 mb-1 flex items-center gap-1">
+              <span>👨‍👩‍👧</span> 林家總費用 (3人)
+            </div>
+            <div class="text-lg font-black text-slate-900" id="total-val-lin">NT$ 0</div>
+            <div class="text-[10px] text-slate-400 mt-1" id="paid-out-lin">林家已代墊: NT$ 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 統計面板 2：智慧拆帳結算試算卡 (誰該補貼給誰) -->
+      <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 shadow-sm">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-xs font-black text-amber-950 flex items-center gap-1">
+            <span>⚖️</span> 代墊結算試算（多退少補）
+          </span>
+          <span class="text-[10px] bg-amber-200/80 text-amber-900 font-bold px-2 py-0.5 rounded-full">自動平帳</span>
+        </div>
+        <div class="text-sm font-extrabold text-amber-950 mt-1" id="settlement-result-text">
+          計算中...
+        </div>
+        <div class="text-[10px] text-amber-800/80 mt-1 leading-relaxed">
+          邏輯：【李家已代墊總額】－【李家應負擔總額】＝ 差額結清。
+        </div>
+      </div>
+
+      <!-- 全體總支出合計卡 -->
+      <div class="bg-rose-50 border border-rose-100 rounded-2xl p-3.5 flex justify-between items-center shadow-sm">
+        <div>
+          <span class="text-xs font-bold text-rose-800 block" id="stat-grand-title">全體總費用合計</span>
+          <span class="text-[10px] text-rose-600">7人兩家整體累計支出</span>
+        </div>
+        <div class="text-xl font-black text-rose-600" id="grand-total-val">NT$ 0</div>
+      </div>
+
+      <!-- 明細列表 -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center px-1 pt-1">
+          <h3 class="text-xs font-extrabold text-slate-700">已紀錄明細清單</h3>
+          <button onclick="clearCurrentExpenses()" class="text-[11px] text-slate-400 hover:text-rose-500 underline">
+            清空當前分類
+          </button>
+        </div>
+
+        <div id="expense-items-list" class="space-y-2">
+          <!-- JS 動態插入清單卡片 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------
+         [VIEW 3] 航班住宿 (Flight & Hotels)
+         ----------------------------------------- -->
+    <section id="view-hotel" class="tab-view hidden space-y-3.5">
+      <div>
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">航班與住宿資訊</h2>
+        <p class="text-xs text-slate-500">機票時段與 3 大飯店導航整合</p>
+      </div>
+
+      <!-- 航班卡片 -->
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-600">去程班機 · 直飛</span>
+          <span class="text-xs font-bold text-slate-400">01/27 (三)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xl font-black text-slate-900">TPE</div>
+            <div class="text-[11px] text-slate-500">台北桃園 09:15</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-[10px] text-slate-400 mb-0.5">約 3 小時 15 分</span>
+            <div class="w-20 h-0.5 bg-slate-200 relative flex items-center justify-center">
+              <span class="text-xs absolute">✈️</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-xl font-black text-slate-900">NRT</div>
+            <div class="text-[11px] text-slate-500">成田機場 13:30</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 飯店 1: 東橫INN 仙台站西口中央 -->
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-2">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="font-extrabold text-sm text-slate-900">東橫INN 仙台站西口中央</h3>
+            <p class="text-xs text-slate-500 mt-0.5">仙台站西口步行約 5 分鐘 · 緊鄰拱廊商店街</p>
+          </div>
+          <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded">市區大本營</span>
+        </div>
+        <div class="text-xs text-slate-600 pt-1 space-y-1">
+          <div><strong class="text-slate-800">入住日期：</strong>1/29–1/31 (2晚) ＆ 2/2–2/3 (1晚)</div>
+          <div><strong class="text-slate-800">重要備註：</strong>1/31 可請飯店櫃檯代寄大行李至 2/2</div>
+        </div>
+        <div class="pt-2">
+          <a href="https://maps.google.com/?q=Toyoko+Inn+Sendai-eki+Nishi-guchi+Chuo" target="_blank"
+             class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-900 text-white rounded-xl text-xs font-bold touch-btn">
+            📍 Google 地圖導航
+          </a>
+        </div>
+      </div>
+
+      <!-- 飯店 2: 深山莊 高見屋 -->
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-2">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="font-extrabold text-sm text-slate-900">藏王 深山莊高見屋</h3>
+            <p class="text-xs text-slate-500 mt-0.5">老街最高處 · 步行 3 分鐘直接到達上之台雪道</p>
+          </div>
+          <span class="text-[10px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded">名湯木造古湯</span>
+        </div>
+        <div class="text-xs text-slate-600 pt-1 space-y-1">
+          <div><strong class="text-slate-800">入住日期：</strong>1/31 – 2/1 (1晚)</div>
+          <div><strong class="text-slate-800">優點：</strong>傍晚先租好雪具，隔天退房後行李直接轉運至藏王國際</div>
+        </div>
+      </div>
+
+      <!-- 飯店 3: 藏王國際大飯店 -->
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-2">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="font-extrabold text-sm text-slate-900">藏王國際大飯店</h3>
+            <p class="text-xs text-slate-500 mt-0.5">直通橫倉雪道 · 步行 1 分鐘到藏王索道纜車站</p>
+          </div>
+          <span class="text-[10px] bg-cyan-50 text-cyan-700 font-bold px-2 py-0.5 rounded">樹冰纜車站旁</span>
+        </div>
+        <div class="text-xs text-slate-600 pt-1 space-y-1">
+          <div><strong class="text-slate-800">入住日期：</strong>2/1 – 2/2 (1晚)</div>
+          <div><strong class="text-slate-800">亮點：</strong>2/2 早餐後 8:15 走過橋直接搶排第一批登頂看樹冰！</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------
+         [VIEW 4] 交通攻略 (Transport Tips)
+         ----------------------------------------- -->
+    <section id="view-transport" class="tab-view hidden space-y-3.5">
+      <div>
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">交通與轉乘攻略</h2>
+        <p class="text-xs text-slate-500">旅途中最關鍵的車種識別與包車流程</p>
+      </div>
+
+      <!-- 月台車種直觀判斷 -->
+      <div class="bg-amber-50/90 border border-amber-200 rounded-3xl p-5">
+        <div class="flex items-center gap-2 mb-2 font-black text-sm text-amber-950">
+          <span>🚆</span> 月台上的電車到底能不能搭？
+        </div>
+        <p class="text-xs text-amber-900/80 mb-3">看到以下字樣，全家可直接刷 Suica / ICOCA 感應進站：</p>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="px-2.5 py-1 bg-white rounded-lg text-[11px] font-bold text-emerald-700 border border-emerald-200">✅ 普通 (Local)</span>
+          <span class="px-2.5 py-1 bg-white rounded-lg text-[11px] font-bold text-emerald-700 border border-emerald-200">✅ 快速 (Rapid)</span>
+          <span class="px-2.5 py-1 bg-white rounded-lg text-[11px] font-bold text-emerald-700 border border-emerald-200">✅ 區間快速</span>
+        </div>
+        <div class="bg-white/95 p-3 rounded-2xl border border-amber-200 text-xs text-slate-700 leading-relaxed">
+          <strong>⚠️ 看到「特急 (Limited Express) / 新幹線」時：</strong><br>
+          JR 東北新幹線（Hayabusa / Yamabiko）採<strong>全車對號指定席</strong>，必須持有指定席車票或 JR PASS 劃位 QR Code，不能刷交通 IC 卡直接上車。
+        </div>
+      </div>
+
+      <!-- 摺疊卡片 -->
+      <div class="space-y-2">
+        <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden">
+          <button onclick="toggleCollapse(this)" class="w-full px-4 py-3 text-left font-bold text-xs flex justify-between items-center text-slate-800">
+            <span>🚐 1/31 包車 (仙台 ➔ 狐狸村 ➔ 藏王溫泉)</span>
+            <span class="text-rose-500 font-bold text-base transition-transform">+</span>
+          </button>
+          <div class="hidden px-4 pb-3 pt-1 text-xs text-slate-600 border-t border-slate-100 bg-slate-50/50 leading-relaxed">
+            • <strong>優點：</strong>不用在冰天雪地轉乘 4 次車，7 人與所有行李專車點對點直送。<br>
+            • <strong>流程：</strong>早上 08:30 司機於東橫INN西口門口接送，直達狐狸村（玩 2 小時），午後直送深山莊高見屋門口。
+          </div>
+        </div>
+
+        <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden">
+          <button onclick="toggleCollapse(this)" class="w-full px-4 py-3 text-left font-bold text-xs flex justify-between items-center text-slate-800">
+            <span>🚌 2/2 藏王溫泉 ➔ 仙台站 直達冬季高速巴士</span>
+            <span class="text-rose-500 font-bold text-base transition-transform">+</span>
+          </button>
+          <div class="hidden px-4 pb-3 pt-1 text-xs text-slate-600 border-t border-slate-100 bg-slate-50/50 leading-relaxed">
+            • <strong>乘車地點：</strong>藏王溫泉巴士總站。<br>
+            • <strong>下車地點：</strong>JR 仙台站東口 76 號月台（約 85 分鐘直達免轉車）。<br>
+            • <strong>提醒：</strong>全車座位預約制，需提前 1 個月至發車歐來網或 Japan Bus Online 預約。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------
+         [VIEW 5] 美食攻略 (Food Guide)
+         ----------------------------------------- -->
+    <section id="view-food" class="tab-view hidden space-y-3.5">
+      <div>
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">必吃美食攻略</h2>
+        <p class="text-xs text-slate-500">仙台、松島、藏王在地嚴選推薦</p>
+      </div>
+
+      <div class="space-y-2.5">
+        <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden">
+          <button onclick="toggleCollapse(this)" class="w-full px-4 py-3.5 text-left font-bold text-xs flex justify-between items-center text-slate-800">
+            <span>🥩 仙台炭烤牛舌名店</span>
+            <span class="text-rose-500 font-bold text-base">+</span>
+          </button>
+          <div class="hidden px-4 pb-3 pt-1 text-xs text-slate-600 border-t border-slate-100 bg-slate-50/50 leading-relaxed">
+            • <strong>牛舌料理 閣（Kaku）</strong>：米其林推薦，招牌厚切炭烤牛舌、微炙牛舌生牛肉。<br>
+            • <strong>善治郎</strong>：鹽烤極厚切牛舌定食，附牛尾湯、麥飯與山藥泥。<br>
+            • <strong>司（Tsukasa）</strong>：熟成炭烤，口感脆嫩多汁。
+          </div>
+        </div>
+
+        <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden">
+          <button onclick="toggleCollapse(this)" class="w-full px-4 py-3.5 text-left font-bold text-xs flex justify-between items-center text-slate-800">
+            <span>🍲 藏王溫泉必吃特色</span>
+            <span class="text-rose-500 font-bold text-base">+</span>
+          </button>
+          <div class="hidden px-4 pb-3 pt-1 text-xs text-slate-600 border-t border-slate-100 bg-slate-50/50 leading-relaxed">
+            • <strong>成吉思汗烤羊肉</strong>：藏王溫泉為發源地之一，特製圓形鐵盤烤肉香氣十足。<br>
+            • <strong>稻花餅（いがもち）</strong>：老街手工竹葉紅豆麻糬，每日限量售完為止。<br>
+            • <strong>山形牛壽喜燒</strong>：溫泉旅館會席料理的壓軸美味。
+          </div>
+        </div>
+
+        <div class="border border-slate-200 bg-white rounded-2xl overflow-hidden">
+          <button onclick="toggleCollapse(this)" class="w-full px-4 py-3.5 text-left font-bold text-xs flex justify-between items-center text-slate-800">
+            <span>🦪 松島海岸現烤牡蠣</span>
+            <span class="text-rose-500 font-bold text-base">+</span>
+          </button>
+          <div class="hidden px-4 pb-3 pt-1 text-xs text-slate-600 border-t border-slate-100 bg-slate-50/50 leading-relaxed">
+            • <strong>松島魚市場</strong>：冬季牡蠣正肥美，老街隨處有現烤生蠔與牡蠣漢堡。<br>
+            • <strong>手烤竹葉魚板</strong>：松島蒲鉾本舖可親手在炭爐上翻烤魚板。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------
+         [VIEW 6] 行李清單 (Checklist)
+         ----------------------------------------- -->
+    <section id="view-luggage" class="tab-view hidden space-y-3.5">
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="text-xl font-black text-slate-900 tracking-tight">行李打包清單</h2>
+          <p class="text-xs text-slate-500">打勾進度會自動儲存在本機</p>
+        </div>
+        <button onclick="clearAllChecks()" class="text-xs text-rose-500 font-bold px-2.5 py-1 rounded-xl bg-rose-50 touch-btn">
+          全部取消
+        </button>
+      </div>
+
+      <div class="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm space-y-2.5">
+        <h3 class="font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">重要證件與支付</h3>
+        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 cursor-pointer">
+          <input type="checkbox" data-chk="passports" class="chk-box w-5 h-5 rounded-lg text-slate-900 accent-slate-900">
+          <span class="text-xs font-bold text-slate-700">7人護照正本（效期 6 個月以上）</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 cursor-pointer">
+          <input type="checkbox" data-chk="vjw" class="chk-box w-5 h-5 rounded-lg text-slate-900 accent-slate-900">
+          <span class="text-xs font-bold text-slate-700">Visit Japan Web 申報 QR Code 截圖</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 cursor-pointer">
+          <input type="checkbox" data-chk="cards" class="chk-box w-5 h-5 rounded-lg text-slate-900 accent-slate-900">
+          <span class="text-xs font-bold text-slate-700">日幣現金 ＆ 雙幣/高回饋信用卡</span>
+        </label>
+      </div>
+
+      <div class="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm space-y-2.5">
+        <h3 class="font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">雪地禦寒裝備</h3>
+        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 cursor-pointer">
+          <input type="checkbox" data-chk="boots" class="chk-box w-5 h-5 rounded-lg text-slate-900 accent-slate-900">
+          <span class="text-xs font-bold text-slate-700">防滑保暖雪靴 ＆ 羊毛加厚襪子</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 cursor-pointer">
+          <input type="checkbox" data-chk="gloves" class="chk-box w-5 h-5 rounded-lg text-slate-900 accent-slate-900">
+          <span class="text-xs font-bold text-slate-700">防水滑雪手套 ＆ 保暖耳罩毛帽</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 rounded-2xl border border-slate-100 bg-slate-50/50 cursor-pointer">
+          <input type="checkbox" data-chk="goggles" class="chk-box w-5 h-5 rounded-lg text-slate-900 accent-slate-900">
+          <span class="text-xs font-bold text-slate-700">防風抗 UV 雪鏡或深色太陽眼鏡</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------
+         [VIEW 7] 旅遊須知 (Emergency & Tips)
+         ----------------------------------------- -->
+    <section id="view-info" class="tab-view hidden space-y-3.5">
+      <div>
+        <h2 class="text-xl font-black text-slate-900 tracking-tight">旅遊實用須知</h2>
+        <p class="text-xs text-slate-500">緊急聯繫電話與日本日常常識</p>
+      </div>
+
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-3">
+        <h3 class="font-bold text-xs text-slate-900 flex items-center gap-1.5">
+          <span>🚨</span> 日本緊急報警與救護
+        </h3>
+        <div class="flex justify-between items-center py-2 border-b border-slate-100 text-xs">
+          <span class="text-slate-600">報警電話 (Police)</span>
+          <span class="font-black text-slate-900 text-sm">110</span>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b border-slate-100 text-xs">
+          <span class="text-slate-600">消防 / 救護車 (Ambulance)</span>
+          <span class="font-black text-slate-900 text-sm">119</span>
+        </div>
+        <div class="flex justify-between items-center py-2 text-xs">
+          <span class="text-slate-600">台北駐日經濟文化代表處</span>
+          <span class="font-black text-slate-900 text-xs">+81-3-3280-7811</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-2">
+        <h3 class="font-bold text-xs text-slate-900 flex items-center gap-1.5">
+          <span>⚡</span> 電壓與時差
+        </h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          • <strong>時差：</strong>日本時間比台灣<strong>快 1 小時</strong>。<br>
+          • <strong>電壓：</strong>日本電壓為 100V，雙孔扁型插座，台灣的手機、平板、相機充電器均可直接使用。
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       4. JavaScript 業務邏輯與本地儲存
+       ========================================== -->
+  <script>
+    /* ========================================================
+       1. 8 天完整行程結構 (含導航與細部時間節奏)
+       ======================================================== */
+    const itineraryData = [
+      {
+        day: 1, date: "1/27 (三)", title: "抵達成田機場 · 入住東京人形町",
+        items: [
+          { time: "13:30", title: "抵達成田國際機場 (NRT)", desc: "入境通關、領取行李，搭乘京成 Access 特急（直通都營淺草線）。", map: "成田國際機場" },
+          { time: "16:00", title: "東橫INN 東京日本橋人形町", desc: "辦理入住放行李，漫步老街品嚐熱呼呼的人形燒與拉麵。", map: "人形町" }
+        ]
+      },
+      {
+        day: 2, date: "1/28 (四)", title: "東京經典漫步 · 晴空塔美景",
+        items: [
+          { time: "09:30", title: "淺草寺雷門散策", desc: "漫步仲見世通商店街，眺望隅田川水岸風光。", map: "淺草寺" },
+          { time: "14:30", title: "東京晴空塔 (Skytree)", desc: "登展望台俯瞰東京全景，商場採買雪地隨身配件。", map: "東京晴空塔" }
+        ]
+      },
+      {
+        day: 3, date: "1/29 (五)", title: "搭新幹線直奔仙台 · 仙台朝市",
+        items: [
+          { time: "10:00", title: "上野搭乘東北新幹線", desc: "搭乘 Hayabusa 號約 90 分鐘直達宮城仙台車站。", map: "上野站" },
+          { time: "12:30", title: "東橫INN 仙台站西口中央寄放行李", desc: "飯店離西口僅 5 分鐘，先卸下大行李並享用午餐。", map: "Toyoko Inn Sendai-eki Nishi-guchi Chuo" },
+          { time: "14:00", title: "仙台朝市與商店街漫策", desc: "品嚐毛豆泥奶昔、炭火烤牛舌名店「閣」或「善治郎」。", map: "仙台朝市" }
+        ]
+      },
+      {
+        day: 4, date: "1/30 (六)", title: "日本三景松島海岸 · 冬季烤生蠔",
+        items: [
+          { time: "09:30", title: "搭仙石線至松島海岸", desc: "車程約 35 分鐘，遊覽五大堂與朱紅色的福浦橋跨海大橋。", map: "松島海岸站" },
+          { time: "12:00", title: "松島魚市場海鮮饗宴", desc: "品嚐炭烤牡蠣、新鮮海鮮丼，體驗手烤竹葉魚板。", map: "松島魚市場" },
+          { time: "16:00", title: "返回仙台商店街採買", desc: "Clis Road 拱廊商店街免稅藥妝掃貨。", map: "CLIS ROAD" }
+        ]
+      },
+      {
+        day: 5, date: "1/31 (日)", title: "9人座包車 ➔ 狐狸村 ➔ 藏王高見屋",
+        items: [
+          { time: "08:30", title: "東橫INN西口門口包車出發", desc: "大行李箱寄往2/2飯店，專車直達狐狸村，行李全程跟車免轉乘！", map: "Toyoko Inn Sendai-eki Nishi-guchi Chuo" },
+          { time: "10:00", title: "宮城藏王狐狸村", desc: "雪地欣賞可愛狐狸群，參加抱狐狸拍照體驗。", map: "宮城藏王狐狸村" },
+          { time: "15:30", title: "入住深山莊高見屋 ＆ 試租雪具", desc: "抵達藏王溫泉老街，傍晚先試穿租好 2 天雪具，晚上泡古湯！", map: "深山莊高見屋" }
+        ]
+      },
+      {
+        day: 6, date: "2/1 (一)", title: "上之台滑雪課程 ➔ 移防藏王國際大飯店",
+        items: [
+          { time: "08:30", title: "退房 ＆ 行李轉送藏王國際大飯店", desc: "行李交由飯店轉運，全家輕裝穿戴雪具步行 3 分鐘到上之台。", map: "深山莊高見屋" },
+          { time: "09:00", title: "上之台滑雪場教練課程", desc: "初學者友善緩坡，由教練指導安全穿板、剎車與轉彎。", map: "上之台滑雪場" },
+          { time: "15:30", title: "入住藏王國際大飯店", desc: "直通橫倉雪道，晚餐後可至門口纜車站看樹冰夜間點燈！", map: "藏王國際大飯店" }
+        ]
+      },
+      {
+        day: 7, date: "2/2 (二)", title: "清晨搭纜車看樹冰 ➔ 直達高速巴士回仙台",
+        items: [
+          { time: "08:15", title: "藏王纜車第一批登頂看樹冰", desc: "飯店步行 1 分鐘到山麓站，搶在人潮前登頂敲鐘、與樹冰合照。", map: "藏王索道" },
+          { time: "11:30", title: "歸還雪具 ＆ 溫泉街午餐", desc: "老街吃熱拉麵或成吉思汗烤羊肉，退房準備下山。", map: "藏王溫泉巴士總站" },
+          { time: "15:00", title: "搭乘直達冬季高速巴士回仙台", desc: "巴士直達仙台站東口，回東橫INN西口入住並享用牛舌晚餐。", map: "仙台車站" }
+        ]
+      },
+      {
+        day: 8, date: "2/3 (三)", title: "三井 Outlet 仙台港採買 ➔ 搭機返程",
+        items: [
+          { time: "09:30", title: "東橫INN退房寄放行李", desc: "搭仙石線至中野榮站，轉公車/步行至三井 Outlet 仙台港逛街採買。", map: "三井 OUTLET PARK 仙台港" },
+          { time: "14:30", title: "返回仙台車站取行李", desc: "搭乘新幹線南下前往機場，帶著滿滿戰利品踏上返家路。", map: "仙台車站" }
+        ]
+      }
+    ];
+
+    let currentSelectedDay = 1;
+
+    function renderDayChips() {
+      const container = document.getElementById('day-chips-container');
+      container.innerHTML = itineraryData.map(d => `
+        <button onclick="selectDay(${d.day})" id="day-chip-${d.day}"
+          class="flex-shrink-0 px-3.5 py-2 rounded-2xl border text-center transition-all ${
+            d.day === currentSelectedDay 
+              ? 'bg-rose-50 border-rose-500 text-rose-600 font-bold shadow-sm' 
+              : 'bg-white border-slate-200 text-slate-600'
+          }">
+          <div class="text-[11px] leading-tight">Day ${d.day}</div>
+          <div class="text-[10px] opacity-80">${d.date.split(' ')[0]}</div>
+        </button>
+      `).join('');
+    }
+
+    function renderDaySchedule(dayNum) {
+      currentSelectedDay = dayNum;
+      renderDayChips();
+      const d = itineraryData.find(item => item.day === dayNum);
+      const card = document.getElementById('itinerary-details-card');
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+          <div>
+            <span class="text-[10px] font-black text-rose-500 tracking-wider uppercase">DAY ${d.day} · ${d.date}</span>
+            <h3 class="text-base font-black text-slate-900 mt-0.5">${d.title}</h3>
+          </div>
+        </div>
+        <div class="relative pl-6 space-y-5 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-100">
+          ${d.items.map((item, idx) => `
+            <div class="relative">
+              <div class="absolute -left-6 top-0 w-5 h-5 rounded-full bg-white border-2 border-rose-500 text-rose-600 text-[10px] font-black flex items-center justify-center">
+                ${idx + 1}
+              </div>
+              <div class="text-xs font-bold text-rose-500">${item.time}</div>
+              <div class="text-sm font-extrabold text-slate-800 mt-0.5">${item.title}</div>
+              <div class="text-xs text-slate-500 mt-1 leading-relaxed">${item.desc}</div>
+              <div class="mt-2">
+                <a href="https://maps.google.com/?q=${encodeURIComponent(item.map)}" target="_blank"
+                   class="inline-block px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[11px] font-semibold">
+                  📍 開啟地圖導航
+                </a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function selectDay(num) {
+      renderDaySchedule(num);
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-nav-btn').forEach(el => {
+        el.className = "tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all text-slate-600 hover:bg-slate-200/60 flex items-center gap-1.5";
+      });
+
+      const activeView = document.getElementById(`view-${tabName}`);
+      const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+      if (activeView) activeView.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.className = "tab-nav-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-900 text-white shadow-sm flex items-center gap-1.5";
+      }
+      window.scrollTo({ top: 220, behavior: 'smooth' });
+    }
+
+    /* ========================================================
+       2. 花費紀錄（記帳系統） - 李家/林家代墊與智慧平帳結算
+       ======================================================== */
+    let currentExpenseCurrency = 'TWD';
+    let currentSelectedPayer = 'lee'; // 'lee' or 'lin'
+
+    const initialExpenses = {
+      TWD: [
+        { id: 1, name: "1/31 包車 (仙台➔狐狸村➔藏王)", payer: "lee", amtLee: 8000, amtLin: 6000, note: "包車平台訂購 / 李家刷卡", date: "01/31" },
+        { id: 2, name: "2/1 藏王滑雪私人教練課訂金", payer: "lin", amtLee: 5500, amtLin: 4000, note: "中文滑雪學校 / 林家匯款", date: "02/01" }
+      ],
+      JPY: [
+        { id: 3, name: "宮城藏王狐狸村門票 (7人)", payer: "lee", amtLee: 4000, amtLin: 3000, note: "售票窗口現場買票", date: "01/31" },
+        { id: 4, name: "藏王纜車樹冰往復乘車券 (7人)", payer: "lin", amtLee: 14000, amtLin: 10500, note: "山麓站現場買票", date: "02/02" }
+      ]
+    };
+
+    function selectPayer(payer) {
+      currentSelectedPayer = payer;
+      const btnLee = document.getElementById('payer-btn-lee');
+      const btnLin = document.getElementById('payer-btn-lin');
+
+      if (payer === 'lee') {
+        btnLee.className = "py-2.5 px-3 rounded-xl text-xs font-bold border-2 border-indigo-600 bg-indigo-50 text-indigo-700 flex items-center justify-center gap-1.5 transition";
+        btnLin.className = "py-2.5 px-3 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-600 flex items-center justify-center gap-1.5 transition";
+      } else {
+        btnLin.className = "py-2.5 px-3 rounded-xl text-xs font-bold border-2 border-emerald-600 bg-emerald-50 text-emerald-700 flex items-center justify-center gap-1.5 transition";
+        btnLee.className = "py-2.5 px-3 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-600 flex items-center justify-center gap-1.5 transition";
+      }
+    }
+
+    function quickSplitRatio() {
+      const totalPrompt = prompt("請輸入此筆花費總金額（將自動按 李家4人 : 林家3人 比例拆分）：");
+      if (!totalPrompt) return;
+      const total = parseFloat(totalPrompt);
+      if (isNaN(total) || total <= 0) return;
+
+      const shareLee = Math.round((total * 4) / 7);
+      const shareLin = total - shareLee;
+      document.getElementById('expense-amt-lee').value = shareLee;
+      document.getElementById('expense-amt-lin').value = shareLin;
+      updateFormTotalPreview();
+    }
+
+    function updateFormTotalPreview() {
+      const amtLee = parseFloat(document.getElementById('expense-amt-lee').value) || 0;
+      const amtLin = parseFloat(document.getElementById('expense-amt-lin').value) || 0;
+      const prefix = currentExpenseCurrency === 'TWD' ? 'NT$ ' : '¥ ';
+      document.getElementById('form-total-preview').innerText = 
+        `此筆代墊總額：${prefix}${(amtLee + amtLin).toLocaleString()}`;
+    }
+
+    function loadExpenses() {
+      const saved = localStorage.getItem('trip_expenses_store_v3');
+      return saved ? JSON.parse(saved) : initialExpenses;
+    }
+
+    function saveExpenses(data) {
+      localStorage.setItem('trip_expenses_store_v3', JSON.stringify(data));
+    }
+
+    function switchExpenseCurrency(curr) {
+      currentExpenseCurrency = curr;
+      const btnTwd = document.getElementById('btn-curr-twd');
+      const btnJpy = document.getElementById('btn-curr-jpy');
+      const indicator = document.getElementById('form-currency-indicator');
+
+      if (curr === 'TWD') {
+        btnTwd.className = "flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-900 shadow-sm";
+        btnJpy.className = "flex-1 py-2 rounded-xl text-xs font-bold transition-all text-slate-600";
+        indicator.innerText = "💳 新增款項（台幣預付 NT$）";
+        document.getElementById('stat-grand-title').innerText = "台幣預付總金額";
+      } else {
+        btnJpy.className = "flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-900 shadow-sm";
+        btnTwd.className = "flex-1 py-2 rounded-xl text-xs font-bold transition-all text-slate-600";
+        indicator.innerText = "💴 新增款項（日本現場 JPY ¥）";
+        document.getElementById('stat-grand-title').innerText = "現場日幣花費總額";
+      }
+      updateFormTotalPreview();
+      renderExpenseList();
+    }
+
+    function addExpenseItem() {
+      const nameInput = document.getElementById('expense-name');
+      const amtLeeInput = document.getElementById('expense-amt-lee');
+      const amtLinInput = document.getElementById('expense-amt-lin');
+      const noteInput = document.getElementById('expense-note');
+
+      const name = nameInput.value.trim();
+      const amtLee = parseFloat(amtLeeInput.value) || 0;
+      const amtLin = parseFloat(amtLinInput.value) || 0;
+      const note = noteInput.value.trim();
+
+      if (!name) return;
+      if (amtLee === 0 && amtLin === 0) return;
+
+      const store = loadExpenses();
+      const newItem = {
+        id: Date.now(),
+        name,
+        payer: currentSelectedPayer,
+        amtLee,
+        amtLin,
+        note: note || (currentSelectedPayer === 'lee' ? '李家代墊' : '林家代墊'),
+        date: new Date().toLocaleDateString('zh-TW', { month: '2-digit', day: '2-digit' })
+      };
+
+      store[currentExpenseCurrency].unshift(newItem);
+      saveExpenses(store);
+
+      nameInput.value = '';
+      amtLeeInput.value = '';
+      amtLinInput.value = '';
+      noteInput.value = '';
+      updateFormTotalPreview();
+
+      renderExpenseList();
+    }
+
+    function deleteExpenseItem(id) {
+      const store = loadExpenses();
+      store[currentExpenseCurrency] = store[currentExpenseCurrency].filter(item => item.id !== id);
+      saveExpenses(store);
+      renderExpenseList();
+    }
+
+    function clearCurrentExpenses() {
+      const store = loadExpenses();
+      store[currentExpenseCurrency] = [];
+      saveExpenses(store);
+      renderExpenseList();
+    }
+
+    function renderExpenseList() {
+      const store = loadExpenses();
+      const list = store[currentExpenseCurrency] || [];
+      const prefix = currentExpenseCurrency === 'TWD' ? 'NT$ ' : '¥ ';
+
+      let totalExpenseLee = 0; // 李家總應負擔
+      let totalExpenseLin = 0; // 林家總應負擔
+      let totalPaidByLee = 0;   // 李家代墊付出
+      let totalPaidByLin = 0;   // 林家代墊付出
+
+      list.forEach(i => {
+        const feeLee = i.amtLee || 0;
+        const feeLin = i.amtLin || 0;
+        const totalThis = feeLee + feeLin;
+
+        totalExpenseLee += feeLee;
+        totalExpenseLin += feeLin;
+
+        if (i.payer === 'lee') {
+          totalPaidByLee += totalThis;
+        } else {
+          totalPaidByLin += totalThis;
+        }
+      });
+
+      const grandTotal = totalExpenseLee + totalExpenseLin;
+
+      // 1. 更新卡片
+      document.getElementById('total-val-lee').innerText = prefix + totalExpenseLee.toLocaleString();
+      document.getElementById('total-val-lin').innerText = prefix + totalExpenseLin.toLocaleString();
+      document.getElementById('paid-out-lee').innerText = `李家已代墊: ${prefix}${totalPaidByLee.toLocaleString()}`;
+      document.getElementById('paid-out-lin').innerText = `林家已代墊: ${prefix}${totalPaidByLin.toLocaleString()}`;
+      document.getElementById('grand-total-val').innerText = prefix + grandTotal.toLocaleString();
+
+      // 2. 智慧平帳結算 (代墊差額)
+      const netLee = totalPaidByLee - totalExpenseLee; 
+      const settlementEl = document.getElementById('settlement-result-text');
+
+      if (netLee > 0) {
+        settlementEl.innerHTML = `
+          👉 <span class="text-emerald-700 font-bold">林家</span> 需支付給 <span class="text-indigo-700 font-black">李家</span> 
+          <span class="text-base text-rose-600 font-black">${prefix}${Math.abs(netLee).toLocaleString()}</span>
+        `;
+      } else if (netLee < 0) {
+        settlementEl.innerHTML = `
+          👉 <span class="text-indigo-700 font-bold">李家</span> 需支付給 <span class="text-emerald-700 font-black">林家</span> 
+          <span class="text-base text-rose-600 font-black">${prefix}${Math.abs(netLee).toLocaleString()}</span>
+        `;
+      } else {
+        settlementEl.innerHTML = `🎉 兩家代墊金額完全平衡，無須額外補找！`;
+      }
+
+      // 3. 渲染明細清單
+      const listContainer = document.getElementById('expense-items-list');
+      if (list.length === 0) {
+        listContainer.innerHTML = `
+          <div class="text-center py-8 bg-white rounded-2xl border border-dashed border-slate-200 text-xs text-slate-400">
+            目前無任何紀錄，歡迎在上方輸入項目新增！
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = list.map(item => {
+        const itemTotal = (item.amtLee || 0) + (item.amtLin || 0);
+        const isLeePaid = item.payer === 'lee';
+        return `
+          <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center justify-between">
+            <div class="space-y-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-xs font-black text-slate-900">${item.name}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                  isLeePaid ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                }">
+                  ${isLeePaid ? '李家代墊' : '林家代墊'}
+                </span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">${item.note}</span>
+              </div>
+              <div class="text-[11px] text-slate-500">
+                李家負擔: <span class="font-bold text-indigo-700">${prefix}${(item.amtLee || 0).toLocaleString()}</span> ｜ 
+                林家負擔: <span class="font-bold text-emerald-700">${prefix}${(item.amtLin || 0).toLocaleString()}</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-right">
+                <div class="text-xs font-black text-slate-900">${prefix}${itemTotal.toLocaleString()}</div>
+                <div class="text-[9px] text-slate-400">${item.date}</div>
+              </div>
+              <button onclick="deleteExpenseItem(${item.id})" class="text-slate-300 hover:text-rose-500 text-sm p-1 touch-btn">
+                ✕
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ========================================================
+       3. 手風琴摺疊 (Accordion)
+       ======================================================== */
+    function toggleCollapse(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('span:last-child');
+      const isHidden = content.classList.contains('hidden');
+      content.classList.toggle('hidden');
+      if (isHidden) {
+        icon.innerText = '−';
+      } else {
+        icon.innerText = '+';
+      }
+    }
+
+    /* ========================================================
+       4. 行李打勾清單 (Local Storage 自動儲存)
+       ======================================================== */
+    function initChecklist() {
+      const boxes = document.querySelectorAll('.chk-box');
+      boxes.forEach(chk => {
+        const key = 'trip_chk_' + chk.getAttribute('data-chk');
+        const saved = localStorage.getItem(key);
+        if (saved !== null) {
+          chk.checked = (saved === 'true');
+        }
+        chk.addEventListener('change', () => {
+          localStorage.setItem(key, chk.checked);
+        });
+      });
+    }
+
+    function clearAllChecks() {
+      document.querySelectorAll('.chk-box').forEach(chk => {
+        chk.checked = false;
+        localStorage.setItem('trip_chk_' + chk.getAttribute('data-chk'), 'false');
+      });
+    }
+
+    /* ========================================================
+       5. 出發倒數計時計算
+       ======================================================== */
+    function calculateCountdown() {
+      const targetDate = new Date("2027-01-27T00:00:00");
+      const today = new Date();
+      const diff = targetDate - today;
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      const el = document.getElementById('stat-countdown');
+      if (el) el.innerText = days > 0 ? days : 0;
+    }
+
+    /* ========================================================
+       6. 自訂更換封面圖 (支援直接讀取本地圖檔)
+       ======================================================== */
+    function handleCoverUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const bg = document.getElementById('hero-bg');
+          bg.style.backgroundImage = `url('${e.target.result}')`;
+          localStorage.setItem('trip_custom_hero_bg', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function loadSavedCover() {
+      const savedBg = localStorage.getItem('trip_custom_hero_bg');
+      if (savedBg) {
+        const bg = document.getElementById('hero-bg');
+        bg.style.backgroundImage = `url('${savedBg}')`;
+      }
+    }
+
+    // 啟動初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateCountdown();
+      renderDaySchedule(1);
+      renderExpenseList();
+      initChecklist();
+      loadSavedCover();
+    });
+  </script>
+</body>
+</html>
