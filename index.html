@@ -3,35 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>東北雪國歷險記 ❄️｜旅遊手動</title>
+  <title>東北雪國歷險記 ❄️｜旅遊手冊</title>
+  
+  <!-- 手機加入主畫面的 App Icon 設計連結 -->
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
+  <link rel="shortcut icon" href="icon.png">
+
   <style>
     :root {
-      --primary: #0f172a;       /* 深海藍 */
-      --accent: #3b82f6;        /* 冰雪藍 */
-      --accent-hover: #0284c7;  /* 湛藍 */
-      --bg: #f1f5f9;            /* 雪地灰白 */
-      --card-bg: #ffffff;       /* 雪白 */
+      --primary: #0891b2;       /* 清透水藍 */
+      --primary-dark: #0e7490;  /* 深海藍 */
+      --accent: #06b6d4;        /* 亮水藍 */
+      --accent-hover: #0891b2;  /* 湛水藍 */
+      --bg: #f0fdfa;            /* 冰雪微綠水藍背景 */
+      --card-bg: #ffffff;       /* 潔白卡片 */
       --text: #0f172a;          /* 墨黑 */
-      --text-muted: #475569;    /* 霧灰藍 */
-      --ice-blue: #f0f9ff;      /* 冰藍 background */
-      --ice-border: #e0f2fe;    /* 冰藍邊框 */
+      --text-muted: #475569;    /* 霧藍灰 */
+      --ice-blue: #e0f7fa;      /* 冰水藍 */
+      --ice-border: #b2ebf2;    /* 淺水藍邊框 */
       --radius: 20px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
 
-    /* Hero Banner with Family Selfie Background */
+    /* 水藍色頂部封面 & 整合自拍合影 */
     .hero {
       position: relative;
-      background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.7) 100%),
+      background: linear-gradient(180deg, rgba(8,145,178,0.1) 0%, rgba(15,23,42,0.7) 100%),
                   url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80') center/cover;
       color: white;
-      padding: 40px 20px 24px;
+      padding: 60px 24px 35px;
       border-bottom-left-radius: 28px;
       border-bottom-right-radius: 28px;
-      box-shadow: 0 10px 30px rgba(15,23,42,0.15);
+      box-shadow: 0 10px 30px rgba(8,145,178,0.15);
       background-size: cover;
       background-position: center 30%;
+      text-align: center;
     }
     .change-cover-btn {
       position: absolute; top: 15px; right: 15px;
@@ -43,57 +53,43 @@
       color: white; font-size: 0.7rem; font-weight: 600;
       cursor: pointer; display: flex; align-items: center; gap: 4px;
     }
-    .hero-title { font-size: 1.7rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-    .hero-dates { font-size: 0.85rem; font-weight: 700; opacity: 0.95; margin-bottom: 2px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-    .hero-locations { font-size: 0.8rem; opacity: 0.85; margin-bottom: 18px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-    
-    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .stat-card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 14px;
-      border-radius: 16px;
-      text-align: center;
-    }
-    .stat-val { font-size: 1.6rem; font-weight: 800; line-height: 1.1; }
-    .stat-lbl { font-size: 0.72rem; opacity: 0.9; margin-top: 4px; font-weight: 600; }
+    .hero-title { font-size: 1.85rem; font-weight: 800; text-shadow: 0 2px 5px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 6px; }
+    .hero-dates { font-size: 1rem; font-weight: 700; opacity: 0.95; margin-bottom: 3px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    .hero-locations { font-size: 0.85rem; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.5); font-weight: 500; }
 
-    /* Weather Quick Glance */
-    .weather-glance {
-      background: rgba(15, 23, 42, 0.5);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+    /* 天氣預報樣式 (調整到每日行程/花費紀錄下方) */
+    .weather-container {
+      background: #e0f7fa;
+      border: 1.5px solid #b2ebf2;
       border-radius: 16px;
-      padding: 10px 14px;
-      margin-top: 14px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 8px rgba(6,182,212,0.06);
     }
-    .weather-item { display: flex; align-items: center; gap: 6px; color: white; font-size: 0.75rem; }
-    .weather-icon { font-size: 1.1rem; }
+    .weather-item { display: flex; align-items: center; gap: 6px; color: var(--primary-dark); font-size: 0.78rem; font-weight: 700; }
+    .weather-icon { font-size: 1.2rem; }
 
-    /* Top Tabs Slider */
+    /* 水藍色 導航列 */
     .tab-nav-wrapper {
       position: sticky; top: 0; z-index: 100;
-      background: #e2e8f0; padding: 10px 14px;
-      border-bottom: 1px solid #cbd5e1;
+      background: #e0f2f1; padding: 10px 14px;
+      border-bottom: 1.5px solid #b2dfdb;
       overflow-x: auto; white-space: nowrap;
       -webkit-overflow-scrolling: touch;
-      display: flex; gap: 6px;
+      display: flex; gap: 8px;
     }
     .tab-nav-wrapper::-webkit-scrollbar { display: none; }
     .tab-btn {
       display: inline-flex; flex-direction: row; align-items: center; justify-content: center; gap: 4px;
-      padding: 8px 14px; border-radius: 30px; border: none;
+      padding: 8px 15px; border-radius: 30px; border: none;
       background: #f8fafc; color: #475569; font-size: 0.78rem; font-weight: 700; cursor: pointer;
       transition: all 0.2s ease;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .tab-btn.active { background: var(--accent); color: #fff; box-shadow: 0 4px 10px rgba(59,130,246,0.35); }
+    .tab-btn.active { background: var(--accent); color: #fff; box-shadow: 0 4px 10px rgba(6,182,212,0.35); }
 
     /* Main Container */
     .container { padding: 16px; max-width: 600px; margin: 0 auto; }
@@ -102,82 +98,82 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Day Chips Selector */
-    .day-selector { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 14px; padding-bottom: 4px; }
+    .day-selector { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 12px; padding-bottom: 4px; }
     .day-selector::-webkit-scrollbar { display: none; }
     .day-chip {
-      flex: 0 0 auto; padding: 8px 14px; background: #fff; border: 1.5px solid #cbd5e1;
+      flex: 0 0 auto; padding: 8px 14px; background: #fff; border: 1.5px solid #b2dfdb;
       border-radius: 14px; text-align: center; cursor: pointer; font-size: 0.82rem; font-weight: 600;
       transition: all 0.2s ease;
     }
-    .day-chip.active { background: var(--ice-blue); border-color: var(--accent); color: var(--accent); font-weight: 800; box-shadow: 0 3px 8px rgba(59,130,246,0.15); }
+    .day-chip.active { background: var(--ice-blue); border-color: var(--accent); color: var(--accent-hover); font-weight: 800; box-shadow: 0 3px 8px rgba(6,182,212,0.15); }
 
     /* Card System */
-    .card { background: var(--card-bg); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(15,23,42,0.04); border: 1.5px solid #f1f5f9; }
-    .card-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; color: var(--primary); }
-    .card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; }
+    .card { background: var(--card-bg); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(8,145,178,0.04); border: 1.5px solid #e0f2f1; }
+    .card-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; color: var(--primary-dark); }
+    .card-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; font-weight: 600; }
 
     /* Timeline Section */
     .timeline { position: relative; padding-left: 28px; margin-top: 14px; }
-    .timeline::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: #cbd5e1; }
+    .timeline::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: #b2dfdb; }
     .t-item { position: relative; margin-bottom: 24px; }
     .t-dot {
       position: absolute; left: -28px; top: 0; width: 22px; height: 22px;
       border-radius: 50%; background: #fff; border: 2px solid var(--accent); color: var(--accent);
       font-size: 0.72rem; font-weight: 800; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 4px rgba(59,130,246,0.2);
+      box-shadow: 0 2px 4px rgba(6,182,212,0.2);
     }
-    .t-time { font-size: 0.8rem; font-weight: 800; color: var(--accent); }
-    .t-title { font-size: 0.98rem; font-weight: 800; margin: 2px 0 4px; color: var(--primary); }
+    .t-time { font-size: 0.82rem; font-weight: 800; color: var(--accent); }
+    .t-title { font-size: 0.98rem; font-weight: 800; margin: 2px 0 4px; color: var(--primary-dark); }
     .t-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 8px; }
     .btn-map {
-      display: inline-block; padding: 5px 12px; background: var(--ice-blue); color: var(--accent);
+      display: inline-block; padding: 5px 12px; background: var(--ice-blue); color: var(--primary-dark);
       font-size: 0.72rem; font-weight: 700; border-radius: 8px; text-decoration: none; border: 1px solid var(--ice-border);
     }
 
     /* Accordion */
-    .accordion-item { background: #fff; border-radius: 14px; border: 1.5px solid #e2e8f0; margin-bottom: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+    .accordion-item { background: #fff; border-radius: 14px; border: 1.5px solid #b2dfdb; margin-bottom: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
     .acc-header {
       padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
-      font-weight: 800; font-size: 0.9rem; cursor: pointer; color: var(--primary);
+      font-weight: 800; font-size: 0.9rem; cursor: pointer; color: var(--primary-dark);
     }
     .acc-header .plus { font-size: 1.1rem; color: var(--accent); font-weight: 800; transition: transform 0.2s ease; }
-    .acc-body { display: none; padding: 12px 16px; border-top: 1px solid #f1f5f9; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; background: #f8fafc; }
+    .acc-body { display: none; padding: 12px 16px; border-top: 1px solid #e0f2f1; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; background: #fafdfd; }
     .accordion-item.open .acc-body { display: block; }
     .accordion-item.open .acc-header .plus { transform: rotate(45deg); }
 
     /* Checklist */
-    .check-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px; cursor: pointer; }
+    .check-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #fff; border: 1.5px solid #b2dfdb; border-radius: 12px; margin-bottom: 8px; cursor: pointer; }
     .check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); }
     .check-item span { font-size: 0.88rem; font-weight: 600; }
 
     /* Billing Section styles */
     .pay-switch { display: flex; gap: 8px; margin-bottom: 12px; }
     .pay-opt {
-      flex: 1; padding: 10px; text-align: center; border-radius: 12px; border: 1.5px solid #cbd5e1;
+      flex: 1; padding: 11px; text-align: center; border-radius: 12px; border: 1.5px solid #b2dfdb;
       font-size: 0.85rem; font-weight: 700; cursor: pointer; background: #fff;
     }
-    .pay-opt.active { background: var(--ice-blue); border-color: var(--accent); color: var(--accent); }
+    .pay-opt.active { background: var(--ice-blue); border-color: var(--accent); color: var(--primary-dark); }
     
     .amt-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
     .amt-box { display: flex; flex-direction: column; }
     .amt-box label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
-    .amt-box input { padding: 10px 12px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-size: 0.9rem; font-weight: 700; }
+    .amt-box input { padding: 10px 12px; border-radius: 10px; border: 1.5px solid #b2dfdb; font-size: 0.9rem; font-weight: 700; color: var(--primary-dark); }
     
     .btn-add-bill {
-      width: 100%; padding: 12px; background: var(--accent); color: white; border: none;
+      width: 100%; padding: 12.5px; background: var(--accent); color: white; border: none;
       border-radius: 12px; font-weight: 700; font-size: 0.9rem; cursor: pointer; margin-bottom: 16px;
-      box-shadow: 0 4px 10px rgba(59,130,246,0.2);
+      box-shadow: 0 4px 10px rgba(6,182,212,0.2);
     }
     
-    .bill-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #f1f5f9; font-size: 0.85rem; }
+    .bill-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #e0f2f1; font-size: 0.85rem; }
     .bill-item .desc { font-weight: 700; }
-    .bill-item .amt { font-weight: 800; color: var(--primary); }
+    .bill-item .amt { font-weight: 800; color: var(--primary-dark); }
     .bill-item .del { color: #ef4444; cursor: pointer; font-weight: bold; margin-left: 10px; }
 
     .summary-card { background: var(--ice-blue); border: 1.5px solid var(--ice-border); border-radius: 14px; padding: 14px; margin-top: 14px; }
-    .summary-title { font-size: 0.85rem; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
+    .summary-title { font-size: 0.85rem; font-weight: 800; color: var(--accent-hover); margin-bottom: 8px; text-transform: uppercase; }
     .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 6px; }
-    .summary-row.total { border-top: 1px dashed #bde0fe; padding-top: 6px; margin-top: 6px; font-weight: 800; font-size: 0.95rem; color: var(--primary); }
+    .summary-row.total { border-top: 1px dashed #4dd0e1; padding-top: 6px; margin-top: 6px; font-weight: 800; font-size: 0.95rem; color: var(--primary-dark); }
   </style>
 </head>
 <body>
@@ -190,21 +186,23 @@
     <button class="change-cover-btn" onclick="document.getElementById('coverInput').click()">📷 更換封面</button>
     <div class="hero-title">東北雪國歷險記 ❄️</div>
     <div class="hero-dates">2027.01.27 ~ 02.03</div>
-    <div class="hero-locations">東京 · 仙台 · 藏王溫泉 8天7夜</div>
-    
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-val" id="countdown">--</div>
-        <div class="stat-lbl">距離出發天數</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-val">8</div>
-        <div class="stat-lbl">旅行天數</div>
-      </div>
-    </div>
+    <div class="hero-locations">東京 ‧ 仙台 ‧ 藏王溫泉</div>
+  </header>
 
-    <!-- 即時天氣小預報 -->
-    <div class="weather-glance">
+  <!-- 冰雪水藍 導航列 -->
+  <nav class="tab-nav-wrapper">
+    <button class="tab-btn active" onclick="switchTab('itinerary', this)">📅 每日行程</button>
+    <button class="tab-btn" onclick="switchTab('billing', this)">💰 花費紀錄</button>
+    <button class="tab-btn" onclick="switchTab('hotel', this)">✈️ 航班住宿</button>
+    <button class="tab-btn" onclick="switchTab('transport', this)">🚅 交通攻略</button>
+    <button class="tab-btn" onclick="switchTab('food', this)">🍜 美食攻略</button>
+    <button class="tab-btn" onclick="switchTab('luggage', this)">🧳 行李清單</button>
+  </nav>
+
+  <main class="container">
+
+    <!-- 即時天氣預報區 (置於每日行程/花費紀錄等標題的下方) -->
+    <div class="weather-container">
       <div class="weather-item">
         <span class="weather-icon">🗼</span>
         <span>東京 1°C~9°C (陰)</span>
@@ -218,19 +216,6 @@
         <span>藏王 -8°C~-3°C (暴雪)</span>
       </div>
     </div>
-  </header>
-
-  <!-- 冰雪藍 導航列 -->
-  <nav class="tab-nav-wrapper">
-    <button class="tab-btn active" onclick="switchTab('itinerary', this)">📅 每日行程</button>
-    <button class="tab-btn" onclick="switchTab('billing', this)">💰 花費紀錄</button>
-    <button class="tab-btn" onclick="switchTab('hotel', this)">✈️ 航班住宿</button>
-    <button class="tab-btn" onclick="switchTab('transport', this)">🚅 交通攻略</button>
-    <button class="tab-btn" onclick="switchTab('food', this)">🍜 美食攻略</button>
-    <button class="tab-btn" onclick="switchTab('luggage', this)">🧳 行李清單</button>
-  </nav>
-
-  <main class="container">
 
     <!-- 1. 每日行程 (Itinerary) -->
     <section id="tab-itinerary" class="tab-content active">
@@ -261,7 +246,7 @@
             <div class="t-dot">2</div>
             <div class="t-time">16:30</div>
             <div class="t-title">抵達東橫 INN 日本橋人形町</div>
-            <div class="t-desc">辦理入住，放置行李，周邊老街散策與買人形燒。</div>
+            <div class="t-desc">辦理入住，放置行程行李，周邊老街與傳統人形燒散策。</div>
           </div>
         </div>
       </div>
@@ -396,12 +381,11 @@
   </main>
 
   <script>
-    // 1. 自動計算倒數天數
+    // 1. 自動計算倒數天數 (雖然刪除卡片，此變數在其他地方調用故保留以防 js 崩潰)
     const tripStartDate = new Date("2027-01-27T00:00:00");
     const today = new Date();
     const diffTime = tripStartDate - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    document.getElementById("countdown").innerText = diffDays > 0 ? diffDays : 0;
 
     // 2. 切換主標籤頁
     function switchTab(tabId, btn) {
@@ -429,7 +413,7 @@
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          document.getElementById('hero-banner').style.backgroundImage = `linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.7) 100%), url('${e.target.result}')`;
+          document.getElementById('hero-banner').style.backgroundImage = `linear-gradient(180deg, rgba(8,145,178,0.1) 0%, rgba(15,23,42,0.7) 100%), url('${e.target.result}')`;
           localStorage.setItem('custom_cover_image', e.target.result);
         };
         reader.readAsDataURL(input.files[0]);
@@ -514,23 +498,21 @@
       const linShareTwd = (grandTotalTwd / 7) * 3;
       const linShareJpy = (grandTotalJpy / 7) * 3;
 
-      // 找補金額（代墊大於應分攤代表要收錢，代墊小於應分攤代表要付錢）
+      // 找補金額
       const liBalanceTwd = totalLiTwd - liShareTwd;
       const liBalanceJpy = totalLiJpy - liShareJpy;
 
       let settleText = '無欠款';
       if (liBalanceTwd > 0.5 || liBalanceJpy > 0.5) {
-        // 李家代墊多，林家要補給李家
         settleText = `👉 林家需補貼李家: NT$ ${Math.round(liBalanceTwd).toLocaleString()} ${liBalanceJpy > 0 ? '＆ ¥' + Math.round(liBalanceJpy).toLocaleString() : ''}`;
       } else if (liBalanceTwd < -0.5 || liBalanceJpy < -0.5) {
-        // 林家代墊多，李家要補給林家
         settleText = `👉 李家需補貼林家: NT$ ${Math.round(Math.abs(liBalanceTwd)).toLocaleString()} ${liBalanceJpy < 0 ? '＆ ¥' + Math.round(Math.abs(liBalanceJpy)).toLocaleString() : ''}`;
       }
       
       document.getElementById('settlement').innerText = settleText;
     }
 
-    // 7. 每日行程切換數據 (可自由擴充各天詳細行程資訊)
+    // 7. 每日行程切換數據 (內建 8 天資料)
     const daySchedules = {
       1: {
         title: "Day 1 ‧ 人形町入住與老街探索",
@@ -641,7 +623,7 @@
       // 讀取暫存 Cover 圖片
       const savedCover = localStorage.getItem('custom_cover_image');
       if (savedCover) {
-        document.getElementById('hero-banner').style.backgroundImage = `linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.7) 100%), url('${savedCover}')`;
+        document.getElementById('hero-banner').style.backgroundImage = `linear-gradient(180deg, rgba(8,145,178,0.1) 0%, rgba(15,23,42,0.7) 100%), url('${savedCover}')`;
       }
       
       // 還原打勾清單
@@ -658,4 +640,3 @@
   </script>
 </body>
 </html>
-  
