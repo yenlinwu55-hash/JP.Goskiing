@@ -41,12 +41,18 @@
       padding: 0 16px;
     }
 
-    /* 1. 即時天氣預報：獨立在最上方，大圖示、三欄無邊框排開 */
+    /* 1. 即時天氣預報：獨立在最上方，大圖示、無邊框動態顯示 */
     .weather-top-card {
       padding: 16px 14px 4px;
       margin-top: 15px;
       margin-bottom: 12px;
       text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    /* 沒有天氣顯示時的隱藏樣式 */
+    .weather-top-card.hide {
+      display: none;
     }
 
     .weather-header-title {
@@ -65,17 +71,23 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
+      justify-content: center;
     }
 
+    /* 動態支持 1、2 欄天氣的彈性伸縮 */
+    .weather-grid.single-col { grid-template-columns: 1fr; }
+    .weather-grid.double-col { grid-template-columns: repeat(2, 1fr); }
+
     .weather-col {
-      display: flex;
+      display: none; /* 預設不顯示，由 JS 動態控制 */
       flex-direction: column;
       align-items: center;
       font-size: 0.78rem;
     }
+    .weather-col.show { display: flex; }
 
     .weather-icon {
-      font-size: 2rem; /* 放大圖示 */
+      font-size: 2.2rem; /* 放大圖示 */
       margin-bottom: 6px;
       filter: drop-shadow(0 2px 4px rgba(2, 132, 199, 0.15));
     }
@@ -108,7 +120,8 @@
       position: relative;
       height: 240px;
       border-radius: var(--radius);
-      background: url('image_45.png') center 25% / cover no-repeat;
+      /* 載入最新圓山或藏王 7 人自拍合影比例圖 */
+      background: url('image_49.png') center 25% / cover no-repeat;
       box-shadow: 0 12px 30px rgba(2, 132, 199, 0.2);
       overflow: hidden;
       border: 1.5px solid rgba(255, 255, 255, 0.8);
@@ -362,34 +375,51 @@
 
   <div class="container">
 
-    <!-- A. 即時天氣預報：獨立在最上方，大圖示、三欄無邊框排開 -->
-    <div class="weather-top-card">
-      <div class="weather-header-title">☁️ 即時天氣預報</div>
-      <div class="weather-grid">
-        <div class="weather-col">
-          <div class="weather-icon">☁️</div>
+    <!-- A. 即時天氣預報：獨立在最上方，大圖示、無邊框 (由 JS 根據點選日動態控制顯示那些城市) -->
+    <div class="weather-top-card" id="weather-banner">
+      <div class="weather-header-title">☁️ 當日預報天氣</div>
+      <div class="weather-grid" id="weather-grid">
+        <!-- 東京天氣 -->
+        <div class="weather-col" id="weather-tokyo">
+          <div class="weather-icon">🗼</div>
           <div class="weather-city">東京</div>
-          <div class="weather-temp">1°C~9°C</div>
-          <div class="weather-condition">(陰)</div>
+          <div class="weather-temp">1°C ~ 9°C</div>
+          <div class="weather-condition">多雲時陰</div>
         </div>
-        <div class="weather-col">
-          <div class="weather-icon">🌨️</div>
+        <!-- 仙台天氣 -->
+        <div class="weather-col" id="weather-sendai">
+          <div class="weather-icon">🏯</div>
           <div class="weather-city">仙台</div>
-          <div class="weather-temp">-2°C~4°C</div>
-          <div class="weather-condition">(雪)</div>
+          <div class="weather-temp">-2°C ~ 4°C</div>
+          <div class="weather-condition">小雪 🌨️</div>
         </div>
-        <div class="weather-col">
+        <!-- 松島天氣 (新增) -->
+        <div class="weather-col" id="weather-matsushima">
+          <div class="weather-icon">🌊</div>
+          <div class="weather-city">松島</div>
+          <div class="weather-temp">-2°C ~ 4°C</div>
+          <div class="weather-condition">陰轉多雪 🌨️</div>
+        </div>
+        <!-- 藏王天氣 -->
+        <div class="weather-col" id="weather-zao">
           <div class="weather-icon">☃️</div>
           <div class="weather-city">藏王</div>
-          <div class="weather-temp">-8°C~-3°C</div>
-          <div class="weather-condition">(暴雪)</div>
+          <div class="weather-temp">-8°C ~ -3°C</div>
+          <div class="weather-condition">暴雪大風</div>
+        </div>
+        <!-- 高雄天氣 (新增) -->
+        <div class="weather-col" id="weather-kaohsiung">
+          <div class="weather-icon">☀️</div>
+          <div class="weather-city">高雄</div>
+          <div class="weather-temp">22°C ~ 27°C</div>
+          <div class="weather-condition">溫暖晴天</div>
         </div>
       </div>
     </div>
 
     <!-- B. 頂部自拍封面：懸浮卡片下移 -->
     <div class="hero-wrapper">
-      <div class="hero-card" id="hero-banner">
+      <div class="hero-card" id="hero-banner-image">
         <button class="change-cover-btn" onclick="document.getElementById('coverInput').click()">📷 更換封面</button>
         <div class="hero-caption">
           <div class="hero-title">東北雪國歷險記 ❄️</div>
@@ -523,11 +553,69 @@
   </div>
 
   <script>
+    let currentTab = 'itinerary';
+    let currentDay = 1;
+
+    // 精確的天氣預報顯示邏輯
+    function updateWeatherDisplay() {
+      const banner = document.getElementById('weather-banner');
+      const grid = document.getElementById('weather-grid');
+      const tokyo = document.getElementById('weather-tokyo');
+      const sendai = document.getElementById('weather-sendai');
+      const matsushima = document.getElementById('weather-matsushima');
+      const zao = document.getElementById('weather-zao');
+      const kaohsiung = document.getElementById('weather-kaohsiung');
+
+      // 1. 如果不是 📅 每日行程，全部隱藏
+      if (currentTab !== 'itinerary') {
+        banner.classList.add('hide');
+        return;
+      }
+
+      // 否則顯示天氣大區塊，並根據 Day 來篩選
+      banner.classList.remove('hide');
+      tokyo.classList.remove('show');
+      sendai.classList.remove('show');
+      matsushima.classList.remove('show');
+      zao.classList.remove('show');
+      kaohsiung.classList.remove('show');
+
+      if (currentDay === 1 || currentDay === 2) {
+        tokyo.classList.add('show');
+        grid.className = 'weather-grid single-col';
+      } else if (currentDay === 3) {
+        tokyo.classList.add('show');
+        sendai.classList.add('show');
+        grid.className = 'weather-grid double-col';
+      } else if (currentDay === 4) {
+        sendai.classList.add('show');
+        matsushima.classList.add('show');
+        grid.className = 'weather-grid double-col';
+      } else if (currentDay === 5) {
+        sendai.classList.add('show');
+        zao.classList.add('show');
+        grid.className = 'weather-grid double-col';
+      } else if (currentDay === 6) {
+        zao.classList.add('show');
+        grid.className = 'weather-grid single-col';
+      } else if (currentDay === 7) {
+        zao.classList.add('show');
+        sendai.classList.add('show');
+        grid.className = 'weather-grid double-col';
+      } else if (currentDay === 8) {
+        sendai.classList.add('show');
+        kaohsiung.classList.add('show');
+        grid.className = 'weather-grid double-col';
+      }
+    }
+
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('tab-' + tabId).classList.add('active');
+      currentTab = tabId;
+      updateWeatherDisplay();
       window.scrollTo({ top: 160, behavior: 'smooth' });
     }
 
@@ -535,7 +623,7 @@
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          document.getElementById('hero-banner').style.backgroundImage = `url('${e.target.result}')`;
+          document.getElementById('hero-banner-image').style.backgroundImage = `url('${e.target.result}')`;
           localStorage.setItem('custom_cover_image', e.target.result);
         };
         reader.readAsDataURL(input.files[0]);
@@ -613,7 +701,7 @@
     }
 
     const daySchedules = {
-      1: { badge: "DAY 1 · 1/27 (三)", title: "抵達成成機場，入住東京人形町", timeline: [
+      1: { badge: "DAY 1 · 1/27 (三)", title: "抵達成田機場，入住東京人形町", timeline: [
         { time: "13:30", title: "抵達成田國際機場 (NRT)", desc: "入境通關、領取行李，搭乘京成 Access 特急（直通淺草線）。" },
         { time: "16:30", title: "東橫 INN 日本橋人形町", desc: "辦理入住，放置行李，老街人形燒散策。" }
       ]},
@@ -634,7 +722,7 @@
         { time: "09:00", title: "專車前往藏王狐狸村", desc: "近距離觀賞雪地狐狸，體驗抱狐狸（地面滑注意防滑）。" },
         { time: "15:30", title: "入住百年高見屋旅館", desc: "前往老街租借 2 天滑雪器材，享受百年強酸硫磺古泉。" }
       ]},
-      6: { badge: "DAY 6 · 2/1 (一)", title: "上之台滑雪全日課，入住藏王國際", timeline: [
+      6: { badge: "DAY 6 · 2/1 (一)", title: "上之台滑雪場全日課，入住藏王國際", timeline: [
         { time: "08:30", title: "行李託運轉至藏王國際", desc: "輕裝出發前往上之台滑雪場集合上課。" },
         { time: "09:00", title: "滑雪教練課 / 不滑雪搭纜車看樹冰", desc: "不滑雪者可從橫倉搭纜車登頂看樹冰，滑雪者在上之台緩坡練習。" },
         { time: "15:30", title: "入住藏王國際大飯店", desc: "緊鄰橫倉纜車站，享受室內外雪景大浴場。" }
@@ -653,6 +741,10 @@
     function filterDay(dayNum, chip) {
       document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
+      currentDay = dayNum;
+      
+      updateWeatherDisplay(); // 即時更新天氣欄目
+
       const sched = daySchedules[dayNum];
       if (!sched) return;
 
@@ -678,9 +770,10 @@
     window.addEventListener('DOMContentLoaded', () => {
       const savedCover = localStorage.getItem('custom_cover_image');
       if (savedCover) {
-        document.getElementById('hero-banner').style.backgroundImage = `url('${savedCover}')`;
+        document.getElementById('hero-banner-image').style.backgroundImage = `url('${savedCover}')`;
       }
       renderBills();
+      updateWeatherDisplay(); // 初始化天氣展示
     });
   </script>
 </body>
