@@ -5,28 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>東北雪國歷險記 ❄️｜旅遊手冊</title>
   
-  <!-- 手機加入主畫面 PWA Icon 與 Manifest -->
+  <!-- 手機加入主畫面的 App Icon 設計連結 -->
   <link rel="apple-touch-icon" href="icon.png">
   <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
   <link rel="shortcut icon" href="icon.png">
 
+  <!-- PWA Web App Manifest 連結 -->
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="東北雪國">
-
-  <!-- Tailwind CSS 快速佈局與樣式支援 -->
-  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root {
       --primary: #0284c7;       /* 湛藍 */
       --primary-dark: #0369a1;  /* 深海藍 */
       --accent: #38bdf8;        /* 冰雪亮藍 */
-      --bg-start: #e0f2fe;      /* 頂部冰雪藍 */
-      --bg-end: #bae6fd;        /* 下方溫潤水藍漸層 */
+      --bg-start: #e0f2fe;     /* 頂部冰雪藍 */
+      --bg-end: #bae6fd;       /* 下方溫潤水藍漸層 */
       --card-bg: rgba(255, 255, 255, 0.95);
       --text-main: #0f172a;     /* 墨黑 */
       --text-sub: #475569;      /* 霧藍灰 */
@@ -43,13 +41,13 @@
       min-height: 100vh;
     }
 
-    .container-box {
+    .container {
       max-width: 480px;
       margin: 0 auto;
       padding: 0 16px;
     }
 
-    /* 頂部封面卡片：16:9 橫向圓角懸浮卡片 */
+    /* 頂部封面卡片：橫向 16:9.5 比例 */
     .hero-wrapper {
       margin-top: 18px;
       margin-bottom: 14px;
@@ -68,15 +66,14 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      transition: background-image 0.3s ease;
     }
 
-    /* 右上角「更換封面」半透明膠囊按鈕 */
+    /* 右上角更換封面按鈕 */
     .change-cover-btn {
       position: absolute;
       top: 12px;
       right: 12px;
-      background: rgba(30, 41, 59, 0.6);
+      background: rgba(30, 41, 59, 0.58);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.4);
@@ -96,7 +93,7 @@
     /* 左下角標題與日期文字覆蓋區 */
     .hero-caption {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(15, 23, 42, 0.82) 100%);
-      padding: 40px 16px 14px;
+      padding: 35px 16px 14px;
       color: white;
       text-align: left;
     }
@@ -109,18 +106,19 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .hero-dates {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 700;
       opacity: 0.95;
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+      margin-bottom: 1px;
     }
 
     .hero-locations {
-      font-size: 0.74rem;
+      font-size: 0.75rem;
       opacity: 0.9;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
       font-weight: 600;
@@ -196,7 +194,7 @@
       box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
     }
 
-    /* 行程白底卡片 */
+    /* 白底卡片通用 */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
@@ -222,7 +220,7 @@
       margin-bottom: 14px;
     }
 
-    /* 地圖導航連結 */
+    /* Google Maps 導航按鈕 */
     .btn-map {
       display: inline-flex;
       align-items: center;
@@ -244,7 +242,7 @@
       color: var(--primary-dark);
     }
 
-    /* 時間軸 */
+    /* 時間軸排版 */
     .timeline {
       position: relative;
       padding-left: 26px;
@@ -300,37 +298,96 @@
       line-height: 1.45;
     }
 
-    /* 留言板卡片與列表 */
-    .comment-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 14px;
-      border: 1px solid #e2e8f0;
-      margin-top: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    /* 旅伴留言與自訂連結區塊 */
+    .memo-section {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1.5px dashed #bae6fd;
     }
-    .comment-link-badge {
-      display: inline-flex;
+
+    .memo-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      display: flex;
       align-items: center;
-      gap: 5px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-decoration: none;
-      word-break: break-all;
-      margin-top: 6px;
+      gap: 6px;
     }
-    .comment-link-badge:hover {
-      background: #dbeafe;
+
+    .memo-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .memo-input {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #bae6fd;
+      font-size: 0.82rem;
+      background: #fff;
+    }
+    .memo-input:focus { outline: none; border-color: var(--primary); }
+
+    .memo-btn {
+      padding: 10px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .memo-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .memo-author {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .memo-text {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .memo-link {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #0284c7;
+      text-decoration: underline;
+      word-break: break-all;
+    }
+
+    .memo-del {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: bold;
     }
 
     /* 底部天氣預報：置於每頁最下方 */
     .weather-bottom-card {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: var(--radius);
       padding: 16px 14px;
       margin-top: 20px;
@@ -341,9 +398,7 @@
       transition: all 0.3s ease;
     }
 
-    .weather-bottom-card.hide {
-      display: none;
-    }
+    .weather-bottom-card.hide { display: none; }
 
     .weather-header-title {
       font-size: 0.88rem;
@@ -399,7 +454,7 @@
       font-weight: 600;
     }
 
-    /* 記帳切換與按鈕 */
+    /* 記帳模組 */
     .pay-switch { display: flex; gap: 8px; margin-bottom: 12px; }
     .pay-opt {
       flex: 1; padding: 10px; text-align: center; border-radius: 12px;
@@ -428,48 +483,47 @@
     .summary-row { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 4px; }
     .summary-row.total { border-top: 1px dashed #7dd3fc; padding-top: 6px; margin-top: 6px; font-weight: 800; color: var(--primary-dark); }
 
+    /* 封面彈窗 Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .modal-title { font-size: 1rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 12px; }
+
     .tab-content { display: none; }
     .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Modal 浮層樣式 */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    .modal-overlay.show { display: flex; }
-    .modal-content {
-      background: #ffffff;
-      border-radius: 20px;
-      max-width: 420px;
-      width: 100%;
-      padding: 20px;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-    }
   </style>
 </head>
 <body>
 
-  <!-- 隱藏的本機圖片檔案選取器 -->
-  <input type="file" id="localCoverInput" accept="image/*" style="display: none;" onchange="handleLocalCoverUpload(this)">
+  <!-- 本地上傳隱藏 input -->
+  <input type="file" id="coverFileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
 
-  <div class="container-box">
+  <div class="container">
 
-    <!-- 頂部自拍封面：16:9 長方形卡片 -->
+    <!-- 頂部自拍封面 -->
     <div class="hero-wrapper">
       <div class="hero-card" id="hero-banner-image">
         <button class="change-cover-btn" onclick="openCoverModal()">📷 更換封面</button>
         <div class="hero-caption">
-          <div class="hero-title" id="display-hero-title">東北雪國歷險記 ❄️</div>
-          <div class="hero-dates" id="display-hero-dates">2027.01.27 - 02.03</div>
-          <div class="hero-locations" id="display-hero-locations">東京 · 仙台 · 藏王溫泉</div>
+          <div class="hero-title" id="display-title">東北雪國歷險記 ❄️</div>
+          <div class="hero-dates" id="display-dates">2027.01.27 - 02.03</div>
+          <div class="hero-locations" id="display-locations">東京 · 仙台 · 藏王溫泉</div>
         </div>
       </div>
     </div>
@@ -495,64 +549,20 @@
         <div class="day-chip" onclick="filterDay(8, this)">Day 8<br><small>2/3</small></div>
       </div>
 
-      <!-- 當日行程時間軸卡片 -->
       <div class="card" id="day-content">
-        <div class="card-badge">DAY 1 · 1/27 (三)</div>
-        <h3 class="card-title">抵達成田機場，入住東京人形町</h3>
-        <div class="timeline">
-          <div class="t-item">
-            <div class="t-dot">1</div>
-            <div class="t-time">13:30</div>
-            <div class="t-title">抵達成田國際機場 (NRT)</div>
-            <a href="https://maps.google.com/?q=成田國際機場+第2候機樓" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">入境通關、領取行李，搭乘京成 Access 特急（直通淺草線）。</div>
-          </div>
-          <div class="t-item">
-            <div class="t-dot">2</div>
-            <div class="t-time">16:30</div>
-            <div class="t-title">東橫 INN 日本橋人形町</div>
-            <a href="https://maps.google.com/?q=東橫INN+日本橋人形町" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">辦理入住，放置行李，老街人形燒散策。</div>
-          </div>
-        </div>
+        <!-- 由 JS 動態注入行程項目與時間軸 -->
       </div>
 
-      <!-- 新增：行程專屬 旅伴互動留言板 / 備忘連結 -->
-      <div class="card" id="notes-section">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="card-title mb-0 flex items-center gap-2">
-            <span>💬 旅伴備忘與分享</span>
-            <span class="text-xs bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full font-bold" id="notes-day-label">Day 1</span>
-          </h3>
-          <span class="text-xs text-slate-400">知道網址皆可留言</span>
+      <!-- 知道網址的旅伴專屬互動留言板 -->
+      <div class="card">
+        <div class="memo-title">💬 旅伴備忘與打卡推薦（可張貼網址）</div>
+        <div class="memo-input-group">
+          <input type="text" id="memo-author" class="memo-input" placeholder="您的暱稱（例：李爸、林媽、大姐）">
+          <input type="text" id="memo-desc" class="memo-input" placeholder="文字說明或美食備忘...">
+          <input type="url" id="memo-url" class="memo-input" placeholder="可貼上網址/IG/Google地圖連結 (選填)">
+          <button class="memo-btn" onclick="addMemo()">📌 新增到今日備忘</button>
         </div>
-        <p class="text-xs text-slate-500 mb-3">可以貼上想去的店家、美食、IG打卡點、YouTube連結或隨手備忘！</p>
-
-        <!-- 留言表單 -->
-        <div class="bg-sky-50/70 p-3 rounded-xl border border-sky-100 mb-4 space-y-2.5">
-          <div class="grid grid-cols-2 gap-2">
-            <input type="text" id="note-author" placeholder="你的暱稱 (例: 林媽/李爸)" class="text-xs p-2 rounded-lg border border-sky-200 bg-white focus:outline-none focus:ring-1 focus:ring-sky-400">
-            <select id="note-target-day" class="text-xs p-2 rounded-lg border border-sky-200 bg-white font-medium focus:outline-none focus:ring-1 focus:ring-sky-400">
-              <option value="current">綁定當前天數 (<span id="select-day-text">Day 1</span>)</option>
-              <option value="all">📌 全部旅程通用備忘</option>
-            </select>
-          </div>
-          <div>
-            <textarea id="note-text" rows="2" placeholder="輸入說明文字、提醒、或是推薦原因..." class="w-full text-xs p-2 rounded-lg border border-sky-200 bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"></textarea>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <input type="text" id="note-link-title" placeholder="連結名稱 (例: 善治郎牛舌食記)" class="text-xs p-2 rounded-lg border border-sky-200 bg-white focus:outline-none focus:ring-1 focus:ring-sky-400">
-            <input type="url" id="note-link-url" placeholder="張貼網址 (https://...)" class="text-xs p-2 rounded-lg border border-sky-200 bg-white focus:outline-none focus:ring-1 focus:ring-sky-400">
-          </div>
-          <button onclick="addTripNote()" class="w-full bg-sky-600 hover:bg-sky-700 active:scale-[0.99] text-white text-xs font-bold py-2 rounded-lg transition-all shadow-sm flex items-center justify-center gap-1">
-            <span>➕ 張貼備忘或連結</span>
-          </button>
-        </div>
-
-        <!-- 留言顯示列表 -->
-        <div id="notes-container" class="space-y-2">
-          <!-- 動態渲染留言內容 -->
-        </div>
+        <div id="memo-list"></div>
       </div>
     </section>
 
@@ -589,35 +599,42 @@
     <!-- 3. 航班住宿 (Hotel) -->
     <section id="tab-hotel" class="tab-content">
       <div class="card">
-        <h3 class="card-title">🏨 東京 · 仙台 · 藏王 住宿</h3>
+        <h3 class="card-title">🏨 東京 · 仙台 · 藏王 住宿清單</h3>
         <div class="timeline">
           <div class="t-item">
             <div class="t-dot">1</div>
-            <div class="t-time">1/27 - 1/29</div>
-            <div class="t-title">東橫 INN 東京日本橋人形町</div>
-            <a href="https://maps.google.com/?q=東橫INN+日本橋人形町" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">近地下鐵人形町站，安靜、生活機能便利。</div>
+            <div class="t-time">1/27 - 1/29 (連住2晚)</div>
+            <div class="t-title">APA飯店 京成上野站前</div>
+            <a href="https://maps.google.com/?q=APA+Hotel+Keisei+Ueno-Ekimae" target="_blank" class="btn-map">📍在地圖上查看</a>
+            <div class="t-desc">Skyliner 京成上野站步行 1 分鐘，直通阿美橫町，出站進飯店超輕鬆。</div>
           </div>
           <div class="t-item">
             <div class="t-dot">2</div>
-            <div class="t-time">1/29 - 1/31</div>
+            <div class="t-time">1/29 - 1/31 (連住2晚)</div>
             <div class="t-title">東橫 INN 仙台站西口中央</div>
             <a href="https://maps.google.com/?q=東橫INN+仙台站西口中央" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">仙台站西口步行 5 分鐘，購物飲食最便利。</div>
+            <div class="t-desc">仙台站西口步行約 5 分鐘，購物飲食最便利。</div>
           </div>
           <div class="t-item">
             <div class="t-dot">3</div>
-            <div class="t-time">1/31 - 2/1</div>
-            <div class="t-title">藏王溫泉 深山莊高見屋</div>
-            <a href="https://maps.google.com/?q=深山莊+高見屋" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">傳統木造百年古湯旅館，直通上之台初學滑雪場。</div>
+            <div class="t-time">1/31 - 2/1 (1晚)</div>
+            <div class="t-title">藏王 高宮飯店（Takamiya Hotel）</div>
+            <a href="https://maps.google.com/?q=Takamiya+Hotel+Zao" target="_blank" class="btn-map">📍在地圖上查看</a>
+            <div class="t-desc">藏王高湯知名溫泉飯店集團，享受傳統酸性硫磺古泉與精緻會席料理。</div>
           </div>
           <div class="t-item">
             <div class="t-dot">4</div>
-            <div class="t-time">2/1 - 2/2</div>
-            <div class="t-title">藏王國際大飯店</div>
+            <div class="t-time">2/1 - 2/2 (1晚)</div>
+            <div class="t-title">藏王國際大飯店（Zao Kokusai Hotel）</div>
             <a href="https://maps.google.com/?q=藏王國際大飯店" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">過橋 1 分鐘到藏王纜車站，搶先登頂看樹冰。</div>
+            <div class="t-desc">過橋 1 分鐘即達藏王索道山麓站，早鳥搶先登頂賞樹冰。</div>
+          </div>
+          <div class="t-item">
+            <div class="t-dot">5</div>
+            <div class="t-time">2/2 - 2/3 (1晚)</div>
+            <div class="t-title">仙台西口大和魯內飯店</div>
+            <a href="https://maps.google.com/?q=Daiwa+Roynet+Hotel+Sendai-Nishiguchi" target="_blank" class="btn-map">📍在地圖上查看</a>
+            <div class="t-desc">西口步行 3-5 分鐘，房間新穎寬敞高質感，方便最後採買打包。</div>
           </div>
         </div>
       </div>
@@ -626,20 +643,30 @@
     <!-- 4. 交通攻略 (Transport) -->
     <section id="tab-transport" class="tab-content">
       <div class="card">
-        <h3 class="card-title">🚅 長途移動與大眾運輸</h3>
-        <div class="t-item" style="margin-bottom:12px;">
-          <div class="t-time">新幹線</div>
-          <div class="t-title">東京 ➔ 仙台（Hayabusa 號）</div>
-          <a href="https://maps.google.com/?q=東京駅" target="_blank" class="btn-map">📍在東京地圖查看</a>
-          <a href="https://maps.google.com/?q=仙台駅" target="_blank" class="btn-map">📍在仙台地圖查看</a>
-          <div class="t-desc">全車指定席，需提前劃位。約 90 分鐘直達。</div>
+        <h3 class="card-title">🚅 長途移動與大眾運輸攻略</h3>
+        <div class="t-item" style="margin-bottom:14px;">
+          <div class="t-time">機場直達</div>
+          <div class="t-title">成田機場 ➔ 京成上野（Skyliner）</div>
+          <a href="https://maps.google.com/?q=京成上野駅" target="_blank" class="btn-map">📍在京成上野站查看</a>
+          <div class="t-desc">全車指定席，約 41 分鐘直達上野，出站即到 APA 飯店。</div>
+        </div>
+        <div class="t-item" style="margin-bottom:14px;">
+          <div class="t-time">東北新幹線</div>
+          <div class="t-title">上野站 ➔ 仙台（Hayabusa 號）</div>
+          <a href="https://maps.google.com/?q=上野駅" target="_blank" class="btn-map">📍在上野站查看</a>
+          <a href="https://maps.google.com/?q=仙台駅" target="_blank" class="btn-map">📍在仙台站查看</a>
+          <div class="t-desc">全車指定席需提早劃位，約 90 分鐘直達。</div>
+        </div>
+        <div class="t-item" style="margin-bottom:14px;">
+          <div class="t-time">專屬包車</div>
+          <div class="t-title">仙台市區 ➔ 狐狸村 ➔ 藏王溫泉</div>
+          <div class="t-desc">7 人專屬包車點對點接送，行李全上車免在雪地拖拉。</div>
         </div>
         <div class="t-item">
-          <div class="t-time">直達巴士</div>
+          <div class="t-time">冬季直達巴士</div>
           <div class="t-title">藏王溫泉 ➔ 仙台站東口</div>
-          <a href="https://maps.google.com/?q=藏王溫泉+巴士總站" target="_blank" class="btn-map">📍在藏王地圖查看</a>
-          <a href="https://maps.google.com/?q=仙台駅" target="_blank" class="btn-map">📍在仙台地圖查看</a>
-          <div class="t-desc">預約制冬季直達高速巴士，行李放底層，車程約 85 分鐘。</div>
+          <a href="https://maps.google.com/?q=藏王溫泉+巴士總站" target="_blank" class="btn-map">📍在藏王站查看</a>
+          <div class="t-desc">預約制冬季直達高速巴士，約 85 分鐘直達仙台。</div>
         </div>
       </div>
     </section>
@@ -651,7 +678,7 @@
         <!-- 東京天氣 -->
         <div class="weather-col" id="weather-tokyo">
           <div class="weather-icon">🗼</div>
-          <div class="weather-city">東京</div>
+          <div class="weather-city">東京 (上野)</div>
           <div class="weather-temp">1°C ~ 9°C</div>
           <div class="weather-condition">多雲時陰</div>
         </div>
@@ -688,49 +715,18 @@
 
   </div>
 
-  <!-- 更換封面與文字彈出視窗 (Modal) -->
-  <div class="modal-overlay" id="coverModal" onclick="closeCoverModal(event)">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <div class="flex justify-between items-center mb-3">
-        <h4 class="font-bold text-slate-800 text-sm">📷 更換封面與自訂標題</h4>
-        <button onclick="closeCoverModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
-      </div>
-
-      <div class="space-y-3">
-        <!-- 方式 A: 張貼圖片網址 -->
-        <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">🔗 方式 1：張貼圖片網址 (URL)</label>
-          <div class="flex gap-2">
-            <input type="url" id="modal-cover-url" placeholder="https://... 或 GitHub 圖片網址" class="flex-1 text-xs p-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500">
-            <button onclick="applyUrlCover()" class="bg-sky-600 text-white text-xs font-bold px-3 py-2 rounded-lg hover:bg-sky-700">套用</button>
-          </div>
-        </div>
-
-        <!-- 方式 B: 本地上傳 -->
-        <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">📁 方式 2：從手機/電腦選取照片</label>
-          <button onclick="document.getElementById('localCoverInput').click()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2 rounded-lg border border-slate-300">
-            📂 選擇照片檔案
-          </button>
-        </div>
-
-        <hr class="border-slate-100 my-2">
-
-        <!-- 文字說明修改 -->
-        <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">✏️ 自訂封面標題文字</label>
-          <input type="text" id="modal-title-input" class="w-full text-xs p-2 rounded-lg border border-slate-200 mb-2 focus:outline-none focus:ring-1 focus:ring-sky-500" placeholder="東北雪國歷險記 ❄️">
-          
-          <label class="block text-xs font-bold text-slate-600 mb-1">📅 自訂日期</label>
-          <input type="text" id="modal-dates-input" class="w-full text-xs p-2 rounded-lg border border-slate-200 mb-2 focus:outline-none focus:ring-1 focus:ring-sky-500" placeholder="2027.01.27 - 02.03">
-
-          <label class="block text-xs font-bold text-slate-600 mb-1">📍 自訂地點說明</label>
-          <input type="text" id="modal-locations-input" class="w-full text-xs p-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500" placeholder="東京 · 仙台 · 藏王溫泉">
-        </div>
-
-        <button onclick="saveCoverTextSettings()" class="w-full bg-sky-600 text-white text-xs font-bold py-2.5 rounded-xl hover:bg-sky-700 shadow-sm mt-2">
-          💾 儲存所有封面設定
-        </button>
+  <!-- 封面與文字管理 Modal 彈窗 -->
+  <div class="modal" id="coverModal">
+    <div class="modal-content">
+      <div class="modal-title">🖼️ 自訂封面與文字</div>
+      <input type="text" id="input-cover-url" class="memo-input" style="width:100%; margin-bottom:8px;" placeholder="張貼圖片網址 (URL)...">
+      <button class="memo-btn" style="width:100%; margin-bottom:12px; background:#475569;" onclick="document.getElementById('coverFileInput').click()">📁 從手機/電腦選取圖片</button>
+      <input type="text" id="input-title" class="memo-input" style="width:100%; margin-bottom:8px;" placeholder="標題（例：東北雪國歷險記 ❄️）">
+      <input type="text" id="input-dates" class="memo-input" style="width:100%; margin-bottom:8px;" placeholder="日期（例：2027.01.27 - 02.03）">
+      <input type="text" id="input-locations" class="memo-input" style="width:100%; margin-bottom:12px;" placeholder="地點（例：東京 · 仙台 · 藏王溫泉）">
+      <div style="display:flex; gap:8px;">
+        <button class="memo-btn" style="flex:1;" onclick="saveCoverSettings()">儲存更新</button>
+        <button class="memo-btn" style="flex:1; background:#94a3b8;" onclick="closeCoverModal()">取消</button>
       </div>
     </div>
   </div>
@@ -738,145 +734,6 @@
   <script>
     let currentTab = 'itinerary';
     let currentDay = 1;
-
-    // 行程資料
-    const daySchedules = {
-      1: { badge: "DAY 1 · 1/27 (三)", title: "抵達成田機場，入住東京人形町", timeline: [
-        { time: "13:30", title: "抵達成田國際機場 (NRT)", mapsQuery: "成田國際機場", desc: "入境通關、領取行李，搭乘京成 Access 特急（直通淺草線）。" },
-        { time: "16:30", title: "東橫 INN 日本橋人形町", mapsQuery: "東橫INN東京日本橋人形町", desc: "辦理入住，放置行李，老街人形燒散策。" }
-      ]},
-      2: { badge: "DAY 2 · 1/28 (四)", title: "東京淺草寺參拜與晴空塔", timeline: [
-        { time: "09:30", title: "淺草寺與仲見世通", mapsQuery: "淺草寺", desc: "雷門參拜、求籤，品嚐在地人形燒與小吃。" },
-        { time: "14:00", title: "東京晴空塔 (Skytree)", mapsQuery: "東京晴空塔", desc: "景觀台眺望東京全景，商場採購伴手禮。" }
-      ]},
-      3: { badge: "DAY 3 · 1/29 (五)", title: "東北新幹線移防仙台，大啖牛舌", timeline: [
-        { time: "10:00", title: "東京站搭乘新幹線", mapsQuery: "東京駅", desc: "搭乘 Hayabusa 號直達仙台，約 90 分鐘。" },
-        { time: "12:30", title: "仙台站牛舌美食街", mapsQuery: "仙台駅", desc: "品嚐炭烤厚切牛舌定食（善治郎/司/利久）。" },
-        { time: "15:00", title: "東橫 INN 仙台站西口中央入住", mapsQuery: "東橫INN仙台站西口中央", desc: "放置行李，西口拱廊商店街採買散策。" }
-      ]},
-      4: { badge: "DAY 4 · 1/30 (六)", title: "日本三景松島海岸巡航", timeline: [
-        { time: "09:00", title: "JR 仙石線前往松島海岸", mapsQuery: "松島海岸駅", desc: "搭乘觀光船遊覽松島灣，參觀五大堂與瑞嚴寺。" },
-        { time: "13:00", title: "品嚐現烤生蠔與魚板", mapsQuery: "松島海岸+觀光街", desc: "品嚐松島在地海味，體驗手烤魚板樂趣。" }
-      ]},
-      5: { badge: "DAY 5 · 1/31 (日)", title: "包車前往藏王狐狸村，入住高見屋", timeline: [
-        { time: "09:00", title: "專車前往藏王狐狸村", mapsQuery: "宮城藏王狐狸村", desc: "近距離觀賞雪地狐狸，體驗抱狐狸（地面滑注意防滑）。" },
-        { time: "15:30", title: "入住百年高見屋旅館", mapsQuery: "深山莊+高見屋", desc: "前往老街租借 2 天滑雪器材，享受百年強酸硫磺古泉。" }
-      ]},
-      6: { badge: "DAY 6 · 2/1 (一)", title: "上之台滑雪場全日課，入住藏王國際", timeline: [
-        { time: "08:30", title: "行李託運轉至藏王國際", mapsQuery: "藏王國際大飯店", desc: "輕裝出發前往上之台滑雪場集合上課。" },
-        { time: "09:00", title: "滑雪教練課 / 不滑雪搭纜車看樹冰", mapsQuery: "藏王溫泉滑雪場", desc: "不滑雪者可從橫倉搭纜車登頂看樹冰，滑雪者在上之台緩坡練習。" },
-        { time: "15:30", title: "入住藏王國際大飯店", mapsQuery: "藏王國際大飯店", desc: "緊鄰橫倉纜車站，享受室內外雪景大浴場。" }
-      ]},
-      7: { badge: "DAY 7 · 2/2 (二)", title: "早鳥纜車賞樹冰，高速巴士回仙台", timeline: [
-        { time: "08:15", title: "早鳥搭乘藏王索道登頂", mapsQuery: "藏王索道+山麓站", desc: "避開團客，趁清晨能見度最佳時前往地藏尊與樹冰群敲鐘。" },
-        { time: "11:00", title: "退房、歸還雪具、溫泉街午餐", mapsQuery: "藏王溫泉街", desc: "享用山形在地特色料理。" },
-        { time: "15:00", title: "搭直達高速巴士回仙台", mapsQuery: "藏王溫泉巴士總站", desc: "在藏王巴士站上車，直達仙台站東口，入住東橫 INN 西口。" }
-      ]},
-      8: { badge: "DAY 8 · 2/3 (三)", title: "三井 Outlet 購物，搭機返台", timeline: [
-        { time: "10:00", title: "三井 Outlet 仙台港採買", mapsQuery: "MITSUI+OUTLET+PARK+仙台港", desc: "購物商場採買伴手禮與免稅商品。" },
-        { time: "14:30", title: "回飯店取行李前往仙台機場", mapsQuery: "仙台機場", desc: "搭乘仙台機場聯絡線鐵路（約 25 分鐘）抵達機場報到返台。" }
-      ]}
-    };
-
-    // 留言板資料管理
-    let tripNotes = JSON.parse(localStorage.getItem('trip_interactive_notes')) || [
-      { id: 1, day: 1, author: "李爸", text: "成田入境後先在 B1 換 JR Pass，順便領 Suica 實體卡！", linkTitle: "成田特快時刻表", linkUrl: "https://www.jreast.co.jp/", time: "10/18 14:00" },
-      { id: 2, day: 3, author: "林媽", text: "仙台車站 3 樓善治郎牛舌建議 11 點先去抽號碼牌！", linkTitle: "善治郎菜單介紹", linkUrl: "https://www.tanya-zenjirou.jp/", time: "10/18 16:30" },
-      { id: 3, day: "all", author: "大姐", text: "藏王山上氣溫約 -8 度，手套要買防水加厚款，暖暖包多帶點！", linkTitle: "藏王山頂即時影像", linkUrl: "https://zaoropeway.co.jp/", time: "10/18 18:00" }
-    ];
-
-    function renderNotes() {
-      const container = document.getElementById('notes-container');
-      const label = document.getElementById('notes-day-label');
-      const selectText = document.getElementById('select-day-text');
-      if (!container) return;
-
-      label.innerText = `Day ${currentDay}`;
-      if (selectText) selectText.innerText = `Day ${currentDay}`;
-
-      // 篩選屬於當天或者通用(all)的筆記
-      const filtered = tripNotes.filter(n => n.day == currentDay || n.day === 'all');
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="text-center py-4 text-xs text-slate-400 bg-slate-50 rounded-xl">此天尚無留言，歡迎在上方留下推薦景點或筆記！</div>`;
-        return;
-      }
-
-      container.innerHTML = filtered.map(note => `
-        <div class="comment-card">
-          <div class="flex items-center justify-between mb-1">
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-xs text-sky-800">${escapeHtml(note.author || '旅伴')}</span>
-              <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">${note.day === 'all' ? '📌 全行程' : 'Day ' + note.day}</span>
-              <span class="text-[10px] text-slate-400">${note.time || ''}</span>
-            </div>
-            <button onclick="deleteNote(${note.id})" class="text-slate-300 hover:text-red-500 text-xs px-1">✕</button>
-          </div>
-          <p class="text-xs text-slate-700 leading-relaxed">${escapeHtml(note.text || '')}</p>
-          ${note.linkUrl ? `
-            <div class="mt-1">
-              <a href="${escapeHtml(note.linkUrl)}" target="_blank" rel="noopener noreferrer" class="comment-link-badge">
-                <span>🔗</span>
-                <span>${escapeHtml(note.linkTitle || note.linkUrl)}</span>
-              </a>
-            </div>
-          ` : ''}
-        </div>
-      `).join('');
-    }
-
-    function addTripNote() {
-      const author = document.getElementById('note-author').value.trim() || '旅伴';
-      const text = document.getElementById('note-text').value.trim();
-      const linkTitle = document.getElementById('note-link-title').value.trim();
-      const linkUrl = document.getElementById('note-link-url').value.trim();
-      const targetDayChoice = document.getElementById('note-target-day').value;
-      const targetDay = targetDayChoice === 'all' ? 'all' : currentDay;
-
-      if (!text && !linkUrl) {
-        alert('請輸入文字說明或貼上網址連結！');
-        return;
-      }
-
-      const now = new Date();
-      const timeStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-      const newNote = {
-        id: Date.now(),
-        day: targetDay,
-        author,
-        text,
-        linkTitle: linkTitle || (linkUrl ? '點擊開啟連結' : ''),
-        linkUrl,
-        time: timeStr
-      };
-
-      tripNotes.unshift(newNote);
-      localStorage.setItem('trip_interactive_notes', JSON.stringify(tripNotes));
-
-      // 清空輸入框
-      document.getElementById('note-text').value = '';
-      document.getElementById('note-link-title').value = '';
-      document.getElementById('note-link-url').value = '';
-
-      renderNotes();
-    }
-
-    function deleteNote(id) {
-      tripNotes = tripNotes.filter(n => n.id !== id);
-      localStorage.setItem('trip_interactive_notes', JSON.stringify(tripNotes));
-      renderNotes();
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
 
     // 天氣預報顯示邏輯
     function updateWeatherDisplay() {
@@ -939,60 +796,44 @@
       window.scrollTo({ top: 160, behavior: 'smooth' });
     }
 
-    function filterDay(dayNum, chip) {
-      document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      currentDay = dayNum;
-      
-      updateWeatherDisplay();
-      renderNotes();
-
-      const sched = daySchedules[dayNum];
-      if (!sched) return;
-
-      let timelineHtml = '';
-      sched.timeline.forEach((t, i) => {
-        timelineHtml += `
-          <div class="t-item">
-            <div class="t-dot">${i+1}</div>
-            <div class="t-time">${t.time}</div>
-            <div class="t-title">${t.title}</div>
-            <a href="https://maps.google.com/?q=${encodeURIComponent(t.mapsQuery)}" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">${t.desc}</div>
-          </div>
-        `;
-      });
-
-      document.getElementById('day-content').innerHTML = `
-        <div class="card-badge">${sched.badge}</div>
-        <h3 class="card-title">${sched.title}</h3>
-        <div class="timeline">${timelineHtml}</div>
-      `;
-    }
-
-    // 封面 Modal 控制
+    // 封面彈窗管理
     function openCoverModal() {
-      document.getElementById('modal-title-input').value = document.getElementById('display-hero-title').innerText;
-      document.getElementById('modal-dates-input').value = document.getElementById('display-hero-dates').innerText;
-      document.getElementById('modal-locations-input').value = document.getElementById('display-hero-locations').innerText;
-      document.getElementById('coverModal').classList.add('show');
+      document.getElementById('input-title').value = document.getElementById('display-title').innerText;
+      document.getElementById('input-dates').value = document.getElementById('display-dates').innerText;
+      document.getElementById('input-locations').value = document.getElementById('display-locations').innerText;
+      document.getElementById('coverModal').style.display = 'flex';
     }
 
-    function closeCoverModal(e) {
-      if (!e || e.target.id === 'coverModal' || e.target.tagName === 'BUTTON') {
-        document.getElementById('coverModal').classList.remove('show');
+    function closeCoverModal() {
+      document.getElementById('coverModal').style.display = 'none';
+    }
+
+    function saveCoverSettings() {
+      const url = document.getElementById('input-cover-url').value.trim();
+      const title = document.getElementById('input-title').value.trim();
+      const dates = document.getElementById('input-dates').value.trim();
+      const locs = document.getElementById('input-locations').value.trim();
+
+      if (url) {
+        document.getElementById('hero-banner-image').style.backgroundImage = `url('${url}')`;
+        localStorage.setItem('custom_cover_image', url);
       }
-    }
-
-    function applyUrlCover() {
-      const url = document.getElementById('modal-cover-url').value.trim();
-      if (!url) return alert('請輸入有效的圖片網址！');
-      document.getElementById('hero-banner-image').style.backgroundImage = `url('${url}')`;
-      localStorage.setItem('custom_cover_image', url);
+      if (title) {
+        document.getElementById('display-title').innerText = title;
+        localStorage.setItem('custom_trip_title', title);
+      }
+      if (dates) {
+        document.getElementById('display-dates').innerText = dates;
+        localStorage.setItem('custom_trip_dates', dates);
+      }
+      if (locs) {
+        document.getElementById('display-locations').innerText = locs;
+        localStorage.setItem('custom_trip_locations', locs);
+      }
       closeCoverModal();
     }
 
-    function handleLocalCoverUpload(input) {
+    function handleFileUpload(input) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -1004,23 +845,7 @@
       }
     }
 
-    function saveCoverTextSettings() {
-      const title = document.getElementById('modal-title-input').value.trim() || '東北雪國歷險記 ❄️';
-      const dates = document.getElementById('modal-dates-input').value.trim() || '2027.01.27 - 02.03';
-      const locations = document.getElementById('modal-locations-input').value.trim() || '東京 · 仙台 · 藏王溫泉';
-
-      document.getElementById('display-hero-title').innerText = title;
-      document.getElementById('display-hero-dates').innerText = dates;
-      document.getElementById('display-hero-locations').innerText = locations;
-
-      localStorage.setItem('custom_hero_title', title);
-      localStorage.setItem('custom_hero_dates', dates);
-      localStorage.setItem('custom_hero_locations', locations);
-
-      closeCoverModal();
-    }
-
-    // 記帳模組
+    // 記帳系統
     let activePayee = 'li';
     let bills = JSON.parse(localStorage.getItem('trip_bills_data')) || [];
 
@@ -1063,9 +888,9 @@
 
         list.innerHTML += `
           <div class="bill-item">
-            <div><span class="desc">${escapeHtml(b.name)}</span> <span style="font-size:0.7rem; color:#64748b;">(${isLi?'李':'林'}墊)</span></div>
+            <div><span class="desc">${b.name}</span> <span style="font-size:0.7rem; color:#64748b;">(${isLi?'李':'林'}墊)</span></div>
             <div>
-              <span class="amt">${b.twd > 0 ? 'NT$ ' + b.twd.toLocaleString() : ''} ${b.jpy > 0 ? ' ¥' + b.jpy.toLocaleString() : ''}</span>
+              <span class="amt">${b.twd > 0 ? 'NT$ ' + b.twd : ''} ${b.jpy > 0 ? ' ¥' + b.jpy : ''}</span>
               <span class="del" onclick="deleteBill(${b.id})">✕</span>
             </div>
           </div>
@@ -1091,25 +916,48 @@
       document.getElementById('settlement').innerText = settleText;
     }
 
-    // 頁面載入初始化
-    window.addEventListener('DOMContentLoaded', () => {
-      // 讀取自訂封面圖片
-      const savedCover = localStorage.getItem('custom_cover_image');
-      if (savedCover) {
-        document.getElementById('hero-banner-image').style.backgroundImage = `url('${savedCover}')`;
-      }
-      // 讀取自訂標題文字
-      const savedTitle = localStorage.getItem('custom_hero_title');
-      const savedDates = localStorage.getItem('custom_hero_dates');
-      const savedLocs = localStorage.getItem('custom_hero_locations');
-      if (savedTitle) document.getElementById('display-hero-title').innerText = savedTitle;
-      if (savedDates) document.getElementById('display-hero-dates').innerText = savedDates;
-      if (savedLocs) document.getElementById('display-hero-locations').innerText = savedLocs;
+    // 8 天行程內容資料庫 (包含更新後的 APA 京成上野、高宮飯店、大和魯內飯店)
+    const daySchedules = {
+      1: { badge: "DAY 1 · 1/27 (三)", title: "抵達成田機場，直達上野阿美橫町", timeline: [
+        { time: "13:30", title: "抵達成田國際機場 (NRT)", mapsQuery: "成田國際機場", desc: "入境通關、領取行李與開通網卡，前往 B1 搭乘京成 Skyliner 特急（直達上野約 41 分鐘）。" },
+        { time: "16:00", title: "APA飯店 京成上野站前 Check-in", mapsQuery: "APA Hotel Keisei Ueno-Ekimae", desc: "出站過馬路步行 1 分鐘即達飯店！放置行李稍作休息。" },
+        { time: "17:30", title: "上野阿美橫町漫遊散策", mapsQuery: "阿美橫町", desc: "逛街採買藥妝零食（二木之菓子），晚餐品嚐一蘭拉麵、伊豆榮鰻魚飯或上野燒肉。" }
+      ]},
+      2: { badge: "DAY 2 · 1/28 (四)", title: "東京經典巡禮：淺草寺與晴空塔", timeline: [
+        { time: "09:30", title: "淺草寺與仲見世通商店街", mapsQuery: "淺草寺", desc: "搭銀座線直達淺草，雷門參拜、求籤，品嚐在地人形燒與小吃。" },
+        { time: "14:00", title: "東京晴空塔 (Skytree)", mapsQuery: "東京晴空塔", desc: "景觀台眺望東京全景，商場採買伴手禮與雪地裝備最後補齊。" },
+        { time: "18:00", title: "返回上野，夜遊不忍池", mapsQuery: "不忍池", desc: "散步回 APA 飯店，欣賞不忍池夜景與品嚐居酒屋。" }
+      ]},
+      3: { badge: "DAY 3 · 1/29 (五)", title: "新幹線移防仙台，大啖厚切牛舌", timeline: [
+        { time: "10:00", title: "上野站搭乘東北新幹線", mapsQuery: "上野駅", desc: "退房步行 3 分鐘至 JR 上野站，搭乘 Hayabusa 號直達仙台（約 90 分鐘）。" },
+        { time: "12:30", title: "仙台站牛舌美食街大啖定食", mapsQuery: "仙台駅", desc: "品嚐炭烤厚切牛舌定食（推薦：善治郎、司、利久）與毛豆泥奶昔。" },
+        { time: "15:00", title: "東橫 INN 仙台站西口中央 Check-in", mapsQuery: "東橫INN仙台站西口中央", desc: "放置行李，西口拱廊商店街採買散策。" }
+      ]},
+      4: { badge: "DAY 4 · 1/30 (六)", title: "日本三景松島海岸巡航，現烤海鮮", timeline: [
+        { time: "09:00", title: "JR 仙石線前往松島海岸", mapsQuery: "松島海岸駅", desc: "搭乘觀光船遊覽松島灣 260 餘座島嶼，參觀五大堂與瑞嚴寺。" },
+        { time: "13:00", title: "品嚐現烤生蠔與手烤魚板", mapsQuery: "松島海岸+觀光街", desc: "品嚐松島在地新鮮海味，體驗手烤魚板樂趣。" }
+      ]},
+      5: { badge: "DAY 5 · 1/31 (日)", title: "包車前往藏王狐狸村，入住高宮飯店", timeline: [
+        { time: "09:00", title: "7 人專屬包車前往藏王狐狸村", mapsQuery: "宮城藏王狐狸村", desc: "近距離觀賞雪地狐狸，體驗抱狐狸（地面濕滑務必穿防滑雪靴）。" },
+        { time: "15:30", title: "入住藏王 高宮飯店（Takamiya Hotel）", mapsQuery: "Takamiya Hotel Zao", desc: "專車直達飯店門口，租借 2 天滑雪器材並試鞋，享受百年傳統酸性硫磺泉。" }
+      ]},
+      6: { badge: "DAY 6 · 2/1 (一)", title: "上之台滑雪場全日課，入住藏王國際", timeline: [
+        { time: "08:30", title: "行李移防藏王國際大飯店", mapsQuery: "藏王國際大飯店", desc: "輕裝出發前往上之台滑雪場集合上課。" },
+        { time: "09:00", title: "滑雪教練課 / 不滑雪搭纜車賞樹冰", mapsQuery: "藏王溫泉滑雪場", desc: "不滑雪者可從橫倉搭纜車登頂看樹冰，滑雪者在上之台緩坡練習。" },
+        { time: "16:00", title: "入住藏王國際大飯店", mapsQuery: "藏王國際大飯店", desc: "緊鄰橫倉纜車站，享受室內外雪景大浴場與豪華山形牛會席。" }
+      ]},
+      7: { badge: "DAY 7 · 2/2 (二)", title: "早鳥纜車賞樹冰，入住仙台西口大和魯內", timeline: [
+        { time: "08:15", title: "早鳥搭乘藏王索道登頂", mapsQuery: "藏王索道+山麓站", desc: "避開團客，趁清晨能見度最佳時前往地藏尊與樹冰群敲鐘拍照。" },
+        { time: "11:00", title: "退房、歸還雪具、老街午餐", mapsQuery: "藏王溫泉街", desc: "享用山形在地特色料理（成吉思汗烤羊肉/蕎麥麵）。" },
+        { time: "15:00", title: "搭直達高速巴士回仙台", mapsQuery: "藏王溫泉巴士總站", desc: "直達仙台站東口，經東西連絡道步行入住「仙台西口大和魯內飯店」，房間寬敞舒適好打包。" }
+      ]},
+      8: { badge: "DAY 8 · 2/3 (三)", title: "三井 Outlet 購物採買，搭機返台", timeline: [
+        { time: "10:00", title: "三井 Outlet 仙台港大採買", mapsQuery: "MITSUI+OUTLET+PARK+仙台港", desc: "購物商場採買日本運動裝備與伴手禮名產。" },
+        { time: "14:30", title: "回飯店取行李前往仙台機場", mapsQuery: "仙台機場", desc: "搭乘仙台機場聯絡線鐵路（約 25 分鐘）直達機場航廈報到返台。" }
+      ]}
+    };
 
-      renderBills();
-      renderNotes();
-      updateWeatherDisplay();
-    });
-  </script>
-</body>
-</html>
+    function filterDay(dayNum, chip) {
+      document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentDay = dayNum
