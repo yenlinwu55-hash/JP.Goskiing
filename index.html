@@ -3,16 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>東北雪國歷險記 ❄️｜旅遊手冊</title>
+  <title>東北雪國歷險記 ❄️｜家庭旅遊手冊</title>
   
-  <!-- 手機加入主畫面的 App Icon 設計連結 -->
   <link rel="apple-touch-icon" href="icon.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
   <link rel="shortcut icon" href="icon.png">
-
-  <!-- PWA Web App Manifest 連結 -->
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -20,15 +15,15 @@
 
   <style>
     :root {
-      --primary: #0284c7;       /* 湛藍 */
-      --primary-dark: #0369a1;  /* 深海藍 */
-      --accent: #38bdf8;        /* 冰雪亮藍 */
-      --bg-start: #e0f2fe;     /* 頂部冰雪藍 */
-      --bg-end: #bae6fd;       /* 下方溫潤水藍漸層 */
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #38bdf8;
+      --bg-start: #e0f2fe;
+      --bg-end: #bae6fd;
       --card-bg: rgba(255, 255, 255, 0.95);
-      --text-main: #0f172a;     /* 墨黑 */
-      --text-sub: #475569;      /* 霧藍灰 */
-      --radius: 22px;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --radius: 20px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
@@ -37,20 +32,20 @@
       background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
       background-attachment: fixed;
       color: var(--text-main); 
-      padding-bottom: 60px;
+      padding-bottom: 70px;
       min-height: 100vh;
     }
 
     .container {
-      max-width: 480px;
+      max-width: 500px;
       margin: 0 auto;
       padding: 0 16px;
     }
 
-    /* 頂部封面卡片：橫向 16:9.5 比例 */
+    /* 頂部封面卡片 */
     .hero-wrapper {
       margin-top: 18px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .hero-card {
@@ -68,7 +63,6 @@
       justify-content: flex-end;
     }
 
-    /* 右上角更換封面按鈕 */
     .change-cover-btn {
       position: absolute;
       top: 12px;
@@ -87,10 +81,8 @@
       align-items: center;
       gap: 6px;
       z-index: 2;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    /* 左下角標題與日期文字覆蓋區 */
     .hero-caption {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(15, 23, 42, 0.82) 100%);
       padding: 35px 16px 14px;
@@ -102,34 +94,30 @@
       font-size: 1.35rem;
       font-weight: 800;
       letter-spacing: 0.5px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
     .hero-dates {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       opacity: 0.95;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-      margin-bottom: 1px;
     }
 
     .hero-locations {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       opacity: 0.9;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-      font-weight: 600;
     }
 
-    /* 水藍色 膠囊導航列 */
+    /* 七大核心主選單導航列 */
     .tab-nav-wrapper {
       position: sticky;
       top: 10px;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       padding: 8px 10px;
@@ -140,7 +128,7 @@
       -webkit-overflow-scrolling: touch;
       display: flex;
       gap: 6px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       box-shadow: 0 4px 15px rgba(2, 132, 199, 0.08);
     }
     .tab-nav-wrapper::-webkit-scrollbar { display: none; }
@@ -149,15 +137,16 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 8px 14px;
+      padding: 7px 13px;
       border-radius: 20px;
       border: none;
-      background: rgba(241, 245, 249, 0.9);
+      background: rgba(241, 245, 249, 0.95);
       color: #334155;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
+      flex-shrink: 0;
     }
     .tab-btn.active {
       background: var(--primary);
@@ -165,25 +154,25 @@
       box-shadow: 0 3px 8px rgba(2, 132, 199, 0.35);
     }
 
-    /* 每日行程天數膠囊 */
+    /* 每日天數選擇膠囊 */
     .day-selector {
       display: flex;
       gap: 6px;
       overflow-x: auto;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       padding-bottom: 2px;
     }
     .day-selector::-webkit-scrollbar { display: none; }
 
     .day-chip {
       flex: 0 0 auto;
-      padding: 6px 12px;
+      padding: 6px 11px;
       background: var(--card-bg);
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: 12px;
       text-align: center;
       cursor: pointer;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       color: var(--text-sub);
     }
@@ -194,12 +183,42 @@
       box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
     }
 
-    /* 白底卡片通用 */
+    /* 方案切換膠囊 (方案A/B/C/D) */
+    .plan-switch-wrapper {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 4px;
+      border-radius: 14px;
+      border: 1px solid #bae6fd;
+    }
+
+    .plan-chip {
+      flex: 1;
+      padding: 6px 4px;
+      text-align: center;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .plan-chip.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15);
+      border: 1px solid #7dd3fc;
+    }
+
+    /* 卡片設計 */
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 18px;
-      margin-bottom: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
       box-shadow: 0 6px 18px rgba(2, 132, 199, 0.05);
       border: 1.5px solid rgba(255, 255, 255, 0.9);
     }
@@ -214,43 +233,41 @@
     }
 
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 800;
       color: var(--text-main);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
-    /* Google Maps 導航按鈕 */
+    /* 地圖連結按鈕 */
     .btn-map {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       color: var(--primary);
       text-decoration: none;
       background: #f0f9ff;
       padding: 3px 8px;
       border-radius: 8px;
-      margin-top: 4px;
-      margin-bottom: 6px;
+      margin-top: 3px;
+      margin-bottom: 5px;
       border: 1px solid #bae6fd;
       transition: all 0.2s ease;
     }
-    .btn-map:hover {
-      background: #e0f2fe;
-      color: var(--primary-dark);
-    }
+    .btn-map:hover { background: #e0f2fe; color: var(--primary-dark); }
 
-    /* 時間軸排版 */
+    /* 時間軸 */
     .timeline {
       position: relative;
-      padding-left: 26px;
+      padding-left: 24px;
+      margin-bottom: 14px;
     }
     .timeline::before {
       content: '';
       position: absolute;
-      left: 10px;
+      left: 9px;
       top: 6px;
       bottom: 6px;
       width: 2px;
@@ -259,250 +276,165 @@
 
     .t-item {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-
     .t-dot {
       position: absolute;
-      left: -26px;
+      left: -24px;
       top: 0;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background: #fff;
       border: 2px solid #e11d48;
       color: #e11d48;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .t-time {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 800;
       color: #e11d48;
     }
-
     .t-title {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: var(--text-main);
-      margin: 2px 0 1px 0;
+      margin: 1px 0;
     }
-
     .t-desc {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-sub);
       line-height: 1.45;
     }
 
-    /* 旅伴留言與自訂連結區塊 */
-    .memo-section {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1.5px dashed #bae6fd;
-    }
-
-    .memo-title {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .memo-input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .memo-input {
-      padding: 9px 12px;
-      border-radius: 10px;
-      border: 1.5px solid #bae6fd;
-      font-size: 0.82rem;
-      background: #fff;
-    }
-    .memo-input:focus { outline: none; border-color: var(--primary); }
-
-    .memo-btn {
-      padding: 10px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .memo-card {
+    /* 每日行程備忘方塊 */
+    .memo-block {
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 10px 12px;
-      margin-bottom: 8px;
-      position: relative;
+      margin-top: 8px;
+      border-left: 4px solid var(--primary);
+      font-size: 0.78rem;
+      line-height: 1.45;
     }
-
-    .memo-author {
-      font-size: 0.74rem;
+    .memo-block.food { border-left-color: #f59e0b; background: #fffbeb; }
+    .memo-block.traffic { border-left-color: #0284c7; background: #f0f9ff; }
+    .memo-block.warn { border-left-color: #ef4444; background: #fef2f2; }
+    .memo-block-title {
       font-weight: 800;
-      color: var(--primary);
+      font-size: 0.75rem;
       margin-bottom: 2px;
-    }
-
-    .memo-text {
-      font-size: 0.8rem;
-      color: var(--text-main);
-      line-height: 1.4;
-      margin-bottom: 4px;
-    }
-
-    .memo-link {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #0284c7;
-      text-decoration: underline;
-      word-break: break-all;
-    }
-
-    .memo-del {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      color: #94a3b8;
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    /* 底部天氣預報：置於每頁最下方 */
-    .weather-bottom-card {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: var(--radius);
-      padding: 16px 14px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      text-align: center;
-      border: 1.5px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.06);
-      transition: all 0.3s ease;
-    }
-
-    .weather-bottom-card.hide { display: none; }
-
-    .weather-header-title {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
+      gap: 4px;
     }
+    .memo-block.food .memo-block-title { color: #b45309; }
+    .memo-block.traffic .memo-block-title { color: #0369a1; }
+    .memo-block.warn .memo-block-title { color: #b91c1c; }
 
-    .weather-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      justify-content: center;
+    /* 交通清單卡片 */
+    .traffic-item {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
     }
-
-    .weather-grid.single-col { grid-template-columns: 1fr; }
-    .weather-grid.double-col { grid-template-columns: repeat(2, 1fr); }
-
-    .weather-col {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      font-size: 0.78rem;
-    }
-    .weather-col.show { display: flex; }
-
-    .weather-icon {
-      font-size: 2.2rem;
-      margin-bottom: 6px;
-      filter: drop-shadow(0 2px 4px rgba(2, 132, 199, 0.15));
-    }
-
-    .weather-city {
+    .traffic-seq {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 0.68rem;
       font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 2px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-bottom: 4px;
     }
-
-    .weather-temp {
+    .traffic-name { font-size: 0.9rem; font-weight: 800; color: var(--text-main); margin-bottom: 3px; }
+    .traffic-tag {
+      display: inline-block;
+      font-size: 0.68rem;
       font-weight: 700;
-      color: var(--primary-dark);
-      font-size: 0.74rem;
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-right: 4px;
+      margin-bottom: 6px;
     }
+    .tag-req { background: #fee2e2; color: #dc2626; }
+    .tag-no { background: #e0f2fe; color: #0284c7; }
+    .traffic-note { font-size: 0.76rem; color: var(--text-sub); line-height: 1.4; margin-top: 4px; }
+    .traffic-link { display: inline-block; font-size: 0.72rem; color: #0284c7; font-weight: 700; text-decoration: underline; margin-top: 4px; }
 
-    .weather-condition {
-      color: var(--text-sub);
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-
-    /* 記帳模組 */
-    .pay-switch { display: flex; gap: 8px; margin-bottom: 12px; }
+    /* 記帳模組樣式 */
+    .pay-switch { display: flex; gap: 8px; margin-bottom: 10px; }
     .pay-opt {
-      flex: 1; padding: 10px; text-align: center; border-radius: 12px;
-      border: 1.5px solid #bae6fd; font-size: 0.82rem; font-weight: 700;
+      flex: 1; padding: 9px; text-align: center; border-radius: 10px;
+      border: 1.5px solid #bae6fd; font-size: 0.78rem; font-weight: 700;
       cursor: pointer; background: #fff;
     }
     .pay-opt.active { background: #e0f2fe; border-color: var(--primary); color: var(--primary); }
 
-    .amt-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .amt-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
     .amt-box { display: flex; flex-direction: column; }
-    .amt-box label { font-size: 0.7rem; font-weight: 700; color: var(--text-sub); margin-bottom: 4px; }
-    .amt-box input { padding: 9px 12px; border-radius: 10px; border: 1.5px solid #bae6fd; font-size: 0.88rem; font-weight: 700; }
+    .amt-box label { font-size: 0.68rem; font-weight: 700; color: var(--text-sub); margin-bottom: 3px; }
+    .amt-box input { padding: 8px 10px; border-radius: 10px; border: 1.5px solid #bae6fd; font-size: 0.85rem; font-weight: 700; }
 
     .btn-add-bill {
-      width: 100%; padding: 11px; background: var(--primary); color: white; border: none;
-      border-radius: 12px; font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-bottom: 14px;
+      width: 100%; padding: 10px; background: var(--primary); color: white; border: none;
+      border-radius: 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-bottom: 12px;
     }
 
-    .bill-item { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.82rem; }
+    .bill-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.8rem; }
     .bill-item .desc { font-weight: 700; }
     .bill-item .amt { font-weight: 800; color: var(--primary); }
-    .bill-item .del { color: #ef4444; cursor: pointer; margin-left: 8px; }
+    .bill-item .del { color: #ef4444; cursor: pointer; margin-left: 8px; font-weight: bold; }
 
-    .summary-card { background: #e0f2fe; border-radius: 14px; padding: 12px; margin-top: 14px; }
-    .summary-title { font-size: 0.78rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; }
-    .summary-row { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 4px; }
+    .summary-card { background: #e0f2fe; border-radius: 12px; padding: 12px; margin-top: 12px; }
+    .summary-title { font-size: 0.76rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; }
     .summary-row.total { border-top: 1px dashed #7dd3fc; padding-top: 6px; margin-top: 6px; font-weight: 800; color: var(--primary-dark); }
 
-    /* 封面彈窗 Modal */
+    /* 底部天氣預報 */
+    .weather-bottom-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius);
+      padding: 14px 12px;
+      margin-top: 18px;
+      text-align: center;
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.06);
+    }
+    .weather-bottom-card.hide { display: none; }
+    .weather-header-title {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .weather-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; justify-content: center; }
+    .weather-grid.single-col { grid-template-columns: 1fr; }
+    .weather-grid.double-col { grid-template-columns: repeat(2, 1fr); }
+    .weather-col { display: none; flex-direction: column; align-items: center; font-size: 0.74rem; }
+    .weather-col.show { display: flex; }
+    .weather-icon { font-size: 2rem; margin-bottom: 4px; }
+    .weather-city { font-weight: 800; margin-bottom: 1px; }
+    .weather-temp { font-weight: 700; color: var(--primary-dark); font-size: 0.72rem; }
+    .weather-condition { color: var(--text-sub); font-size: 0.68rem; font-weight: 600; }
+
+    /* Modal 彈窗 */
     .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.55);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.55); z-index: 999; justify-content: center; align-items: center; padding: 16px;
     }
     .modal-content {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      background: white; border-radius: 20px; padding: 18px; max-width: 380px; width: 100%;
     }
-    .modal-title { font-size: 1rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 12px; }
+    .modal-input { width: 100%; padding: 8px 10px; margin-bottom: 8px; border-radius: 8px; border: 1.5px solid #bae6fd; font-size: 0.8rem; }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
@@ -511,7 +443,6 @@
 </head>
 <body>
 
-  <!-- 本地上傳隱藏 input -->
   <input type="file" id="coverFileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
 
   <div class="container">
@@ -528,12 +459,15 @@
       </div>
     </div>
 
-    <!-- 水藍導航列 -->
+    <!-- 七大核心主選單 -->
     <nav class="tab-nav-wrapper">
       <button class="tab-btn active" onclick="switchTab('itinerary', this)">📅 每日行程</button>
-      <button class="tab-btn" onclick="switchTab('billing', this)">💰 花費紀錄</button>
-      <button class="tab-btn" onclick="switchTab('hotel', this)">✈️ 航班住宿</button>
+      <button class="tab-btn" onclick="switchTab('flight-hotel', this)">✈️ 航班住宿</button>
       <button class="tab-btn" onclick="switchTab('transport', this)">🚅 交通攻略</button>
+      <button class="tab-btn" onclick="switchTab('food', this)">🍱 美食攻略</button>
+      <button class="tab-btn" onclick="switchTab('shopping', this)">🛍️ 購物攻略</button>
+      <button class="tab-btn" onclick="switchTab('billing', this)">💰 花費紀錄</button>
+      <button class="tab-btn" onclick="switchTab('notice', this)">ℹ️ 旅遊須知</button>
     </nav>
 
     <!-- 1. 每日行程 (Itinerary) -->
@@ -549,32 +483,292 @@
         <div class="day-chip" onclick="filterDay(8, this)">Day 8<br><small>2/3</small></div>
       </div>
 
-      <div class="card" id="day-content">
-        <!-- 由 JS 動態注入行程項目與時間軸 -->
+      <!-- 方案 A / B / C / D 切換器 -->
+      <div class="plan-switch-wrapper" id="plan-switch-bar">
+        <div class="plan-chip active" onclick="switchPlan('A', this)">方案 A (首選)</div>
+        <div class="plan-chip" onclick="switchPlan('B', this)">方案 B</div>
+        <div class="plan-chip" onclick="switchPlan('C', this)">方案 C</div>
+        <div class="plan-chip" onclick="switchPlan('D', this)">方案 D</div>
       </div>
 
-      <!-- 知道網址的旅伴專屬互動留言板 -->
-      <div class="card">
-        <div class="memo-title">💬 旅伴備忘與打卡推薦（可張貼網址）</div>
-        <div class="memo-input-group">
-          <input type="text" id="memo-author" class="memo-input" placeholder="您的暱稱（例：李爸、林媽、大姐）">
-          <input type="text" id="memo-desc" class="memo-input" placeholder="文字說明或美食備忘...">
-          <input type="url" id="memo-url" class="memo-input" placeholder="可貼上網址/IG/Google地圖連結 (選填)">
-          <button class="memo-btn" onclick="addMemo()">📌 新增到今日備忘</button>
-        </div>
-        <div id="memo-list"></div>
+      <div class="card" id="day-content">
+        <!-- JS 動態渲染行程內容、時間軸、備忘錄 -->
       </div>
     </section>
 
-    <!-- 2. 花費紀錄 (Billing) -->
+    <!-- 2. 航班住宿 (Flight & Hotel) -->
+    <section id="tab-flight-hotel" class="tab-content">
+      <div class="card">
+        <div class="card-badge">FLIGHTS · 台灣虎航直飛</div>
+        <h3 class="card-title">✈️ 航班時刻與注意事項</h3>
+        
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:10px;">
+          <div style="font-weight:800; color:var(--primary); font-size:0.85rem;">🛫 去程：高雄 (KHH) ➔ 東京成田 (NRT)</div>
+          <div style="font-size:0.8rem; font-weight:700; margin:4px 0;">航班：台灣虎航 IT280 ｜ 2027/01/27 (三)</div>
+          <div style="font-size:0.78rem; color:#475569;">時間：<strong>08:00 起飛 ➔ 12:10 抵達成田 (第2航廈)</strong></div>
+          <div class="memo-block warn" style="margin-top:6px;">⚠️ <strong>無機上餐飲</strong>：航程約 3 小時 10 分，建議在高雄小港出境後購買飲水與輕食，或自備乾糧果腹。</div>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px;">
+          <div style="font-weight:800; color:var(--primary); font-size:0.85rem;">🛬 回程：仙台 (SDJ) ➔ 高雄 (KHH)</div>
+          <div style="font-size:0.8rem; font-weight:700; margin:4px 0;">航班：台灣虎航 IT773 ｜ 2027/02/03 (三)</div>
+          <div style="font-size:0.78rem; color:#475569;">時間：<strong>18:50 起飛 ➔ 22:30 抵達高雄小港</strong></div>
+          <div class="memo-block warn" style="margin-top:6px;">⚠️ <strong>無機上餐飲</strong>：最遲 16:20 需抵達仙台機場櫃檯報到；過海關前可於機場 2F 伴手禮街與餐廳用餐。</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-badge">HOTELS · 雙家庭住宿清單與付款註記</div>
+        <h3 class="card-title">🏨 飯店明細與訂房現況</h3>
+
+        <!-- 飯店 1 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">1/27 ~ 1/29 (2晚)</div>
+          <div class="traffic-name">APA飯店 京成上野站前 (APA Hotel Keisei Ueno-Ekimae)</div>
+          <a href="https://maps.google.com/?q=APA+Hotel+Keisei+Ueno-Ekimae" target="_blank" class="btn-map">📍在地圖上查看</a>
+          <div class="traffic-note">
+            • 房型：<strong>三間雙人房 ＋ 一間單人房</strong><br>
+            • 預訂管道：<strong>林媽媽 AGODA 預付</strong><br>
+            • 付款狀態：林家已付，<span style="color:#ef4444; font-weight:800;">李媽媽尚未付款</span>（列入花費找補）<br>
+            • 特點：出京成 Skyliner 上野站過馬路 1 分鐘，直達阿美橫丁。
+          </div>
+        </div>
+
+        <!-- 飯店 2 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">1/29 ~ 1/31 (2晚)</div>
+          <div class="traffic-name">東橫 INN 仙台站西口中央</div>
+          <a href="https://maps.google.com/?q=東橫INN+仙台站西口中央" target="_blank" class="btn-map">📍在地圖上查看</a>
+          <div class="traffic-note">
+            • 房型：雙家庭配置（附免費早餐）<br>
+            • 預訂管道：<strong>李媽媽官網預定</strong><br>
+            • 付款狀態：<span style="color:#ef4444; font-weight:800;">現場付款（尚未付款）</span>，退房時拆帳。<br>
+            • 特點：仙台站西口步行約 5 分鐘，購物飲食極其便利。
+          </div>
+        </div>
+
+        <!-- 飯店 3 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">1/31 ~ 2/1 (1晚)</div>
+          <div class="traffic-name">藏王 高宮飯店 (Takamiya Hotel)</div>
+          <a href="https://maps.google.com/?q=Takamiya+Hotel+Zao" target="_blank" class="btn-map">📍在地圖上查看</a>
+          <div class="traffic-note">
+            • 餐食：<strong>含精緻日式會席晚餐 ＋ 傳統朝食</strong><br>
+            • 預訂管道：<strong>李媽媽官網預定</strong><br>
+            • 付款狀態：<span style="color:#10b981; font-weight:800;">兩家皆已付款完成 ✅</span><br>
+            • 特點：藏王高湯百年歷史溫泉，專車直達門口，近上之台雪場。
+          </div>
+        </div>
+
+        <!-- 飯店 4 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">2/1 ~ 2/2 (1晚)</div>
+          <div class="traffic-name">藏王國際大飯店 (Zao Kokusai Hotel)</div>
+          <a href="https://maps.google.com/?q=藏王國際大飯店" target="_blank" class="btn-map">📍在地圖上查看</a>
+          <div class="traffic-note">
+            • 餐食：<strong>含山形牛會席料理晚宴 ＋ 豪華自助早餐</strong><br>
+            • 預訂管道與狀態：<br>
+              - <strong>林媽媽 AGODA 訂房：已付款 ✅</strong><br>
+              - <strong>李媽媽 官網訂房：已付款 ✅</strong><br>
+            • 特點：過木橋 1 分鐘到藏王索道山麓站，早鳥搭纜車看樹冰免排隊。
+          </div>
+        </div>
+
+        <!-- 飯店 5 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">2/2 ~ 2/3 (1晚)</div>
+          <div class="traffic-name">仙台西口大和魯內飯店 (Daiwa Roynet Hotel Sendai-Nishiguchi)</div>
+          <a href="https://maps.google.com/?q=Daiwa+Roynet+Hotel+Sendai-Nishiguchi" target="_blank" class="btn-map">📍在地圖上查看</a>
+          <div class="traffic-note">
+            • 預訂管道：<strong>林媽媽 AGODA 預定</strong><br>
+            • 付款狀態：<span style="color:#ef4444; font-weight:800;">李媽媽尚未付款</span>（列入花費找補）<br>
+            • 特點：仙台站西口步行約 3-5 分鐘，房間新穎寬敞好打包，最後一晚享受。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 交通攻略 (Transport) -->
+    <section id="tab-transport" class="tab-content">
+      <div class="card">
+        <div class="card-badge">SEQUENCE & RESERVATION</div>
+        <h3 class="card-title">🚅 交通工具先後順序、預約與搭乘要點</h3>
+
+        <!-- 交通 1 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">序號 1 · 1/27 (Day 1)</div>
+          <div class="traffic-name">京成電鐵 Skyliner 特急（成田機場 ➔ 京成上野）</div>
+          <div><span class="traffic-tag tag-req">需劃位指定席</span><span class="traffic-tag tag-no">不可刷 IC 卡直接進站</span></div>
+          <div class="traffic-note">
+            • 車程：約 41 分鐘直達京成上野站。<br>
+            • 預定網站：<a href="https://www.keisei.co.jp/keisei/tetudou/skyliner/tc/" target="_blank" class="traffic-link">京成 Skyliner 官網預約購票</a> 或 Klook / KKday 購買換票憑證。<br>
+            • 注意事項：入境成田後下至 B1「京成電鐵售票櫃檯或售票機」出示憑證劃位取實體票。出站由「池之端口」步行 1 分鐘即達 APA 飯店。
+          </div>
+        </div>
+
+        <!-- 交通 2 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">序號 2 · 1/27~1/28 (Day 1~2)</div>
+          <div class="traffic-name">東京地鐵（銀座線 / 都營淺草線 / JR山手線）</div>
+          <div><span class="traffic-tag tag-no">無需預約</span><span class="traffic-tag tag-no">直接刷 Suica / iPhone 交通卡</span></div>
+          <div class="traffic-note">
+            • 適用區間：上野 ➔ 淺草（銀座線 5 分鐘）、押上 ➔ 新宿（淺草線轉 JR）。<br>
+            • 注意事項：7 人出行請全部手機開通 Apple Pay / Google Wallet 綁定 Suica 或 ICOCA，進出閘門最快速。
+          </div>
+        </div>
+
+        <!-- 交通 3 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">序號 3 · 1/29 (Day 3)</div>
+          <div class="traffic-name">JR 東北新幹線 Hayabusa 號（上野站 ➔ 仙台站）</div>
+          <div><span class="traffic-tag tag-req">全車指定席（必須預約）</span></div>
+          <div class="traffic-note">
+            • 車程：約 90 分鐘直達仙台。<br>
+            • 預定網站：<a href="https://www.eki-net.com/zh-CHS/jreast-train-reservation/Top/Index" target="_blank" class="traffic-link">JR 東日本網路訂票系統 (Eki-Net)</a>（搭車前 1 個月台灣時間上午 9:00 開放劃位）。<br>
+            • 注意事項：<strong>全車無自由席！</strong>大型行李若長寬高總和超過 160 公分，劃位時需勾選「特大荷物預約席」。退房後從 APA 步行 3 分鐘即可至 JR 上野站新幹線月台。
+          </div>
+        </div>
+
+        <!-- 交通 4 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">序號 4 · 1/30 (Day 4)</div>
+          <div class="traffic-name">JR 仙石線（仙台站 ➔ 松島海岸站）</div>
+          <div><span class="traffic-tag tag-no">無需預約</span><span class="traffic-tag tag-no">刷 IC 卡乘車</span></div>
+          <div class="traffic-note">
+            • 車程：約 40 分鐘，班次密集。<br>
+            • 注意事項：務必在<strong>「松島海岸站」</strong>下車（觀光核心區），切勿搭到東北本線的「松島站」（離海邊走路需 20 分鐘）。去程建議坐在前進方向<strong>右側車窗</strong>賞海景。
+          </div>
+        </div>
+
+        <!-- 交通 5 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">序號 5 · 1/31 (Day 5)</div>
+          <div class="traffic-name">7人專屬包車（仙台飯店 ➔ 藏王狐狸村 ➔ 藏王高宮飯店）</div>
+          <div><span class="traffic-tag tag-req">必須預約（包車公司）</span></div>
+          <div class="traffic-note">
+            • 行程：09:00 仙台東橫 INN 出發，10:15~12:15 狐狸村，14:30 直達藏王高宮飯店門口。<br>
+            • 注意事項：所有大行李一次全上專車，點對點接送，完全不用在雪地拉行李或轉乘巴士。司機會在狐狸村停車場等候。
+          </div>
+        </div>
+
+        <!-- 交通 6 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">序號 6 · 2/2 (Day 7)</div>
+          <div class="traffic-name">山交冬季高速巴士（藏王溫泉巴士站 ➔ 仙台站東口）</div>
+          <div><span class="traffic-tag tag-req">季節性預約制（強烈建議預約）</span></div>
+          <div class="traffic-note">
+            • 車程：約 85 分鐘直達仙台站東口。<br>
+            • 建議班次：<strong>15:30 藏王溫泉發車 ➔ 16:55 抵達仙台站東口</strong>。<br>
+            • 預定網站：<a href="https://travel.yamagatakotsu.jp/zh-tw/timetable/highway-sendai-zaoline.html" target="_blank" class="traffic-link">山交巴士 藏王~仙台時刻與預約</a>（搭車前 1 個月開放預訂）。<br>
+            • 注意事項：大件行李可免費放巴士底層行李艙。抵達仙台東口後經室內連絡通道步行 3 分鐘至西口大和魯內飯店。
+          </div>
+        </div>
+
+        <!-- 交通 7 -->
+        <div class="traffic-item">
+          <div class="traffic-seq">序號 7 · 2/3 (Day 8)</div>
+          <div class="traffic-name">仙台機場 Access 線（仙台站 ➔ 仙台機場航廈）</div>
+          <div><span class="traffic-tag tag-no">無需預約</span><span class="traffic-tag tag-no">刷 IC 卡乘車</span></div>
+          <div class="traffic-note">
+            • 車程：快速電車 17 分鐘、普通電車 25 分鐘。<br>
+            • 注意事項：出站即為機場 2F 出境大廳。配合 18:50 班機，建議搭乘 15:30~16:00 之間發車的班次前往。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 美食攻略 (Food) -->
+    <section id="tab-food" class="tab-content">
+      <div class="card">
+        <div class="card-badge">MUST-EAT LIST</div>
+        <h3 class="card-title">🍱 東北必吃美食推薦清單</h3>
+        
+        <div class="traffic-item">
+          <div class="traffic-seq">仙台必吃</div>
+          <div class="traffic-name">炭烤厚切牛舌定食</div>
+          <div class="traffic-note">
+            • <strong>牛たん炭火焼 善治郎 (仙台站前本店)</strong>：招牌極厚切牛舌，附麥飯、牛肉清湯、山藥泥。<a href="https://maps.google.com/?q=牛たん炭火焼+善治郎+仙台駅前本店" target="_blank" class="btn-map">📍善治郎地圖</a><br>
+            • <strong>牛舌 司 (Tsukasa 虎橫店)</strong>：炭香濃郁熟成牛舌，極品燉牛舌。<br>
+            • <strong>利久牛舌 (西口店)</strong>：經典品質穩定，套餐豐富。
+          </div>
+        </div>
+
+        <div class="traffic-item">
+          <div class="traffic-seq">松島必吃</div>
+          <div class="traffic-name">現烤牡蠣 (生蠔) ＆ 手烤魚板</div>
+          <div class="traffic-note">
+            • <strong>松島魚市場 燒烤牡蠣小屋</strong>：鐵板帶殼現蒸現烤肥美生蠔，牡蠣漢堡。<a href="https://maps.google.com/?q=松島さかな市場+焼がきハウス" target="_blank" class="btn-map">📍魚市場牡蠣地圖</a><br>
+            • <strong>阿部蒲鉾店 松島寺町店</strong>：自己動手烤熱騰騰的笹魚板（每串約 ¥300）。
+          </div>
+        </div>
+
+        <div class="traffic-item">
+          <div class="traffic-seq">藏王與山形</div>
+          <div class="traffic-name">頂級山形牛會席 ＆ 成吉思汗烤羊肉</div>
+          <div class="traffic-note">
+            • <strong>高宮飯店 / 藏王國際</strong>：晚餐精緻山形牛陶板燒與壽喜燒。<br>
+            • <strong>成吉思汗烤羊肉 (ろばた Robata)</strong>：藏王溫泉發祥特色無羶味烤羊肉。
+          </div>
+        </div>
+
+        <div class="traffic-item">
+          <div class="traffic-seq">名物甜點</div>
+          <div class="traffic-name">毛豆甜點 ＆ 人形燒</div>
+          <div class="traffic-note">
+            • <strong>ずんだ茶寮 (Zunda Saryo)</strong>：仙台站必喝毛豆泥奶昔（微甜濃郁豆香）。<br>
+            • <strong>喜久福 (Kikufuku)</strong>：抹茶生奶油大福（《排球少年》《咒術迴戰》名場面同款）。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 購物攻略 (Shopping) -->
+    <section id="tab-shopping" class="tab-content">
+      <div class="card">
+        <div class="card-badge">SHOPPING SPOTS</div>
+        <h3 class="card-title">🛍️ 沿線採買與必逛地點指南</h3>
+        
+        <div class="traffic-item">
+          <div class="traffic-seq">東京上野 (1/27~1/28)</div>
+          <div class="traffic-name">阿美橫丁 ＆ 吉池大樓 UNIQLO 旗艦店</div>
+          <div class="traffic-note">
+            • <strong>二木之菓子 (阿美橫)</strong>：零食批發免稅天堂，採買整箱日式仙貝、軟糖、伴手禮。<br>
+            • <strong>御徒町吉池本店 (1F~4F)</strong>：超大型 UNIQLO & GU 旗艦店，發熱衣、羽絨衣款式最齊；B1/B2 採買當季日本草莓。<a href="https://maps.google.com/?q=吉池本店" target="_blank" class="btn-map">📍吉池大樓地圖</a>
+          </div>
+        </div>
+
+        <div class="traffic-item">
+          <div class="traffic-seq">仙台站前 (1/29 & 2/2)</div>
+          <div class="traffic-name">S-PAL 百貨 ＆ 排球少年周邊</div>
+          <div class="traffic-note">
+            • <strong>Animate 仙台店 (EBeanS 商場 8F)</strong>：全東北最大動漫店，《排球少年》官方周邊旗艦展售。<a href="https://maps.google.com/?q=アニメイト仙台" target="_blank" class="btn-map">📍Animate地圖</a><br>
+            • <strong>S-PAL 仙台 (東館/本館 2F)</strong>：宮城特產街，一口氣買齊萩之月、白謙魚板、地酒。
+          </div>
+        </div>
+
+        <div class="traffic-item">
+          <div class="traffic-seq">仙台港 (2/3 Day 8)</div>
+          <div class="traffic-name">三井 OUTLET PARK 仙台港</div>
+          <div class="traffic-note">
+            • 東北最大 Outlet，進駐 Mont-bell、Columbia、Nike、Adidas 等戶外運動與日系品牌，可直達機場前最後血拚。<a href="https://maps.google.com/?q=MITSUI+OUTLET+PARK+仙台港" target="_blank" class="btn-map">📍三井Outlet地圖</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 花費紀錄 (Billing) -->
     <section id="tab-billing" class="tab-content">
       <div class="card">
-        <h3 class="card-title">💵 代墊記帳與分攤</h3>
+        <div class="card-badge">SPLIT BILL · 4:3 RATIO</div>
+        <h3 class="card-title">💰 雙家庭代墊記帳與自動結算 (李家4人 : 林家3人)</h3>
+        
         <div class="pay-switch">
           <div class="pay-opt active" id="pay-opt-li" onclick="setPayee('li')">李家代墊 (4人)</div>
           <div class="pay-opt" id="pay-opt-lin" onclick="setPayee('lin')">林家代墊 (3人)</div>
         </div>
-        <input type="text" id="bill-name" placeholder="項目（例：晚餐、車票...）" style="width:100%; padding:9px; margin-bottom:10px; border-radius:10px; border:1.5px solid #bae6fd;">
+
+        <input type="text" id="bill-name" placeholder="項目（例：晚餐、車票、門票...）" style="width:100%; padding:9px; margin-bottom:8px; border-radius:10px; border:1.5px solid #bae6fd;">
+        
         <div class="amt-inputs">
           <div class="amt-box">
             <label>台幣金額 (NT$)</label>
@@ -585,125 +779,82 @@
             <input type="number" id="bill-jpy" value="0">
           </div>
         </div>
-        <button class="btn-add-bill" onclick="addBill()">➕ 新增花費紀錄</button>
+
+        <button class="btn-add-bill" onclick="addBill()">➕ 新增代墊花費紀錄</button>
+
+        <div style="font-weight:800; font-size:0.85rem; color:var(--primary-dark); margin:10px 0 6px;">📝 已記錄款項清單：</div>
         <div id="bill-list"></div>
+
         <div class="summary-card">
-          <div class="summary-title">📊 費用總結與代墊找補 (4:3 拆帳)</div>
+          <div class="summary-title">📊 費用總結與最終代墊找補 (李4 : 林3)</div>
           <div class="summary-row"><span>李家代墊總額:</span><span id="li-pay">NT$ 0 ｜ ¥0</span></div>
           <div class="summary-row"><span>林家代墊總額:</span><span id="lin-pay">NT$ 0 ｜ ¥0</span></div>
-          <div class="summary-row total"><span>應找補結算:</span><span id="settlement">無欠款</span></div>
+          <div class="summary-row total"><span>應找補結算結果:</span><span id="settlement">無欠款</span></div>
         </div>
       </div>
     </section>
 
-    <!-- 3. 航班住宿 (Hotel) -->
-    <section id="tab-hotel" class="tab-content">
+    <!-- 7. 旅遊須知 (Notice) -->
+    <section id="tab-notice" class="tab-content">
       <div class="card">
-        <h3 class="card-title">🏨 東京 · 仙台 · 藏王 住宿清單</h3>
-        <div class="timeline">
-          <div class="t-item">
-            <div class="t-dot">1</div>
-            <div class="t-time">1/27 - 1/29 (連住2晚)</div>
-            <div class="t-title">APA飯店 京成上野站前</div>
-            <a href="https://maps.google.com/?q=APA+Hotel+Keisei+Ueno-Ekimae" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">Skyliner 京成上野站步行 1 分鐘，直通阿美橫町，出站進飯店超輕鬆。</div>
+        <div class="card-badge">IMPORTANT TIPS</div>
+        <h3 class="card-title">ℹ️ 行前準備與雪地旅行重要須知</h3>
+        
+        <div class="traffic-item">
+          <div class="traffic-seq">1. 入境申報</div>
+          <div class="traffic-name">Visit Japan Web (VJW)</div>
+          <div class="traffic-note">出發前 3~7 天，所有成員（或家長代填小孩）至官網填寫入境審查與海關申報，截圖保存 QR Code，通關快速省時。</div>
+        </div>
+
+        <div class="traffic-item">
+          <div class="traffic-seq">2. 雪地防滑穿著</div>
+          <div class="traffic-name">防滑防水雪靴 ＆ 洋蔥式穿法</div>
+          <div class="traffic-note">
+            • 狐狸村與藏王老街路面全面結冰，<strong>嚴禁穿著平底慢跑鞋</strong>，務必準備具深深刻紋的防水雪靴，必要時加裝簡易冰爪。<br>
+            • 內層吸濕排汗發熱衣、中層保暖刷毛、外層防風防水羽絨/雪衣，進入室內暖氣房方便穿脫。
           </div>
-          <div class="t-item">
-            <div class="t-dot">2</div>
-            <div class="t-time">1/29 - 1/31 (連住2晚)</div>
-            <div class="t-title">東橫 INN 仙台站西口中央</div>
-            <a href="https://maps.google.com/?q=東橫INN+仙台站西口中央" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">仙台站西口步行約 5 分鐘，購物飲食最便利。</div>
-          </div>
-          <div class="t-item">
-            <div class="t-dot">3</div>
-            <div class="t-time">1/31 - 2/1 (1晚)</div>
-            <div class="t-title">藏王 高宮飯店（Takamiya Hotel）</div>
-            <a href="https://maps.google.com/?q=Takamiya+Hotel+Zao" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">藏王高湯知名溫泉飯店集團，享受傳統酸性硫磺古泉與精緻會席料理。</div>
-          </div>
-          <div class="t-item">
-            <div class="t-dot">4</div>
-            <div class="t-time">2/1 - 2/2 (1晚)</div>
-            <div class="t-title">藏王國際大飯店（Zao Kokusai Hotel）</div>
-            <a href="https://maps.google.com/?q=藏王國際大飯店" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">過橋 1 分鐘即達藏王索道山麓站，早鳥搶先登頂賞樹冰。</div>
-          </div>
-          <div class="t-item">
-            <div class="t-dot">5</div>
-            <div class="t-time">2/2 - 2/3 (1晚)</div>
-            <div class="t-title">仙台西口大和魯內飯店</div>
-            <a href="https://maps.google.com/?q=Daiwa+Roynet+Hotel+Sendai-Nishiguchi" target="_blank" class="btn-map">📍在地圖上查看</a>
-            <div class="t-desc">西口步行 3-5 分鐘，房間新穎寬敞高質感，方便最後採買打包。</div>
+        </div>
+
+        <div class="traffic-item">
+          <div class="traffic-seq">3. 隨身緊急聯絡</div>
+          <div class="traffic-name">急難救助與實用電話</div>
+          <div class="traffic-note">
+            • 日本警察局：<strong>110</strong> ｜ 消防救護：<strong>119</strong><br>
+            • 台北駐日經濟文化代表處 (東京)：+81-3-3280-7811<br>
+            • 外交部緊急聯絡中心 (旅外國人)：+886-800-085-095
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 4. 交通攻略 (Transport) -->
-    <section id="tab-transport" class="tab-content">
-      <div class="card">
-        <h3 class="card-title">🚅 長途移動與大眾運輸攻略</h3>
-        <div class="t-item" style="margin-bottom:14px;">
-          <div class="t-time">機場直達</div>
-          <div class="t-title">成田機場 ➔ 京成上野（Skyliner）</div>
-          <a href="https://maps.google.com/?q=京成上野駅" target="_blank" class="btn-map">📍在京成上野站查看</a>
-          <div class="t-desc">全車指定席，約 41 分鐘直達上野，出站即到 APA 飯店。</div>
-        </div>
-        <div class="t-item" style="margin-bottom:14px;">
-          <div class="t-time">東北新幹線</div>
-          <div class="t-title">上野站 ➔ 仙台（Hayabusa 號）</div>
-          <a href="https://maps.google.com/?q=上野駅" target="_blank" class="btn-map">📍在上野站查看</a>
-          <a href="https://maps.google.com/?q=仙台駅" target="_blank" class="btn-map">📍在仙台站查看</a>
-          <div class="t-desc">全車指定席需提早劃位，約 90 分鐘直達。</div>
-        </div>
-        <div class="t-item" style="margin-bottom:14px;">
-          <div class="t-time">專屬包車</div>
-          <div class="t-title">仙台市區 ➔ 狐狸村 ➔ 藏王溫泉</div>
-          <div class="t-desc">7 人專屬包車點對點接送，行李全上車免在雪地拖拉。</div>
-        </div>
-        <div class="t-item">
-          <div class="t-time">冬季直達巴士</div>
-          <div class="t-title">藏王溫泉 ➔ 仙台站東口</div>
-          <a href="https://maps.google.com/?q=藏王溫泉+巴士總站" target="_blank" class="btn-map">📍在藏王站查看</a>
-          <div class="t-desc">預約制冬季直達高速巴士，約 85 分鐘直達仙台。</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 底部天氣預報：置於每頁最下方 -->
+    <!-- 底部動態天氣預報：置於最下方 -->
     <div class="weather-bottom-card" id="weather-banner">
-      <div class="weather-header-title">☁️ 景點預期天氣</div>
+      <div class="weather-header-title">☁️ 當日景點預期天氣</div>
       <div class="weather-grid" id="weather-grid">
-        <!-- 東京天氣 -->
         <div class="weather-col" id="weather-tokyo">
           <div class="weather-icon">🗼</div>
           <div class="weather-city">東京 (上野)</div>
           <div class="weather-temp">1°C ~ 9°C</div>
           <div class="weather-condition">多雲時陰</div>
         </div>
-        <!-- 仙台天氣 -->
         <div class="weather-col" id="weather-sendai">
           <div class="weather-icon">🏯</div>
           <div class="weather-city">仙台</div>
           <div class="weather-temp">-2°C ~ 4°C</div>
           <div class="weather-condition">小雪 🌨️</div>
         </div>
-        <!-- 松島天氣 -->
         <div class="weather-col" id="weather-matsushima">
           <div class="weather-icon">🌊</div>
           <div class="weather-city">松島</div>
           <div class="weather-temp">-2°C ~ 4°C</div>
           <div class="weather-condition">陰轉多雪 🌨️</div>
         </div>
-        <!-- 藏王天氣 -->
         <div class="weather-col" id="weather-zao">
           <div class="weather-icon">☃️</div>
           <div class="weather-city">藏王</div>
           <div class="weather-temp">-8°C ~ -3°C</div>
           <div class="weather-condition">暴雪大風</div>
         </div>
-        <!-- 高雄天氣 -->
         <div class="weather-col" id="weather-kaohsiung">
           <div class="weather-icon">☀️</div>
           <div class="weather-city">高雄</div>
@@ -715,18 +866,18 @@
 
   </div>
 
-  <!-- 封面與文字管理 Modal 彈窗 -->
+  <!-- 封面設定 Modal -->
   <div class="modal" id="coverModal">
     <div class="modal-content">
-      <div class="modal-title">🖼️ 自訂封面與文字</div>
-      <input type="text" id="input-cover-url" class="memo-input" style="width:100%; margin-bottom:8px;" placeholder="張貼圖片網址 (URL)...">
-      <button class="memo-btn" style="width:100%; margin-bottom:12px; background:#475569;" onclick="document.getElementById('coverFileInput').click()">📁 從手機/電腦選取圖片</button>
-      <input type="text" id="input-title" class="memo-input" style="width:100%; margin-bottom:8px;" placeholder="標題（例：東北雪國歷險記 ❄️）">
-      <input type="text" id="input-dates" class="memo-input" style="width:100%; margin-bottom:8px;" placeholder="日期（例：2027.01.27 - 02.03）">
-      <input type="text" id="input-locations" class="memo-input" style="width:100%; margin-bottom:12px;" placeholder="地點（例：東京 · 仙台 · 藏王溫泉）">
+      <div style="font-size:0.95rem; font-weight:800; color:var(--primary-dark); margin-bottom:10px;">🖼️ 更換封面與自訂標題</div>
+      <input type="text" id="input-cover-url" class="modal-input" placeholder="貼上網路圖片網址 (URL)...">
+      <button class="btn-add-bill" style="background:#475569; margin-bottom:8px;" onclick="document.getElementById('coverFileInput').click()">📁 從手機/電腦選取相片</button>
+      <input type="text" id="input-title" class="modal-input" placeholder="標題（例：東北雪國歷險記 ❄️）">
+      <input type="text" id="input-dates" class="modal-input" placeholder="日期（例：2027.01.27 - 02.03）">
+      <input type="text" id="input-locations" class="modal-input" placeholder="地點（例：東京 · 仙台 · 藏王溫泉）">
       <div style="display:flex; gap:8px;">
-        <button class="memo-btn" style="flex:1;" onclick="saveCoverSettings()">儲存更新</button>
-        <button class="memo-btn" style="flex:1; background:#94a3b8;" onclick="closeCoverModal()">取消</button>
+        <button class="btn-add-bill" style="margin-bottom:0;" onclick="saveCoverSettings()">儲存更新</button>
+        <button class="btn-add-bill" style="background:#94a3b8; margin-bottom:0;" onclick="closeCoverModal()">取消</button>
       </div>
     </div>
   </div>
@@ -734,8 +885,477 @@
   <script>
     let currentTab = 'itinerary';
     let currentDay = 1;
+    let currentPlan = 'A';
 
-    // 天氣預報顯示邏輯
+    // 每日行程方案資料庫 (支援 A / B / C / D 完整切換，附備忘錄與地圖連結)
+    const scheduleDatabase = {
+      1: {
+        badge: "DAY 1 · 1/27 (三)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：阿美橫丁深度吃喝伴手禮採買",
+            timeline: [
+              { time: "08:00~12:10", title: "搭乘台灣虎航 IT280 (高雄 ➔ 成田機場)", mapsQuery: "成田國際機場", desc: "無機上餐飲，建議登機前備好輕食或機場用餐。" },
+              { time: "12:10~13:30", title: "成田機場第2航廈入境通關、領取行李", mapsQuery: "成田國際機場第2候機樓", desc: "至 B1 京成電鐵櫃檯兌換 Skyliner 實體劃位車票。" },
+              { time: "14:15~15:00", title: "搭乘京成 Skyliner 特急直達京成上野站", mapsQuery: "京成上野駅", desc: "全車指定席，約 41 分鐘極速直達終點上野站。" },
+              { time: "15:15~16:00", title: "入住 APA飯店 京成上野站前 Check-in", mapsQuery: "APA Hotel Keisei Ueno-Ekimae", desc: "出站過馬路步行 1 分鐘進飯店！放置行李稍作休息。" },
+              { time: "16:30~20:30", title: "阿美橫丁吃喝逛街 ＆ 二木之菓子採買", mapsQuery: "阿美橫町", desc: "二木之菓子整箱零食批發免稅、肉の大山爆汁炸肉餅、大國藥妝採購。" }
+            ],
+            food: "午餐：機上自備輕食；晚餐：阿美橫丁在地美食（肉の大山炸肉餅、一蘭拉麵、伊豆榮鰻魚飯或上野燒肉）。",
+            traffic: "成田機場搭乘 Skyliner 直達京成上野，步行 1 分鐘進飯店；阿美橫丁步行即達。",
+            warn: "第一天舟車勞頓，阿美橫就在飯店門口，長輩小孩累了隨時可先回房休息。"
+          },
+          'B': {
+            name: "方案 B：御徒町吉池大樓 (UNIQLO旗艦店 ＋ 吉池超市水果)",
+            timeline: [
+              { time: "08:00~15:00", title: "抵達成田機場 ➔ Skyliner 直達上野", mapsQuery: "京成上野駅", desc: "與方案 A 相同，抵達上野並於 APA Check-in。" },
+              { time: "16:30~19:30", title: "御徒町吉池本店大樓採買", mapsQuery: "吉池本店", desc: "1~4F UNIQLO & GU 旗艦店採買全家防寒發熱衣；B1/B2 超市買當季日本草莓與熟食。" },
+              { time: "19:30~21:00", title: "吉池周邊燒肉或拉麵晚餐", mapsQuery: "御徒町駅", desc: "步行約 6~7 分鐘回飯店，避開強風與低溫。" }
+            ],
+            food: "晚餐：御徒町周邊日式燒肉定食或吉池美食街；飯店享用日本新鮮草莓與蜜柑。",
+            traffic: "自飯店平路步行約 500 公尺（約 6 分鐘）直達吉池大樓。",
+            warn: "室內暖氣充足，建議進室內脫外套避免流汗著涼。"
+          },
+          'C': {
+            name: "方案 C：上野丸井百貨 (OIOI) 全室內逛街 (少走路首選)",
+            timeline: [
+              { time: "08:00~15:00", title: "抵達東京上野 ➔ APA 飯店入住宿", mapsQuery: "APA Hotel Keisei Ueno-Ekimae", desc: "放行李後整裝出發。" },
+              { time: "16:30~20:00", title: "上野丸井百貨 (OIOI) ＆ 地下超市", mapsQuery: "上野丸井", desc: "逛無印良品 (MUJI)、生活雜貨，全室內通道連通地鐵地下街超市。" }
+            ],
+            food: "晚餐：丸井百貨商場美食街或鄰近敘敘苑燒肉上野店。",
+            traffic: "自飯店步行約 3 分鐘即達丸井百貨，全程平路且多有遮蔽。",
+            warn: "完全不吹戶外冷風，適合長輩體力放鬆行程。"
+          },
+          'D': {
+            name: "方案 D：不忍池水上步道 ＆ 上野恩賜公園文化散策",
+            timeline: [
+              { time: "08:00~15:00", title: "抵達上野 APA 飯店 Check-in", mapsQuery: "APA Hotel Keisei Ueno-Ekimae", desc: "稍作休息準備散步。" },
+              { time: "16:15~18:00", title: "不忍池水上步道 ＆ 弁天堂參拜", mapsQuery: "不忍池弁天堂", desc: "飯店出門就是不忍池，漫步水上步道欣賞冬季暮色與古寺。" },
+              { time: "18:30~20:30", title: "上野伊豆榮鰻魚飯經典晚餐", mapsQuery: "伊豆榮+本店", desc: "百年鰻魚飯名店品嚐蒲燒鰻定食，購物需求留到仙台解決。" }
+            ],
+            food: "晚餐：上野百年老店「伊豆榮」鰻魚飯定食。",
+            traffic: "全步行散策，飯店方圓 300 公尺內。",
+            warn: "傍晚池邊風大溫差大，請戴好毛帽與圍巾。"
+          }
+        }
+      },
+      2: {
+        badge: "DAY 2 · 1/28 (四)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：淺草寺雷門 ➔ 晴空塔展望台 ➔ 新宿晚餐",
+            timeline: [
+              { time: "09:30~12:00", title: "淺草寺雷門參拜、求籤、仲見世通小吃", mapsQuery: "淺草寺", desc: "上野搭銀座線 5 分鐘直達淺草，雷門大燈籠前合影。" },
+              { time: "12:30~16:30", title: "東京晴空塔 (Skytree) 登高 ＆ 商場購物", mapsQuery: "東京晴空塔", desc: "漫步隅田川步道或搭東武線至晴空塔，展望台俯瞰東京全景。" },
+              { time: "17:30~20:30", title: "移動至新宿商圈大啖晚餐 ＆ 欣賞夜景", mapsQuery: "新宿駅", desc: "搭都營淺草線轉 JR 總武線直達新宿，伊勢丹美食街或敘敘苑燒肉。" }
+            ],
+            food: "午餐：淺草大黑家天婦羅或文字燒；晚餐：新宿高島屋/伊勢丹美食街或特色燒肉。",
+            traffic: "上野 ➔ 淺草 (地鐵銀座線 5 分鐘)；淺草 ➔ 押上晴空塔 (步道/地鐵)；押上 ➔ 新宿 (地鐵轉JR約 30 分)。",
+            warn: "晴空塔展望台門票建議提早預訂，傍晚搭車避開東京上下班尖峰。"
+          },
+          'B': {
+            name: "方案 B：東京車站丸之內 ➔ 皇居二重橋 ➔ 新宿晚餐",
+            timeline: [
+              { time: "09:30~12:30", title: "東京車站紅磚建築 ＆ 皇居外苑散策", mapsQuery: "皇居二重橋", desc: "上野搭 JR 山手線 7 分鐘到東京站，散步至皇居二重橋。" },
+              { time: "13:30~16:30", title: "銀座或澀谷 SHIBUYA SKY 展望台", mapsQuery: "SHIBUYA+SKY", desc: "搭地鐵前往澀谷俯瞰十字路口。" },
+              { time: "17:30~20:30", title: "新宿商圈享用晚餐", mapsQuery: "新宿高島屋", desc: "搭 JR 山手線 7 分鐘直達新宿大啖美食。" }
+            ],
+            food: "午餐：東京站一番街拉麵街；晚餐：新宿精緻居酒屋或和牛壽喜燒。",
+            traffic: "全程搭乘 JR 山手線與地下鐵，刷 IC 卡乘車極便利。",
+            warn: "皇居外苑為碎石路面，穿著好走保暖鞋款。"
+          },
+          'C': {
+            name: "方案 C：秋葉原動漫電器 ➔ 新宿御苑漫步 ➔ 新宿晚餐",
+            timeline: [
+              { time: "10:00~13:00", title: "秋葉原電器街 ＆ 動漫周邊巡禮", mapsQuery: "秋葉原電器街", desc: "上野搭山手線 2 站即達，採買模型公仔與日本電器。" },
+              { time: "14:00~16:30", title: "漫步新宿御苑日式景觀庭園", mapsQuery: "新宿御苑", desc: "搭 JR 總武線至千駄谷站，在百年庭園內悠閒漫步。" },
+              { time: "17:30~20:30", title: "新宿東口商圈採買 ＆ 晚餐", mapsQuery: "新宿東口", desc: "步行至新宿商圈品嚐割烹料理或一蘭拉麵。" }
+            ],
+            food: "午餐：秋葉原特色咖哩；晚餐：新宿割烹中嶋或敘敘苑燒肉。",
+            traffic: "JR 山手線與總武線串聯，轉乘少。",
+            warn: "新宿御苑最後入園時間為 16:00，週一休園（週四正常開放）。"
+          },
+          'D': {
+            name: "方案 D：上野動物園/美術館悠閒半日 ➔ 新宿晚餐",
+            timeline: [
+              { time: "09:30~13:00", title: "上野恩賜公園 ＆ 國立西洋美術館/動物園", mapsQuery: "上野動物園", desc: "飯店出門散步入園，觀賞大貓熊與世界遺產建築。" },
+              { time: "14:30~17:00", title: "新宿商場大採買 (Bic Camera / 伊勢丹)", mapsQuery: "Bic+Camera+新宿西口店", desc: "搭 JR 直達新宿採買免稅電器與藥妝。" },
+              { time: "17:30~20:30", title: "新宿東京都廳 45F 免費夜景 ＆ 晚餐", mapsQuery: "東京都廳展望室", desc: "都廳南展望台欣賞無敵百萬夜景。" }
+            ],
+            food: "午餐：上野公園綠蔭咖啡輕食；晚餐：新宿都廳周邊高空景觀餐廳。",
+            traffic: "上野搭乘地鐵大江戶線直達「都廳前站」免換車。",
+            warn: "都廳展望室為免費參觀，需接受隨身行李安檢。"
+          }
+        }
+      },
+      3: {
+        badge: "DAY 3 · 1/29 (五)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：新幹線移防仙台 ➔ 善治郎牛舌 ➔ 排球少年聖地巡禮",
+            timeline: [
+              { time: "09:30~10:00", title: "退房步行 3 分鐘至 JR 上野站新幹線月台", mapsQuery: "上野駅", desc: "搭乘 Hayabusa 號直達仙台（約 90 分鐘，全車指定席）。" },
+              { time: "11:30~13:30", title: "抵達仙台！大啖善治郎厚切牛舌定食", mapsQuery: "牛たん炭火焼+善治郎+仙台駅前本店", desc: "品嚐炭火烤極厚牛舌、麥飯與牛肉清湯。" },
+              { time: "14:00~14:30", title: "入住 東橫INN 仙台站西口中央 放行李", mapsQuery: "東橫INN+仙台站西口中央", desc: "西口步行 5 分鐘抵達飯店寄放行李。" },
+              { time: "15:00~17:00", title: "【排球少年聖地】仙台市體育館 (Kamei Arena)", mapsQuery: "カメイアリーナ仙台", desc: "搭地鐵南北線至「富澤站」，朝聖烏野決戰主舞台、簽名櫥窗。" },
+              { time: "17:30~19:30", title: "仙台站西口天橋名場面 ＆ Animate 仙台店", mapsQuery: "アニメイト仙台", desc: "回仙台站西口天橋打卡，至 EBeanS 8F 採買官方周邊。" }
+            ],
+            food: "午餐：善治郎牛舌定食；晚餐：仙台居酒屋品嚐三角油豆腐、毛豆泥奶昔 (ずんだ茶寮)。",
+            traffic: "新幹線 Hayabusa 直達；仙台市內搭乘地下鐵南北線至富澤站（單程約 12 分）。",
+            warn: "新幹線必須提早 1 個月劃位！善治郎本店若人多可請櫃檯現場登記等候。"
+          },
+          'B': {
+            name: "方案 B：新幹線移防 ➔ 善治郎牛舌 ➔ 仙台城跡 (伊達政宗騎馬像)",
+            timeline: [
+              { time: "09:30~11:30", title: "搭新幹線直達仙台 ➔ 東橫 INN 寄放行李", mapsQuery: "東橫INN+仙台站西口中央", desc: "出站放置行李。" },
+              { time: "11:45~13:30", title: "仙台站牛舌通大啖特色牛舌定食", mapsQuery: "仙台駅", desc: "善治郎、司或利久牛舌。" },
+              { time: "14:00~17:00", title: "搭乘盧普兒 (Loople) 觀光巴士至仙台城跡", mapsQuery: "仙台城跡", desc: "俯瞰仙台市容，與伊達政宗騎馬雕像合影。" }
+            ],
+            food: "午餐：炭火牛舌定食；晚餐：仙台牛燒肉仔虎站前店。",
+            traffic: "仙台站西口搭乘「Loople 仙台」單向循環觀光巴士。",
+            warn: "青葉山城跡風勢較大，體感溫度低注意保暖。"
+          },
+          'C': {
+            name: "方案 C：仙台市區一番町拱廊商店街悠閒漫遊採買",
+            timeline: [
+              { time: "11:30~13:30", title: "抵達仙台品嚐牛舌 ➔ 飯店 Check-in", mapsQuery: "東橫INN+仙台站西口中央", desc: "放行李整理裝備。" },
+              { time: "14:00~18:00", title: "逛一番町商店街 (Clis Road / SunMall)", mapsQuery: "クリスロード商店街", desc: "全室內遮雨拱廊，逛藥妝、生活雜貨、品嚐鯛魚燒。" }
+            ],
+            food: "晚餐：味之牛舌喜助或在地鄉土料理水芹鍋（せり鍋）。",
+            traffic: "自東橫 INN 步行 5 分鐘即進入商店街核心區。",
+            warn: "全平路散步，隨時可進超商或咖啡廳休息。"
+          },
+          'D': {
+            name: "方案 D：JR 仙山線順訪「山寺」登高半日遊 (體力充沛路線)",
+            timeline: [
+              { time: "11:30~12:30", title: "仙台站快餐 ➔ 搭 JR 仙山線前往山寺站", mapsQuery: "山寺駅", desc: "搭乘電車約 50 分鐘抵達山形立石寺。" },
+              { time: "13:30~16:00", title: "挑戰山寺千層雪梯 ＆ 五大堂水墨雪景", mapsQuery: "立石寺+五大堂", desc: "雪中登高賞壯觀山林絕景。" },
+              { time: "16:30~17:30", title: "搭電車返回仙台站西口東橫 INN", mapsQuery: "東橫INN+仙台站西口中央", desc: "回飯店休息泡澡。" }
+            ],
+            food: "午餐：山寺在地板蕎麥麵；晚餐：仙台站前炭烤居酒屋。",
+            traffic: "JR 仙山線快速電車往返。",
+            warn: "雪季山寺千段階梯非常滑，全員必須穿冰爪才能上山！"
+          }
+        }
+      },
+      4: {
+        badge: "DAY 4 · 1/30 (六)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：日本三景松島海岸巡航 ➔ 現烤牡蠣 ＆ 烤魚板體驗",
+            timeline: [
+              { time: "09:00~09:45", title: "仙台站搭乘 JR 仙石線直達「松島海岸站」", mapsQuery: "松島海岸駅", desc: "車程僅約 40 分鐘，去程建議坐右側欣賞松島灣景致。" },
+              { time: "10:00~11:00", title: "搭乘松島觀光遊覽船巡航松島灣", mapsQuery: "松島遊覧船乗り場", desc: "約 50 分鐘巡遊 260 座奇岩島嶼，避風舒適。" },
+              { time: "11:15~12:15", title: "五大堂（結緣透橋）＆ 瑞嚴寺參拜", mapsQuery: "五大堂", desc: "漫步伊達政宗建造之國寶古剎。" },
+              { time: "12:30~14:30", title: "松島魚市場烤生蠔小屋大啖海鮮", mapsQuery: "松島さかな市場+焼がきハウス", desc: "鐵板現烤肥美生蠔、海鮮丼，阿部蒲鉾店現烤魚板。" },
+              { time: "14:45~16:00", title: "漫步福浦島朱紅結緣大橋", mapsQuery: "福浦橋", desc: "走過 252 米長紅橋進入自然島嶼步道。" },
+              { time: "16:30~17:15", title: "搭乘 JR 仙石線返回仙台站", mapsQuery: "仙台駅", desc: "返回東橫 INN 休息採買。" }
+            ],
+            food: "午餐：松島魚市場現烤生蠔/炸牡蠣漢堡、阿部蒲鉾店手烤笹魚板；晚餐：仙台牛燒肉仔虎。",
+            traffic: "JR 仙石線直達松島海岸站，景點間全步行 5~10 分鐘內。",
+            warn: "切勿搭錯到「松島站」！海邊風大請備妥防風防寒衣物。"
+          },
+          'B': {
+            name: "方案 B：松島深度文化行 (含円通院枯山水庭園)",
+            timeline: [
+              { time: "09:30~13:30", title: "松島海岸遊覽船 ＆ 烤牡蠣海鮮午餐", mapsQuery: "松島海岸駅", desc: "與方案 A 相同享受海景與牡蠣。" },
+              { time: "13:45~15:30", title: "參觀松島円通院（數珠手作體驗）", mapsQuery: "円通院", desc: "欣賞雪景枯山水，體驗串天然石手珠帶回家保平安。" }
+            ],
+            food: "午餐：松島旬產亭現烤牡蠣定食；晚餐：仙台西口拉麵小路。",
+            traffic: "JR 仙石線往返，步行可達。",
+            warn: "數珠體驗約需 30~40 分鐘，適合靜心體驗。"
+          },
+          'C': {
+            name: "方案 C：松島半日 ＋ 下午仙台港三井 Outlet 購物",
+            timeline: [
+              { time: "09:00~13:30", title: "松島海岸搭船 ＆ 享用現烤牡蠣午餐", mapsQuery: "松島海岸駅", desc: "上午精華遊松島。" },
+              { time: "13:45~14:15", title: "JR 仙石線搭至「中野榮站」", mapsQuery: "中野栄駅", desc: "轉接駁車至三井 Outlet 仙台港。" },
+              { time: "14:30~18:30", title: "三井 Outlet 仙台港運動品牌大採買", mapsQuery: "MITSUI+OUTLET+PARK+仙台港", desc: "買齊 Mont-bell、Nike 與免稅服飾。" }
+            ],
+            food: "午餐：松島烤牡蠣；晚餐：Outlet 美食街多樣日式定食。",
+            traffic: "仙石線順路下車，免重複折返市區。",
+            warn: "回程中野榮站搭車回仙台約 18 分鐘。"
+          },
+          'D': {
+            name: "方案 D：松島溫泉一日泡湯放鬆行程",
+            timeline: [
+              { time: "10:00~13:00", title: "松島遊船 ＆ 海鮮市場午餐", mapsQuery: "松島さかな市場", desc: "悠閒漫步老街。" },
+              { time: "13:30~16:00", title: "松島一之坊溫泉飯店享受日歸溫泉", mapsQuery: "松島一の坊", desc: "眺望松島灣絕景的露天溫泉日歸泡湯。" }
+            ],
+            food: "午餐：松島海鮮丼定食；晚餐：仙台西口特色居酒屋。",
+            traffic: "JR 仙石線往返，短途散步。",
+            warn: "日歸溫泉需確認當日對外開放時間（建議提早致電）。"
+          }
+        }
+      },
+      5: {
+        badge: "DAY 5 · 1/31 (日)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：7人專車狐狸村 ➔ 藏王高宮飯店 ➔ 租雪具 ＆ 溫泉會席",
+            timeline: [
+              { time: "09:00~10:15", title: "專屬 7 人包車出發前往宮城藏王狐狸村", mapsQuery: "宮城蔵王キツネ村", desc: "行李全部上車點對點直達，免轉車勞累。" },
+              { time: "10:15~12:15", title: "狐狸村近距離接觸雪狐 ＆ 體驗抱狐狸", mapsQuery: "宮城蔵王キツネ村", desc: "冬季毛茸茸雪狐超可愛！留意地面結冰防滑。" },
+              { time: "12:30~13:30", title: "沿途享用簡餐或直奔藏王溫泉街", mapsQuery: "蔵王温泉", desc: "品嚐山形拉麵、蒟蒻丸子。" },
+              { time: "14:30~15:30", title: "入住百年「藏王 高宮飯店」Check-in", mapsQuery: "Takamiya+Hotel+Zao", desc: "專車直達門口，放行李稍作休息。" },
+              { time: "16:00~17:30", title: "前往上之台雪具店試穿並租借 2 天雪具", mapsQuery: "蔵王温泉スキー場+上の台ゲレンデ", desc: "試穿雪靴與板子，翌日 9 點直接開滑！" },
+              { time: "18:00~20:00", title: "享用高宮飯店豪華日式會席晚餐", mapsQuery: "Takamiya+Hotel+Zao", desc: "品嚐頂級山形牛會席料理，享受百年強酸硫磺古泉。" }
+            ],
+            food: "午餐：狐狸村周邊簡餐或老街拉麵；晚餐：高宮飯店精緻山形牛會席料理。",
+            traffic: "專屬包車點對點直達，省去冰雪路面拖行李之苦。",
+            warn: "狐狸村嚴禁觸摸自由走動的狐狸（拍照時保持距離）；地面結冰務必穿雪靴。"
+          },
+          'B': {
+            name: "方案 B：狐狸村 ➔ 高宮飯店 ➔ 傍晚搭計程車觀賞夜間樹冰點燈",
+            timeline: [
+              { time: "09:00~15:30", title: "專車狐狸村 ➔ 高宮飯店 Check-in ➔ 租借雪具", mapsQuery: "Takamiya+Hotel+Zao", desc: "與方案 A 相同流程。" },
+              { time: "17:30~19:30", title: "預約接駁至藏王索道山麓站賞夜間樹冰", mapsQuery: "蔵王ロープウェイ+山麓駅", desc: "搭夜間點燈纜車登頂看五彩燈光雪怪（1/31有夜間點燈）。" },
+              { time: "20:00~21:30", title: "返回高宮飯店享用會席晚餐 ＆ 泡湯", mapsQuery: "Takamiya+Hotel+Zao", desc: "溫暖身心驅散嚴寒。" }
+            ],
+            food: "晚餐：高宮飯店晚宴（需提早向飯店登記延後至 20:00 用餐）。",
+            traffic: "高宮飯店至纜車站坡陡結冰，需搭乘計程車或專車往返。",
+            warn: "夜間山頂氣溫約 -12°C~-15°C，若暴風雪濃霧建議取消，留至 Day 7 晨間早鳥纜車。"
+          },
+          'C': {
+            name: "方案 C：高宮飯店百年溫泉巡禮 ＆ 溫泉老街足湯放鬆",
+            timeline: [
+              { time: "15:00~17:30", title: "完成租借雪具後，漫步藏王溫泉老街", mapsQuery: "蔵王温泉街", desc: "參觀下湯公眾浴場、體驗免費路邊足湯。" },
+              { time: "18:00~21:00", title: "高宮飯店深山莊享受館內三座不同檜木湯屋", mapsQuery: "Takamiya+Hotel+Zao", desc: "傳統古老純天然硫磺泉徹底放鬆筋骨。" }
+            ],
+            food: "晚餐：高宮飯店傳統日式料理；點心：老街現煮醬油蒟蒻丸子。",
+            traffic: "溫泉街徒步漫遊。",
+            warn: "硫磺溫泉酸性極強，銀飾手錶務必取下避免發黑受損。"
+          },
+          'D': {
+            name: "方案 D：提早前往雪場進行簡易暖身滑行 (有經驗者)",
+            timeline: [
+              { time: "15:30~17:00", title: "租妥雪具後在上之台緩坡做 1 小時暖身", mapsQuery: "蔵王温泉スキー場+上の台ゲレンデ", desc: "熟悉雪質與裝備，為翌日全天課預熱。" }
+            ],
+            food: "晚餐：高宮飯店館內豐盛朝夕食。",
+            traffic: "步行至上之台雪場。",
+            warn: "傍晚 16:30 天色漸黑且降溫，切勿滑遠以防危險。"
+          }
+        }
+      },
+      6: {
+        badge: "DAY 6 · 2/1 (一)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：上之台全日滑雪教練課 ➔ 換宿藏王國際大飯店",
+            timeline: [
+              { time: "08:30~09:00", title: "退房高宮飯店，行李專車送至藏王國際", mapsQuery: "藏王國際大飯店", desc: "輕裝前往上之台滑雪場集合點。" },
+              { time: "09:00~11:30", title: "【上午滑雪教練課】初學者基本滑行與剎車", mapsQuery: "蔵王温泉スキー場+上の台ゲレンデ", desc: "專業教練指導單板/雙板平衡跌倒防護。" },
+              { time: "11:30~13:00", title: "上之台滑雪中心雪屋午餐休息", mapsQuery: "上の台ゲレンデ", desc: "品嚐熱騰騰的豬排咖哩飯、味噌拉麵補充電解質。" },
+              { time: "13:00~15:00", title: "【下午滑雪練習】搭緩坡纜車練習轉向", mapsQuery: "蔵王温泉スキー場", desc: "循序漸進享受在寬敞平緩粉雪道滑行的成就感！" },
+              { time: "15:30~16:30", title: "入住「藏王國際大飯店」Check-in", mapsQuery: "藏王國際大飯店", desc: "過橋 1 分鐘到藏王索道山麓站，享受雪景大浴場。" },
+              { time: "18:00~20:00", title: "藏王國際大飯店豪華會席晚餐 (山形牛壽喜燒)", mapsQuery: "藏王國際大飯店", desc: "頂級黑毛和牛晚宴，徹底犒賞全家人！" }
+            ],
+            food: "午餐：雪場餐廳炸豬排飯/拉麵；晚餐：藏王國際大飯店豪華會席料理。",
+            traffic: "飯店間專車短駁行李，雪場與飯店步行可達。",
+            warn: "滑雪運動流汗多，穿排汗發熱衣；不滑雪家人可在飯店享受八右衛門之湯雪景浴場。"
+          },
+          'B': {
+            name: "方案 B：不滑雪家人專屬：橫倉纜車觀景 ＋ 飯店八右衛門雪景溫泉",
+            timeline: [
+              { time: "09:30~12:00", title: "搭乘藏王中央索道欣賞雪白森林全景", mapsQuery: "蔵王中央ロープウェイ", desc: "避開滑雪人潮，在高空纜車內飽覽銀白世界。" },
+              { time: "13:00~16:00", title: "入住藏王國際大飯店，沉浸在露天雪見風呂", mapsQuery: "藏王國際大飯店", desc: "百年純木造溫泉大浴場，邊泡湯邊看漫天雪花。" }
+            ],
+            food: "午餐：纜車站旁景觀咖啡屋；晚餐：藏王國際飯店同享豪華會席晚宴。",
+            traffic: "飯店旁纜車站步行 1 分鐘。",
+            warn: "拍照手機注意低溫耗電，隨身攜帶行動電源。"
+          },
+          'C': {
+            name: "方案 C：下午轉移至橫倉雪道挑戰不同坡度 (中級體驗)",
+            timeline: [
+              { time: "13:30~15:30", title: "換至藏王國際飯店前的橫倉滑雪場", mapsQuery: "横倉ゲレンデ", desc: "直接在飯店門口練習，滑累了走進大廳就能休息喝茶。" }
+            ],
+            food: "晚餐：藏王國際大飯店晚宴。",
+            traffic: "Skis-in / Skis-out 步行即可。",
+            warn: "橫倉部分坡度較陡，初學者請留在底層平坦綠線。"
+          },
+          'D': {
+            name: "方案 D：老街巡禮與手作體驗 (山形蒟蒻製作)",
+            timeline: [
+              { time: "13:30~15:30", title: "藏王老街伴手禮店採買溫泉粉與木芥子娃娃", mapsQuery: "蔵王温泉街", desc: "體驗在地特色手工藝。" }
+            ],
+            food: "下午茶：老街咖啡廳品嚐山形蘋果派；晚餐：飯店會席。",
+            traffic: "步行散步。",
+            warn: "穿著雪靴行走於融雪老街。"
+          }
+        }
+      },
+      7: {
+        badge: "DAY 7 · 2/2 (二)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：早鳥樹冰敲鐘 ➔ 回雪場滑雪 ➔ 直達巴士回仙台大和魯內",
+            timeline: [
+              { time: "08:00~09:30", title: "【早鳥樹冰】藏王索道首班登頂敲鐘拍照", mapsQuery: "蔵王ロープウェイ+山麓駅", desc: "避開團客！清晨能見度最佳，在藏王地藏尊前合影敲鐘。" },
+              { time: "09:30~10:45", title: "搭纜車下山，回雪場享受清晨優質粉雪", mapsQuery: "横倉ゲレンデ", desc: "把握最後雪上滑行時光。" },
+              { time: "10:45~11:30", title: "回藏王國際大飯店收拾退房、行李寄大廳", mapsQuery: "藏王國際大飯店", desc: "完成退房手續。" },
+              { time: "11:30~14:00", title: "午餐 ＆ 繼續滑雪至 14:00 歸還雪具", mapsQuery: "上の台ゲレンデ", desc: "雪場午餐充電，至雪具店順利歸還所有器材。" },
+              { time: "14:30~15:15", title: "回飯店取行李，前往藏王巴士總站", mapsQuery: "蔵王温泉バスターミナル", desc: "準備搭乘預約制直達高速巴士。" },
+              { time: "15:30~16:55", title: "搭乘山交高速巴士直達仙台站東口", mapsQuery: "仙台駅", desc: "免換車直達！大件行李放置底層車廂（車程約 85 分）。" },
+              { time: "17:15~18:00", title: "入住 仙台西口大和魯內飯店 Check-in", mapsQuery: "Daiwa+Roynet+Hotel+Sendai-Nishiguchi", desc: "步行約 3~5 分鐘進飯店，房間新穎寬敞好打包！" },
+              { time: "18:30~21:00", title: "仙台市區晚餐 (善治郎牛舌或仔虎燒肉)", mapsQuery: "牛たん炭火焼+善治郎+仙台駅前本店", desc: "逛青葉通商圈採買特產，慶祝滑雪挑戰成功。" }
+            ],
+            food: "早餐：藏王國際豐盛早餐；午餐：雪場拉麵/咖哩；晚餐：善治郎炭火牛舌或米澤牛燒肉仔虎。",
+            traffic: "步行至纜車站；15:30 藏王搭山交高速巴士直達仙台站東口；室內連通道步行至西口飯店。",
+            warn: "高速巴士必須提早預訂！樹冰山頂風大體感溫度極低，戴好雪鏡手套。"
+          },
+          'B': {
+            name: "方案 B：上午早鳥樹冰 ➔ 退房後提早搭 13:00 巴士回仙台購物",
+            timeline: [
+              { time: "08:00~10:30", title: "藏王索道登頂樹冰巡禮 ➔ 退房歸還雪具", mapsQuery: "藏王國際大飯店", desc: "不繼續滑雪，輕鬆收拾。" },
+              { time: "13:00~14:25", title: "搭乘中午高速巴士提早返回仙台", mapsQuery: "仙台駅", desc: "下午在大和魯內放好行李後大逛仙台商場。" }
+            ],
+            food: "午餐：藏王成吉思汗烤羊肉；晚餐：仙台站西口居酒屋。",
+            traffic: "山交巴士直達仙台。",
+            warn: "適合想多留時間在仙台市區血拚的成員。"
+          },
+          'C': {
+            name: "方案 C：樹冰結束後至山形市區順訪霞城公園",
+            timeline: [
+              { time: "11:30~12:15", title: "搭路線巴士至 JR 山形站", mapsQuery: "山形駅", desc: "車程約 40 分鐘。" },
+              { time: "12:30~15:00", title: "山形市區品嚐米澤牛午餐 ＆ 漫步霞城公園", mapsQuery: "霞城公園", desc: "參觀山形城遺跡雪景。" },
+              { time: "15:30~16:45", title: "搭 JR 仙山線快速電車直達仙台站", mapsQuery: "仙台駅", desc: "入住大和魯內飯店。" }
+            ],
+            food: "午餐：山形米澤牛牛排/壽喜燒；晚餐：仙台牛舌。",
+            traffic: "山形路線巴士轉 JR 仙山線。",
+            warn: "需於山形站寄存大件行李。"
+          },
+          'D': {
+            name: "方案 D：藏王全日悠閒溫泉泡到退房 ➔ 傍晚回仙台",
+            timeline: [
+              { time: "09:00~12:00", title: "飯店內享用八右衛門之湯雪景浴場 ➔ 退房", mapsQuery: "藏王國際大飯店", desc: "不滑雪的慢活行程。" },
+              { time: "15:30~16:55", title: "搭乘高速巴士回仙台大和魯內飯店", mapsQuery: "Daiwa+Roynet+Hotel+Sendai-Nishiguchi", desc: "晚上在飯店舒舒服服整理行李。" }
+            ],
+            food: "晚餐：仙台站內 S-PAL 百貨美食街。",
+            traffic: "15:30 直達高速巴士。",
+            warn: "最後一晚大和魯內房間乾濕分離且寬敞，最適合秤重大行李。"
+          }
+        }
+      },
+      8: {
+        badge: "DAY 8 · 2/3 (三)",
+        plans: {
+          'A': {
+            name: "方案 A (首選)：排球少年聖地巡禮 ➔ S-PAL伴手禮 ➔ 機場返台",
+            timeline: [
+              { time: "09:30~11:30", title: "【排球少年】仙台市體育館 (烏野高中主舞台)", mapsQuery: "カメイアリーナ仙台", desc: "搭地鐵南北線至富澤站，補拍玄關名場面與販賣機。" },
+              { time: "12:00~13:30", title: "【排球少年】Animate 仙台店旗艦店採買周邊", mapsQuery: "アニメイト仙台", desc: "EBeanS 商場 8F，採買漫畫、同人與聯名徽章。" },
+              { time: "13:30~15:30", title: "S-PAL 仙台百貨採買伴手禮 (萩之月/喜久福)", mapsQuery: "S-PAL仙台", desc: "最後補貨排球少年愛吃的大福、ずんだ毛豆奶昔。" },
+              { time: "15:45~16:15", title: "回大和魯內拿行李，搭機場線直達仙台機場", mapsQuery: "仙台空港アクセス線", desc: "快速電車約 17~25 分鐘直達航廈內部！" },
+              { time: "16:20~18:50", title: "仙台機場辦理虎航 IT773 報到、出境返台", mapsQuery: "仙台空港", desc: "18:50 起飛，22:30 平安順利抵達高雄小港機場！" }
+            ],
+            food: "早餐：飯店早餐或超商輕食；午餐：S-PAL 百貨日式定食；機場免稅店伴手禮點心。",
+            traffic: "市區搭乘地鐵南北線；仙台站搭乘仙台機場 Access 線直達航廈。",
+            warn: "回程虎航 IT773 無機上餐，過安檢前在機場 2F 餐廳吃飽再登機。"
+          },
+          'B': {
+            name: "方案 B：三井 OUTLET PARK 仙台港大採買 ➔ 機場返台",
+            timeline: [
+              { time: "09:45~14:30", title: "三井 Outlet 仙台港運動服飾與精品採買", mapsQuery: "MITSUI+OUTLET+PARK+仙台港", desc: "採買 Mont-bell、Columbia 雪地裝備與日系服飾。" },
+              { time: "15:00~15:30", title: "返回仙台站取行李，搭機場線前往仙台機場", mapsQuery: "仙台空港", desc: "直達航廈辦理報到。" }
+            ],
+            food: "午餐：三井 Outlet 美食街日式拉麵/炸豬排飯。",
+            traffic: "仙台站搭乘巴士約 35 分直達 Outlet；或搭仙石線至中野榮站轉接駁公車。",
+            warn: "需留足夠時間回飯店提領大行李再搭電車去機場。"
+          },
+          'C': {
+            name: "方案 C：仙台市區一番町藥妝電器最後補貨 ➔ 機場返台",
+            timeline: [
+              { time: "10:00~14:30", title: "一番町拱廊商店街採買藥妝零食與電器", mapsQuery: "クリスロード商店街", desc: "把未退稅的日常用品、美妝保養品買齊。" },
+              { time: "15:30~16:15", title: "退房取行李搭乘電車前往仙台機場", mapsQuery: "仙台空港", desc: "輕鬆進入出境程序。" }
+            ],
+            food: "午餐：仙台西口炭烤牛舌定食；機場採買名產點心。",
+            traffic: "市區全步行，回飯店拿行李直通仙台站搭機場線。",
+            warn: "液體類免稅品切記放入托運行李，不可隨身登機。"
+          },
+          'D': {
+            name: "方案 D：仙台歷史巡禮 (瑞鳳殿 ＆ 大崎八幡宮) ➔ 機場返台",
+            timeline: [
+              { time: "09:30~13:30", title: "搭乘觀光巴士參訪伊達政宗長眠地「瑞鳳殿」", mapsQuery: "瑞鳳殿", desc: "欣賞極致奢華的桃山建築雪景。" },
+              { time: "15:30~16:15", title: "前往仙台機場搭機返台", mapsQuery: "仙台空港", desc: "圓滿結束 8 天東北雪國歷險記！" }
+            ],
+            food: "午餐：仙台鄉土料理毛豆飯；機場輕食。",
+            traffic: "市區搭乘 Loople 仙台巴士；仙台站搭機場線直達機場。",
+            warn: "瑞鳳殿階梯有殘雪，注意腳步防滑。"
+          }
+        }
+      }
+    };
+
+    // 依天數與方案動態渲染行程
+    function renderItinerary() {
+      const container = document.getElementById('day-content');
+      const dayData = scheduleDatabase[currentDay];
+      if (!dayData) return;
+
+      const planData = dayData.plans[currentPlan] || dayData.plans['A'];
+
+      let timelineHtml = '';
+      planData.timeline.forEach((t, i) => {
+        timelineHtml += `
+          <div class="t-item">
+            <div class="t-dot">${i+1}</div>
+            <div class="t-time">${t.time}</div>
+            <div class="t-title">${t.title}</div>
+            <a href="https://maps.google.com/?q=${encodeURIComponent(t.mapsQuery)}" target="_blank" class="btn-map">📍在地圖上查看</a>
+            <div class="t-desc">${t.desc}</div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="card-badge">${dayData.badge}</div>
+        <h3 class="card-title">${planData.name}</h3>
+        <div class="timeline">${timelineHtml}</div>
+        <div class="memo-block food">
+          <div class="memo-block-title">🍽️ 飲食備忘錄</div>
+          ${planData.food}
+        </div>
+        <div class="memo-block traffic">
+          <div class="memo-block-title">🚅 交通備忘錄</div>
+          ${planData.traffic}
+        </div>
+        <div class="memo-block warn">
+          <div class="memo-block-title">⚠️ 當日提醒事項</div>
+          ${planData.warn}
+        </div>
+      `;
+    }
+
+    function switchPlan(planLetter, btn) {
+      document.querySelectorAll('.plan-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      currentPlan = planLetter;
+      renderItinerary();
+    }
+
+    function filterDay(dayNum, chip) {
+      document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentDay = dayNum;
+      currentPlan = 'A'; // 切換天數時預設回方案 A
+      document.querySelectorAll('.plan-chip').forEach((c, idx) => {
+        c.classList.toggle('active', idx === 0);
+      });
+      renderItinerary();
+      updateWeatherDisplay();
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+      currentTab = tabId;
+      updateWeatherDisplay();
+      window.scrollTo({ top: 160, behavior: 'smooth' });
+    }
+
+    // 天氣動態顯示邏輯
     function updateWeatherDisplay() {
       const banner = document.getElementById('weather-banner');
       const grid = document.getElementById('weather-grid');
@@ -786,68 +1406,19 @@
       }
     }
 
-    function switchTab(tabId, btn) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + tabId).classList.add('active');
-      currentTab = tabId;
-      updateWeatherDisplay();
-      window.scrollTo({ top: 160, behavior: 'smooth' });
-    }
-
-    // 封面彈窗管理
-    function openCoverModal() {
-      document.getElementById('input-title').value = document.getElementById('display-title').innerText;
-      document.getElementById('input-dates').value = document.getElementById('display-dates').innerText;
-      document.getElementById('input-locations').value = document.getElementById('display-locations').innerText;
-      document.getElementById('coverModal').style.display = 'flex';
-    }
-
-    function closeCoverModal() {
-      document.getElementById('coverModal').style.display = 'none';
-    }
-
-    function saveCoverSettings() {
-      const url = document.getElementById('input-cover-url').value.trim();
-      const title = document.getElementById('input-title').value.trim();
-      const dates = document.getElementById('input-dates').value.trim();
-      const locs = document.getElementById('input-locations').value.trim();
-
-      if (url) {
-        document.getElementById('hero-banner-image').style.backgroundImage = `url('${url}')`;
-        localStorage.setItem('custom_cover_image', url);
-      }
-      if (title) {
-        document.getElementById('display-title').innerText = title;
-        localStorage.setItem('custom_trip_title', title);
-      }
-      if (dates) {
-        document.getElementById('display-dates').innerText = dates;
-        localStorage.setItem('custom_trip_dates', dates);
-      }
-      if (locs) {
-        document.getElementById('display-locations').innerText = locs;
-        localStorage.setItem('custom_trip_locations', locs);
-      }
-      closeCoverModal();
-    }
-
-    function handleFileUpload(input) {
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('hero-banner-image').style.backgroundImage = `url('${e.target.result}')`;
-          localStorage.setItem('custom_cover_image', e.target.result);
-          closeCoverModal();
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-
-    // 記帳系統
+    // 記帳模組 (預載 5 間飯店項目，金額預設 0 可後續修改輸入)
     let activePayee = 'li';
-    let bills = JSON.parse(localStorage.getItem('trip_bills_data')) || [];
+    let bills = JSON.parse(localStorage.getItem('trip_bills_data_v4'));
+    if (!bills || bills.length === 0) {
+      bills = [
+        { id: 101, payee: 'lin', name: '1/27~29 APA上野京成 (3雙1單 林媽AGODA預付)', twd: 0, jpy: 0 },
+        { id: 102, payee: 'li',  name: '1/29~31 仙台東橫INN西口 (李媽官網訂尚未付款)', twd: 0, jpy: 0 },
+        { id: 103, payee: 'li',  name: '1/31 藏王高宮飯店 (李媽官網兩家皆已付款)', twd: 0, jpy: 0 },
+        { id: 104, payee: 'lin', name: '2/1 藏王國際大飯店 (林媽AGODA/李媽官網皆付款)', twd: 0, jpy: 0 },
+        { id: 105, payee: 'lin', name: '2/2 仙台西口大和魯內 (林媽AGODA預定李媽未付)', twd: 0, jpy: 0 }
+      ];
+      localStorage.setItem('trip_bills_data_v4', JSON.stringify(bills));
+    }
 
     function setPayee(payee) {
       activePayee = payee;
@@ -859,10 +1430,10 @@
       const name = document.getElementById('bill-name').value.trim() || '未命名花費';
       const twd = parseFloat(document.getElementById('bill-twd').value) || 0;
       const jpy = parseFloat(document.getElementById('bill-jpy').value) || 0;
-      if (twd === 0 && jpy === 0) return alert('請輸入金額！');
+      if (twd === 0 && jpy === 0) return alert('請輸入花費金額！');
 
       bills.push({ id: Date.now(), payee: activePayee, name, twd, jpy });
-      localStorage.setItem('trip_bills_data', JSON.stringify(bills));
+      localStorage.setItem('trip_bills_data_v4', JSON.stringify(bills));
       document.getElementById('bill-name').value = '';
       document.getElementById('bill-twd').value = '0';
       document.getElementById('bill-jpy').value = '0';
@@ -871,8 +1442,18 @@
 
     function deleteBill(id) {
       bills = bills.filter(b => b.id !== id);
-      localStorage.setItem('trip_bills_data', JSON.stringify(bills));
+      localStorage.setItem('trip_bills_data_v4', JSON.stringify(bills));
       renderBills();
+    }
+
+    function updateBillAmount(id, twd, jpy) {
+      const b = bills.find(item => item.id === id);
+      if (b) {
+        b.twd = parseFloat(twd) || 0;
+        b.jpy = parseFloat(jpy) || 0;
+        localStorage.setItem('trip_bills_data_v4', JSON.stringify(bills));
+        renderBills();
+      }
     }
 
     function renderBills() {
@@ -888,9 +1469,12 @@
 
         list.innerHTML += `
           <div class="bill-item">
-            <div><span class="desc">${b.name}</span> <span style="font-size:0.7rem; color:#64748b;">(${isLi?'李':'林'}墊)</span></div>
             <div>
-              <span class="amt">${b.twd > 0 ? 'NT$ ' + b.twd : ''} ${b.jpy > 0 ? ' ¥' + b.jpy : ''}</span>
+              <div class="desc">${b.name}</div>
+              <div style="font-size:0.7rem; color:#64748b;">代墊方：${isLi ? '李家代墊' : '林家代墊'}</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="amt">${b.twd > 0 ? 'NT$' + b.twd.toLocaleString() : ''} ${b.jpy > 0 ? '¥' + b.jpy.toLocaleString() : (b.twd === 0 ? '待輸入金額' : '')}</span>
               <span class="del" onclick="deleteBill(${b.id})">✕</span>
             </div>
           </div>
@@ -907,57 +1491,63 @@
       const liBalanceTwd = totalLiTwd - liShareTwd;
       const liBalanceJpy = totalLiJpy - liShareJpy;
 
-      let settleText = '無欠款';
+      let settleText = '無欠款 / 款項平衡';
       if (liBalanceTwd > 0.5 || liBalanceJpy > 0.5) {
-        settleText = `👉 林家需補貼李家: NT$ ${Math.round(liBalanceTwd).toLocaleString()} ${liBalanceJpy > 0 ? '＆ ¥' + Math.round(liBalanceJpy).toLocaleString() : ''}`;
+        settleText = `👉 林家需找補李家: NT$ ${Math.round(liBalanceTwd).toLocaleString()} ${liBalanceJpy > 0 ? '＆ ¥' + Math.round(liBalanceJpy).toLocaleString() : ''}`;
       } else if (liBalanceTwd < -0.5 || liBalanceJpy < -0.5) {
-        settleText = `👉 李家需補貼林家: NT$ ${Math.round(Math.abs(liBalanceTwd)).toLocaleString()} ${liBalanceJpy < 0 ? '＆ ¥' + Math.round(Math.abs(liBalanceJpy)).toLocaleString() : ''}`;
+        settleText = `👉 李家需找補林家: NT$ ${Math.round(Math.abs(liBalanceTwd)).toLocaleString()} ${liBalanceJpy < 0 ? '＆ ¥' + Math.round(Math.abs(liBalanceJpy)).toLocaleString() : ''}`;
       }
       document.getElementById('settlement').innerText = settleText;
     }
 
-    // 8 天行程內容資料庫 (包含更新後的 APA 京成上野、高宮飯店、大和魯內飯店)
-    const daySchedules = {
-      1: { badge: "DAY 1 · 1/27 (三)", title: "抵達成田機場，直達上野阿美橫町", timeline: [
-        { time: "13:30", title: "抵達成田國際機場 (NRT)", mapsQuery: "成田國際機場", desc: "入境通關、領取行李與開通網卡，前往 B1 搭乘京成 Skyliner 特急（直達上野約 41 分鐘）。" },
-        { time: "16:00", title: "APA飯店 京成上野站前 Check-in", mapsQuery: "APA Hotel Keisei Ueno-Ekimae", desc: "出站過馬路步行 1 分鐘即達飯店！放置行李稍作休息。" },
-        { time: "17:30", title: "上野阿美橫町漫遊散策", mapsQuery: "阿美橫町", desc: "逛街採買藥妝零食（二木之菓子），晚餐品嚐一蘭拉麵、伊豆榮鰻魚飯或上野燒肉。" }
-      ]},
-      2: { badge: "DAY 2 · 1/28 (四)", title: "東京經典巡禮：淺草寺與晴空塔", timeline: [
-        { time: "09:30", title: "淺草寺與仲見世通商店街", mapsQuery: "淺草寺", desc: "搭銀座線直達淺草，雷門參拜、求籤，品嚐在地人形燒與小吃。" },
-        { time: "14:00", title: "東京晴空塔 (Skytree)", mapsQuery: "東京晴空塔", desc: "景觀台眺望東京全景，商場採買伴手禮與雪地裝備最後補齊。" },
-        { time: "18:00", title: "返回上野，夜遊不忍池", mapsQuery: "不忍池", desc: "散步回 APA 飯店，欣賞不忍池夜景與品嚐居酒屋。" }
-      ]},
-      3: { badge: "DAY 3 · 1/29 (五)", title: "新幹線移防仙台，大啖厚切牛舌", timeline: [
-        { time: "10:00", title: "上野站搭乘東北新幹線", mapsQuery: "上野駅", desc: "退房步行 3 分鐘至 JR 上野站，搭乘 Hayabusa 號直達仙台（約 90 分鐘）。" },
-        { time: "12:30", title: "仙台站牛舌美食街大啖定食", mapsQuery: "仙台駅", desc: "品嚐炭烤厚切牛舌定食（推薦：善治郎、司、利久）與毛豆泥奶昔。" },
-        { time: "15:00", title: "東橫 INN 仙台站西口中央 Check-in", mapsQuery: "東橫INN仙台站西口中央", desc: "放置行李，西口拱廊商店街採買散策。" }
-      ]},
-      4: { badge: "DAY 4 · 1/30 (六)", title: "日本三景松島海岸巡航，現烤海鮮", timeline: [
-        { time: "09:00", title: "JR 仙石線前往松島海岸", mapsQuery: "松島海岸駅", desc: "搭乘觀光船遊覽松島灣 260 餘座島嶼，參觀五大堂與瑞嚴寺。" },
-        { time: "13:00", title: "品嚐現烤生蠔與手烤魚板", mapsQuery: "松島海岸+觀光街", desc: "品嚐松島在地新鮮海味，體驗手烤魚板樂趣。" }
-      ]},
-      5: { badge: "DAY 5 · 1/31 (日)", title: "包車前往藏王狐狸村，入住高宮飯店", timeline: [
-        { time: "09:00", title: "7 人專屬包車前往藏王狐狸村", mapsQuery: "宮城藏王狐狸村", desc: "近距離觀賞雪地狐狸，體驗抱狐狸（地面濕滑務必穿防滑雪靴）。" },
-        { time: "15:30", title: "入住藏王 高宮飯店（Takamiya Hotel）", mapsQuery: "Takamiya Hotel Zao", desc: "專車直達飯店門口，租借 2 天滑雪器材並試鞋，享受百年傳統酸性硫磺泉。" }
-      ]},
-      6: { badge: "DAY 6 · 2/1 (一)", title: "上之台滑雪場全日課，入住藏王國際", timeline: [
-        { time: "08:30", title: "行李移防藏王國際大飯店", mapsQuery: "藏王國際大飯店", desc: "輕裝出發前往上之台滑雪場集合上課。" },
-        { time: "09:00", title: "滑雪教練課 / 不滑雪搭纜車賞樹冰", mapsQuery: "藏王溫泉滑雪場", desc: "不滑雪者可從橫倉搭纜車登頂看樹冰，滑雪者在上之台緩坡練習。" },
-        { time: "16:00", title: "入住藏王國際大飯店", mapsQuery: "藏王國際大飯店", desc: "緊鄰橫倉纜車站，享受室內外雪景大浴場與豪華山形牛會席。" }
-      ]},
-      7: { badge: "DAY 7 · 2/2 (二)", title: "早鳥纜車賞樹冰，入住仙台西口大和魯內", timeline: [
-        { time: "08:15", title: "早鳥搭乘藏王索道登頂", mapsQuery: "藏王索道+山麓站", desc: "避開團客，趁清晨能見度最佳時前往地藏尊與樹冰群敲鐘拍照。" },
-        { time: "11:00", title: "退房、歸還雪具、老街午餐", mapsQuery: "藏王溫泉街", desc: "享用山形在地特色料理（成吉思汗烤羊肉/蕎麥麵）。" },
-        { time: "15:00", title: "搭直達高速巴士回仙台", mapsQuery: "藏王溫泉巴士總站", desc: "直達仙台站東口，經東西連絡道步行入住「仙台西口大和魯內飯店」，房間寬敞舒適好打包。" }
-      ]},
-      8: { badge: "DAY 8 · 2/3 (三)", title: "三井 Outlet 購物採買，搭機返台", timeline: [
-        { time: "10:00", title: "三井 Outlet 仙台港大採買", mapsQuery: "MITSUI+OUTLET+PARK+仙台港", desc: "購物商場採買日本運動裝備與伴手禮名產。" },
-        { time: "14:30", title: "回飯店取行李前往仙台機場", mapsQuery: "仙台機場", desc: "搭乘仙台機場聯絡線鐵路（約 25 分鐘）直達機場航廈報到返台。" }
-      ]}
-    };
+    // 封面彈窗功能
+    function openCoverModal() {
+      document.getElementById('input-title').value = document.getElementById('display-title').innerText;
+      document.getElementById('input-dates').value = document.getElementById('display-dates').innerText;
+      document.getElementById('input-locations').value = document.getElementById('display-locations').innerText;
+      document.getElementById('coverModal').style.display = 'flex';
+    }
+    function closeCoverModal() { document.getElementById('coverModal').style.display = 'none'; }
+    function saveCoverSettings() {
+      const url = document.getElementById('input-cover-url').value.trim();
+      const title = document.getElementById('input-title').value.trim();
+      const dates = document.getElementById('input-dates').value.trim();
+      const locs = document.getElementById('input-locations').value.trim();
+      if (url) {
+        document.getElementById('hero-banner-image').style.backgroundImage = `url('${url}')`;
+        localStorage.setItem('custom_cover_image', url);
+      }
+      if (title) { document.getElementById('display-title').innerText = title; localStorage.setItem('custom_trip_title', title); }
+      if (dates) { document.getElementById('display-dates').innerText = dates; localStorage.setItem('custom_trip_dates', dates); }
+      if (locs) { document.getElementById('display-locations').innerText = locs; localStorage.setItem('custom_trip_locations', locs); }
+      closeCoverModal();
+    }
+    function handleFileUpload(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('hero-banner-image').style.backgroundImage = `url('${e.target.result}')`;
+          localStorage.setItem('custom_cover_image', e.target.result);
+          closeCoverModal();
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
 
-    function filterDay(dayNum, chip) {
-      document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      currentDay = dayNum
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedCover = localStorage.getItem('custom_cover_image');
+      if (savedCover) document.getElementById('hero-banner-image').style.backgroundImage = `url('${savedCover}')`;
+      const savedTitle = localStorage.getItem('custom_trip_title');
+      if (savedTitle) document.getElementById('display-title').innerText = savedTitle;
+      const savedDates = localStorage.getItem('custom_trip_dates');
+      if (savedDates) document.getElementById('display-dates').innerText = savedDates;
+      const savedLocs = localStorage.getItem('custom_trip_locations');
+      if (savedLocs) document.getElementById('display-locations').innerText = savedLocs;
+
+      renderItinerary();
+      renderBills();
+      updateWeatherDisplay();
+    });
+  </script>
+</body>
+</html>
