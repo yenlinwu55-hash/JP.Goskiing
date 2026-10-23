@@ -336,6 +336,95 @@
     .memo-block.traffic .memo-block-title { color: #0369a1; }
     .memo-block.warn .memo-block-title { color: #b91c1c; }
 
+    /* 使用者自訂備忘錄留言板 */
+    .user-memo-section {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1.5px dashed #bae6fd;
+    }
+    .user-memo-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .memo-input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1.5px solid #bae6fd;
+      font-size: 0.8rem;
+      background: #fff;
+      margin-bottom: 6px;
+    }
+    .memo-input:focus { outline: none; border-color: var(--primary); }
+    .memo-btn {
+      padding: 8px 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .memo-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .memo-author {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 3px;
+    }
+    .memo-text {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      line-height: 1.45;
+      margin-bottom: 4px;
+      white-space: pre-wrap;
+    }
+    .memo-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #0284c7;
+      text-decoration: none;
+      background: #e0f2fe;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+    .memo-img-preview {
+      max-width: 100%;
+      max-height: 180px;
+      border-radius: 8px;
+      margin-top: 6px;
+      display: block;
+      border: 1px solid #cbd5e1;
+      object-fit: cover;
+    }
+    .memo-del-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
     /* 交通清單卡片 */
     .traffic-item {
       background: #fff;
@@ -443,7 +532,9 @@
 </head>
 <body>
 
+  <!-- 本地上傳隱藏 input -->
   <input type="file" id="coverFileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+  <input type="file" id="memoFileInput" accept="image/*" style="display: none;" onchange="handleMemoFileUpload(this)">
 
   <div class="container">
 
@@ -493,6 +584,26 @@
 
       <div class="card" id="day-content">
         <!-- JS 動態渲染行程內容、時間軸、備忘錄 -->
+      </div>
+
+      <!-- 每日行程專屬：使用者自訂輸入（文字、連結、圖片） -->
+      <div class="card">
+        <div class="user-memo-title">💬 當日自訂備忘錄（可輸入文字、網址或相片）</div>
+        <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:10px;">
+          <input type="text" id="memo-user-name" class="memo-input" placeholder="您的暱稱（例：李爸、林媽）">
+          <textarea id="memo-user-text" class="memo-input" rows="2" placeholder="輸入文字備忘、心得、想去的地點..."></textarea>
+          <input type="url" id="memo-user-url" class="memo-input" placeholder="張貼相關連結 / IG / Google地圖 (選填)">
+          <input type="text" id="memo-user-img-url" class="memo-input" placeholder="貼上圖片網址 URL (選填)">
+          
+          <div style="display:flex; gap:6px;">
+            <button class="memo-btn" style="flex:1; background:#475569;" onclick="document.getElementById('memoFileInput').click()">📁 上傳照片截圖</button>
+            <button class="memo-btn" style="flex:1;" onclick="addUserMemo()">📌 新增備忘</button>
+          </div>
+          <div id="memo-upload-status" style="font-size:0.7rem; color:var(--primary); font-weight:700;"></div>
+        </div>
+
+        <div style="font-weight:800; font-size:0.8rem; color:var(--primary-dark); margin:10px 0 6px;">📋 本日已儲存的備忘列表：</div>
+        <div id="user-memo-list"></div>
       </div>
     </section>
 
@@ -886,8 +997,9 @@
     let currentTab = 'itinerary';
     let currentDay = 1;
     let currentPlan = 'A';
+    let tempMemoImgBase64 = '';
 
-    // 每日行程方案資料庫 (支援 A / B / C / D 完整切換，附備忘錄與地圖連結)
+    // 每日行程方案資料庫
     const scheduleDatabase = {
       1: {
         badge: "DAY 1 · 1/27 (三)",
@@ -1286,7 +1398,7 @@
       }
     };
 
-    // 依天數與方案動態渲染行程
+    // 渲染行程與當日自訂留言
     function renderItinerary() {
       const container = document.getElementById('day-content');
       const dayData = scheduleDatabase[currentDay];
@@ -1324,6 +1436,8 @@
           ${planData.warn}
         </div>
       `;
+
+      renderUserMemos();
     }
 
     function switchPlan(planLetter, btn) {
@@ -1337,7 +1451,7 @@
       document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
       currentDay = dayNum;
-      currentPlan = 'A'; // 切換天數時預設回方案 A
+      currentPlan = 'A';
       document.querySelectorAll('.plan-chip').forEach((c, idx) => {
         c.classList.toggle('active', idx === 0);
       });
@@ -1353,6 +1467,84 @@
       currentTab = tabId;
       updateWeatherDisplay();
       window.scrollTo({ top: 160, behavior: 'smooth' });
+    }
+
+    // 每日行程自訂輸入邏輯（文字、連結、圖片）
+    let userMemos = JSON.parse(localStorage.getItem('trip_user_memos_v5')) || [];
+
+    function handleMemoFileUpload(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          tempMemoImgBase64 = e.target.result;
+          document.getElementById('memo-upload-status').innerText = `✅ 照片已就緒: ${file.name}`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function addUserMemo() {
+      const author = document.getElementById('memo-user-name').value.trim() || '旅伴';
+      const text = document.getElementById('memo-user-text').value.trim();
+      const url = document.getElementById('memo-user-url').value.trim();
+      const imgUrlInput = document.getElementById('memo-user-img-url').value.trim();
+      const finalImg = tempMemoImgBase64 || imgUrlInput;
+
+      if (!text && !url && !finalImg) {
+        return alert('請輸入文字說明、張貼連結或上傳圖片！');
+      }
+
+      userMemos.push({
+        id: Date.now(),
+        day: currentDay,
+        author: author,
+        text: text,
+        url: url,
+        image: finalImg
+      });
+
+      localStorage.setItem('trip_user_memos_v5', JSON.stringify(userMemos));
+
+      // 重置欄位
+      document.getElementById('memo-user-text').value = '';
+      document.getElementById('memo-user-url').value = '';
+      document.getElementById('memo-user-img-url').value = '';
+      document.getElementById('memoFileInput').value = '';
+      document.getElementById('memo-upload-status').innerText = '';
+      tempMemoImgBase64 = '';
+
+      renderUserMemos();
+    }
+
+    function deleteUserMemo(id) {
+      userMemos = userMemos.filter(m => m.id !== id);
+      localStorage.setItem('trip_user_memos_v5', JSON.stringify(userMemos));
+      renderUserMemos();
+    }
+
+    function renderUserMemos() {
+      const list = document.getElementById('user-memo-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      const dayMemos = userMemos.filter(m => m.day === currentDay);
+      if (dayMemos.length === 0) {
+        list.innerHTML = `<div style="font-size:0.75rem; color:#94a3b8; text-align:center; padding:10px;">Day ${currentDay} 尚無自訂備忘，歡迎留下私房景點、必買清單或美照！</div>`;
+        return;
+      }
+
+      dayMemos.forEach(m => {
+        list.innerHTML += `
+          <div class="memo-card">
+            <span class="memo-del-btn" onclick="deleteUserMemo(${m.id})">✕</span>
+            <div class="memo-author">👤 ${m.author}</div>
+            ${m.text ? `<div class="memo-text">${m.text}</div>` : ''}
+            ${m.url ? `<a href="${m.url}" target="_blank" class="memo-link-btn">🔗 開啟外部連結 / 地圖</a>` : ''}
+            ${m.image ? `<img src="${m.image}" class="memo-img-preview" alt="備忘圖片" onclick="window.open(this.src)">` : ''}
+          </div>
+        `;
+      });
     }
 
     // 天氣動態顯示邏輯
@@ -1406,7 +1598,7 @@
       }
     }
 
-    // 記帳模組 (預載 5 間飯店項目，金額預設 0 可後續修改輸入)
+    // 記帳模組
     let activePayee = 'li';
     let bills = JSON.parse(localStorage.getItem('trip_bills_data_v4'));
     if (!bills || bills.length === 0) {
@@ -1444,16 +1636,6 @@
       bills = bills.filter(b => b.id !== id);
       localStorage.setItem('trip_bills_data_v4', JSON.stringify(bills));
       renderBills();
-    }
-
-    function updateBillAmount(id, twd, jpy) {
-      const b = bills.find(item => item.id === id);
-      if (b) {
-        b.twd = parseFloat(twd) || 0;
-        b.jpy = parseFloat(jpy) || 0;
-        localStorage.setItem('trip_bills_data_v4', JSON.stringify(bills));
-        renderBills();
-      }
     }
 
     function renderBills() {
